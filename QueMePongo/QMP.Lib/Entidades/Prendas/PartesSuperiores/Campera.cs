@@ -2,5 +2,8 @@
 {
     public class Campera : ParteSuperior
     {
+        public Campera(object material) : base(material)
+        {
+        }
     }
 }

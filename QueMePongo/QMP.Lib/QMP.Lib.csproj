@@ -40,11 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades\Atuendo.cs" />
-    <Compile Include="Entidades\Caracteristica.cs" />
+    <Compile Include="Entidades\Guardaropa\Atuendo.cs" />
+    <Compile Include="Entidades\Guardaropa\Caracteristica.cs" />
+    <Compile Include="Entidades\Guardaropa\GuardaRopa.cs" />
     <Compile Include="Entidades\Prendas\Accesorio.cs" />
-    <Compile Include="Entidades\Prendas\Accesorios\AnteojosDeSol.cs" />
-    <Compile Include="Entidades\Prendas\Accesorios\AnteojosDeVer.cs" />
+    <Compile Include="Entidades\Prendas\Accesorios\Anteojos.cs" />
     <Compile Include="Entidades\Prendas\Accesorios\Sombrero.cs" />
     <Compile Include="Entidades\Prendas\Calzado.cs" />
     <Compile Include="Entidades\Prendas\Calzados\Ojota.cs" />
