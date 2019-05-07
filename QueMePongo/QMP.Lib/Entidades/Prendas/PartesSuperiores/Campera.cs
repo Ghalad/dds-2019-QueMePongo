@@ -1,9 +1,7 @@
-﻿namespace Ar.UTN.QMP.Lib.Entidades.Prendas.PartesSuperior
+﻿namespace Ar.UTN.QMP.Lib.Entidades.Prendas.PartesSuperiores
 {
-    public class Campera : ParteSuperior
+    public abstract class Campera : ParteSuperior
     {
-        public Campera(object material) : base(material)
-        {
-        }
+        public eTelaGruesa Tela { get; set; }
     }
 }

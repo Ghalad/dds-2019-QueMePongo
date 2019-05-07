@@ -1,16 +1,8 @@
-﻿namespace Ar.UTN.QMP.Lib.Entidades.Prendas.PartesSuperior
+﻿namespace Ar.UTN.QMP.Lib.Entidades.Prendas.PartesSuperiores
 {
-    public class Remera : ParteSuperior
+    public abstract class Remera : ParteSuperior
     {
-        public enum TMaterial : int
-        {
-            SEDA,
-            HILO,
-            POLIESTER
-        }
-
-        public Remera(TMaterial material) : base(material)
-        {
-        }
+        public eTelaFina Tela { get; set; }
+        public eEstampado Estampado { get; set; }
     }
 }

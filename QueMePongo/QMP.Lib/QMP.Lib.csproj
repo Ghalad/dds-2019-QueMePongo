@@ -41,21 +41,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entidades\Guardaropa\Atuendo.cs" />
-    <Compile Include="Entidades\Guardaropa\Caracteristica.cs" />
+    <Compile Include="Entidades\Guardaropa\AtuendoBuilder.cs" />
     <Compile Include="Entidades\Guardaropa\GuardaRopa.cs" />
     <Compile Include="Entidades\Prendas\Accesorio.cs" />
-    <Compile Include="Entidades\Prendas\Accesorios\Anteojos.cs" />
-    <Compile Include="Entidades\Prendas\Accesorios\Sombrero.cs" />
+    <Compile Include="Entidades\Prendas\Accesorios\AnteojosDeSol.cs" />
+    <Compile Include="Entidades\Prendas\Accesorios\Pañuelo.cs" />
     <Compile Include="Entidades\Prendas\Calzado.cs" />
-    <Compile Include="Entidades\Prendas\Calzados\Ojota.cs" />
+    <Compile Include="Entidades\Prendas\Calzados\Crocks.cs" />
     <Compile Include="Entidades\Prendas\Calzados\Zapato.cs" />
     <Compile Include="Entidades\Prendas\ParteInferior.cs" />
     <Compile Include="Entidades\Prendas\PartesInferiores\Pantalon.cs" />
-    <Compile Include="Entidades\Prendas\PartesInferiores\Vermuda.cs" />
+    <Compile Include="Entidades\Prendas\PartesInferiores\Short.cs" />
     <Compile Include="Entidades\Prendas\PartesSuperiores\Campera.cs" />
+    <Compile Include="Entidades\Prendas\PartesSuperiores\CamperaDeAbrigo.cs" />
+    <Compile Include="Entidades\Prendas\PartesSuperiores\CamperaRompeViento.cs" />
     <Compile Include="Entidades\Prendas\PartesSuperiores\Remera.cs" />
+    <Compile Include="Entidades\Prendas\PartesSuperiores\RemeraMangaCorta.cs" />
+    <Compile Include="Entidades\Prendas\PartesSuperiores\RemeraMangaLarga.cs" />
     <Compile Include="Entidades\Prendas\ParteSuperior.cs" />
     <Compile Include="Entidades\Prendas\Prenda.cs" />
+    <Compile Include="Entidades\Usuarios\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

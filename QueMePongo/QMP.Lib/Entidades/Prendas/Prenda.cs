@@ -1,33 +1,59 @@
-﻿using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
-using System.Collections.Generic;
-
-namespace Ar.UTN.QMP.Lib.Entidades.Prendas
+﻿namespace Ar.UTN.QMP.Lib.Entidades.Prendas
 {
     public abstract class Prenda
     {
+        public enum eColor
+        {
+            BLANCO,
+            NEGRO,
+            AZUL,
+            VERDE,
+            ROJO
+        }
 
-        private List<Caracteristica> caracteristicas { get; set; }
+        public enum eTelaFina
+        {
+            ALGODON,
+            SEDA
+        }
+
+        public enum eTelaGruesa
+        {
+            CORDEROI,
+            CUERO,
+            JEAN
+        }
+
+        public enum eEstampado
+        {
+            MICKEY,
+            DONALD,
+            POWER_RANGER
+        }
+
+        public enum eMaterialAccesorio
+        {
+            METAL,
+            PLASTICO,
+            TELA
+        }
+
+        public enum eMaterialCalzado
+        {
+            PLASTICO,
+            TELA,
+            CUERO
+        }
+
+        public bool EsFavorita { get; set; }
+        public bool EsRegalo { get; set; }
+        public eColor ColorPrincipal { get; set; }
+        public eColor ColorSecundario { get; set; }
 
         public Prenda()
         {
-            this.caracteristicas = new List<Caracteristica>();
-        }
-
-        public void AgregarCaracteristicas(Caracteristica caracteristica)
-        {
-            foreach(Caracteristica c in this.caracteristicas)
-                if (c.Valor.Equals(caracteristica.Valor))
-                    return;
-
-            this.caracteristicas.Add(caracteristica);
-        }
-
-        public bool TieneCaracteristica(Caracteristica caracteristica)
-        {
-            foreach (Caracteristica c in this.caracteristicas)
-                if (c.Valor.Equals(caracteristica.Valor))
-                    return true;
-            return false;
+            this.EsFavorita = false;
+            this.EsRegalo = false;
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ar.UTN.QMP.Lib.Entidades.Prendas.PartesSuperior;
+using Ar.UTN.QMP.Lib.Entidades.Prendas.PartesSuperiores;
+using static Ar.UTN.QMP.Lib.Entidades.Prendas.Prenda;
+using static Ar.UTN.QMP.Lib.Entidades.Prendas.ParteSuperior;
 using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
+using Ar.UTN.QMP.Lib.Entidades.Prendas;
 
 namespace QueMePongoTest
 {
@@ -10,19 +13,18 @@ namespace QueMePongoTest
         [TestMethod]
         public void CrearRemeraDeSeda()
         {
-            Remera r = new Remera(Remera.TMaterial.SEDA);
-            Caracteristica c = new Caracteristica(Remera.TMaterial.SEDA, null);
+            Atuendo Atuendo;
+            AtuendoBuilder builder = new AtuendoBuilder();
 
-            Assert.IsTrue(r.TieneCaracteristica(c));
-        }
+            builder.CrearAtuendo()
+                   .ConAccesorio(Accesorio.Tipo.ANTEOJOS_DE_SOL)
+                   .AccesorioConColorPrincipal(eColor.NEGRO)
+                   .AccesorioDeMaterial(eMaterialAccesorio.METAL)
+                   .ConParteSuperior(Tipo.REMERA_MANGA_CORTA)
+                   .ParteSuperiorConColorPrincipal(eColor.AZUL)
+                   .ParteSuperiorConColorSecundario(eColor.BLANCO);
 
-        [TestMethod]
-        public void CrearRemeraDistintoDeSeda()
-        {
-            Remera r = new Remera(Remera.TMaterial.HILO);
-            Caracteristica c = new Caracteristica(Remera.TMaterial.SEDA, null);
-
-            Assert.IsFalse(r.TieneCaracteristica(c));
+            Atuendo = builder.getAtuedo();
         }
     }
 }
