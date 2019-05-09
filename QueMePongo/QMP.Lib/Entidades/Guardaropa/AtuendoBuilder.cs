@@ -9,34 +9,34 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
 {
     public class AtuendoBuilder
     {
-        private Atuendo Atuendo { get; set; }
+        public  Atuendo Atuendo { get; private set; }
 
-        public AtuendoBuilder CrearAtuendo()
+        public AtuendoBuilder()
         {
             this.Atuendo = new Atuendo();
-            return this;
         }
-        public Atuendo getAtuedo()
-        {
-            return this.Atuendo;
-        }
+
 
         #region ACCESORIO
-        public AtuendoBuilder ConAccesorio(Accesorio.Tipo tipo)
+        public AtuendoBuilder ConAccesorio(Accesorio.eTipoAnteOjo tipo)
         {
-            if (tipo.Equals(Accesorio.Tipo.ANTEOJOS_DE_SOL))
-            {
-                this.Atuendo.Accesorio = new AnteojosDeSol();
-            }
-            else if (tipo.Equals(Accesorio.Tipo.PAÑUELO))
-            {
-
-                this.Atuendo.Accesorio = new Pañuelo();
-            }
-            else
-            {
-                // DEFINIR EXCEPCIONES
-            }
+            Anteojos anteojo = new Anteojos();
+            anteojo.Tipo = tipo;
+            this.Atuendo.Accesorio = anteojo;
+            return this;
+        }
+        public AtuendoBuilder ConAccesorio(eTipoPañuelo tipo)
+        {
+            Pañuelo pañuelo = new Pañuelo();
+            pañuelo.Tipo = tipo;
+            this.Atuendo.Accesorio = pañuelo;
+            return this;
+        }
+        public AtuendoBuilder ConAccesorio(eTipoSombrero tipo)
+        {
+            Sombrero sombrero = new Sombrero();
+            sombrero.Tipo = tipo;
+            this.Atuendo.Accesorio = sombrero;
             return this;
         }
         public AtuendoBuilder AccesorioConColorPrincipal(eColor color)
@@ -47,9 +47,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         public AtuendoBuilder AccesorioConColorSecundario(eColor color)
         {
             if (this.Atuendo.Accesorio.ColorPrincipal != color)
-            {
                 this.Atuendo.Accesorio.ColorSecundario = color;
-            }
             else
             {
                 // DEFINIR EXCEPCIONES
@@ -61,41 +59,51 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             this.Atuendo.Accesorio.EsFavorita = true;
             return this;
         }
-        public AtuendoBuilder AccesorioEsRegalado()
+        public AtuendoBuilder AccesorioEsRegaladoPor(string nombre)
         {
-            this.Atuendo.Accesorio.EsRegalo = true;
+            this.Atuendo.Accesorio.EsRegaloPor = nombre.ToUpper();
             return this;
         }
-        public AtuendoBuilder AccesorioDeMaterial(eMaterialAccesorio material)
+        public AtuendoBuilder AccesorioDeMaterial(eMaterialesAnteojos material)
         {
-            this.Atuendo.Accesorio.Material = material;
+            if(this.Atuendo.Accesorio is Anteojos)
+                ((Anteojos)this.Atuendo.Accesorio).Material = material;
+            return this;
+        }
+        public AtuendoBuilder AccesorioDeMaterial(eMaterialesPañuelos material)
+        {
+            if (this.Atuendo.Accesorio is Pañuelo)
+                ((Pañuelo)this.Atuendo.Accesorio).Material = material;
+            return this;
+        }
+        public AtuendoBuilder AccesorioDeMaterial(eMaterialesSombrero material)
+        {
+            if (this.Atuendo.Accesorio is Sombrero)
+                ((Sombrero)this.Atuendo.Accesorio).Material = material;
             return this;
         }
         #endregion ACCESORIO
 
         #region PARTESUPERIOR
-        public AtuendoBuilder ConParteSuperior(ParteSuperior.Tipo tipo)
+        public AtuendoBuilder ConParteSuperior(ParteSuperior.eTipoRemera tipo)
         {
-            if (tipo.Equals(ParteSuperior.Tipo.CAMPERA_DE_ABRIGO))
-            {
-                this.Atuendo.ParteSuperior = new CamperaDeAbrigo();
-            }
-            else if (tipo.Equals(ParteSuperior.Tipo.CAMPERA_ROMPE_VIENTO))
-            {
-                this.Atuendo.ParteSuperior = new CamperaRompeViento();
-            }
-            else if (tipo.Equals(ParteSuperior.Tipo.REMERA_MANGA_CORTA))
-            {
-                this.Atuendo.ParteSuperior = new RemeraMangaCorta();
-            }
-            else if (tipo.Equals(ParteSuperior.Tipo.REMERA_MANGA_LARGA))
-            {
-                this.Atuendo.ParteSuperior = new RemeraMangaLarga();
-            }
-            else
-            {
-                // DEFINIR EXCEPCIONES
-            }
+            Remera remera = new Remera();
+            remera.Tipo = tipo;
+            this.Atuendo.ParteSuperior = remera;
+            return this;
+        }
+        public AtuendoBuilder ConParteSuperior(ParteSuperior.eTipoCampera tipo)
+        {
+            Campera campera = new Campera();
+            campera.Tipo = tipo;
+            this.Atuendo.ParteSuperior = campera;
+            return this;
+        }
+        public AtuendoBuilder ConParteSuperior(ParteSuperior.eTipoCamisa tipo)
+        {
+            Camisa camisa = new Camisa();
+            camisa.Tipo = tipo;
+            this.Atuendo.ParteSuperior = camisa;
             return this;
         }
         public AtuendoBuilder ParteSuperiorConColorPrincipal(eColor color)
@@ -106,9 +114,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         public AtuendoBuilder ParteSuperiorConColorSecundario(eColor color)
         {
             if (this.Atuendo.ParteSuperior.ColorPrincipal != color)
-            {
                 this.Atuendo.ParteSuperior.ColorSecundario = color;
-            }
             else
             {
                 // DEFINIR EXCEPCIONES
@@ -120,69 +126,55 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             this.Atuendo.ParteSuperior.EsFavorita = true;
             return this;
         }
-        public AtuendoBuilder ParteSuperiorEsRegalado()
+        public AtuendoBuilder ParteSuperiorEsRegaladoPor(string nombre)
         {
-            this.Atuendo.ParteSuperior.EsRegalo = true;
+            this.Atuendo.ParteSuperior.EsRegaloPor = nombre.ToUpper();
             return this;
         }
-        public AtuendoBuilder ParteSuperiorDeTalle(ParteSuperior.eTalle talle)
+        public AtuendoBuilder ParteSuperiorDeTalle(ParteSuperior.eTalleParteSuperior talle)
         {
             this.Atuendo.ParteSuperior.Talle = talle;
             return this;
         }
-        public AtuendoBuilder ParteSuperiorDeTela(ParteSuperior.eTelaGruesa tela)
-        {
-            if (this.Atuendo.ParteSuperior is Campera)
-            {
-                ((Campera)this.Atuendo.ParteSuperior).Tela = tela;
-            }
-            else
-            {
-                // DEFINIR EXCEPCIONES
-            }
-            return this;
-        }
-        public AtuendoBuilder ParteSuperiorDeTela(ParteSuperior.eTelaFina tela)
+        public AtuendoBuilder ParteSuperiorDeMaterial(ParteSuperior.eMaterialesRemera material)
         {
             if (this.Atuendo.ParteSuperior is Remera)
-            {
-                ((Remera)this.Atuendo.ParteSuperior).Tela = tela;
-            }
-            else
-            {
-                // DEFINIR EXCEPCIONES
-            }
+                ((Remera)this.Atuendo.ParteSuperior).Material = material;
             return this;
         }
-        public AtuendoBuilder ParteSuperiorConEstampado(ParteSuperior.eEstampado estampado)
+        public AtuendoBuilder ParteSuperiorDeMaterial(ParteSuperior.eMaterialesCamisa material)
+        {
+            if (this.Atuendo.ParteSuperior is Camisa)
+                ((Camisa)this.Atuendo.ParteSuperior).Material = material;
+            return this;
+        }
+        public AtuendoBuilder ParteSuperiorDeMaterial(ParteSuperior.eMaterialesCampera material)
+        {
+            if (this.Atuendo.ParteSuperior is Campera)
+                ((Campera)this.Atuendo.ParteSuperior).Material = material;
+            return this;
+        }
+        public AtuendoBuilder ParteSuperiorConEstampado(ParteSuperior.eEstampados estampado)
         {
             if(this.Atuendo.ParteSuperior is Remera)
-            {
                 ((Remera)this.Atuendo.ParteSuperior).Estampado = estampado;
-            }
-            else
-            {
-                // DEFINIR EXCEPCIONES
-            }
             return this;
         }
         #endregion PARTESUPERIOR
 
         #region PARTEINFERIOR
-        public AtuendoBuilder ConParteInferior(ParteInferior.Tipo tipo)
+        public AtuendoBuilder ConParteInferior(eTipoPantalon tipo)
         {
-            if (tipo.Equals(ParteInferior.Tipo.PANTALON))
-            {
-                this.Atuendo.ParteInferior = new Pantalon();
-            }
-            else if (tipo.Equals(ParteInferior.Tipo.SHORT))
-            {
-                this.Atuendo.ParteInferior = new Short();
-            }
-            else
-            {
-                // DEFINIR EXCEPCIONES
-            }
+            Pantalon pantalon = new Pantalon();
+            pantalon.Tipo = tipo;
+            this.Atuendo.ParteInferior = pantalon;
+            return this;
+        }
+        public AtuendoBuilder ConParteInferior(eTipoPollera tipo)
+        {
+            Pollera pollera = new Pollera();
+            pollera.Tipo = tipo;
+            this.Atuendo.ParteInferior = pollera;
             return this;
         }
         public AtuendoBuilder ParteInferiorConColorPrincipal(eColor color)
@@ -193,12 +185,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         public AtuendoBuilder ParteInferiorConColorSecundario(eColor color)
         {
             if (this.Atuendo.ParteInferior.ColorPrincipal != color)
-            {
                 this.Atuendo.ParteInferior.ColorSecundario = color;
-            }
             else
             {
-                // DEFINIR EXCEPCIONES
+                // DEFINIR EXCEPCIONES??
             }
             return this;
         }
@@ -207,38 +197,50 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             this.Atuendo.ParteInferior.EsFavorita = true;
             return this;
         }
-        public AtuendoBuilder ParteInferiorEsRegalado()
+        public AtuendoBuilder ParteInferiorEsRegaladoPor(string nombre)
         {
-            this.Atuendo.ParteInferior.EsRegalo = true;
+            this.Atuendo.ParteInferior.EsRegaloPor = nombre;
             return this;
         }
-        public AtuendoBuilder ParteInferiorDeTalle(int talle)
+        public AtuendoBuilder ParteInferiorDeTalle(eTalleParteInferior talle)
         {
             this.Atuendo.ParteInferior.Talle = talle;
             return this;
         }
-        public AtuendoBuilder ParteInferiorDeTela(ParteSuperior.eTelaGruesa tela)
+        public AtuendoBuilder ParteInferiorDeMaterial(eMaterialesPantalon material)
         {
-            this.Atuendo.ParteInferior.Tela = tela;
+            if(this.Atuendo.ParteInferior is Pantalon)
+                ((Pantalon)this.Atuendo.ParteInferior).Material = material;
+            return this;
+        }
+        public AtuendoBuilder ParteInferiorDeMaterial(eMaterialesPollera material)
+        {
+            if (this.Atuendo.ParteInferior is Pollera)
+                ((Pollera)this.Atuendo.ParteInferior).Material = material;
             return this;
         }
         #endregion PARTEINFERIOR
 
         #region CALZADO
-        public AtuendoBuilder ConCalzado(Calzado.Tipo tipo)
+        public AtuendoBuilder ConCalzado(eTipoOjota tipo)
         {
-            if (tipo.Equals(Calzado.Tipo.ZAPATO))
-            {
-                this.Atuendo.Calzado = new Zapato();
-            }
-            else if (tipo.Equals(Calzado.Tipo.CROCKS))
-            {
-                this.Atuendo.Calzado = new Crocks();
-            }
-            else
-            {
-                // DEFINIR EXCEPCIONES
-            }
+            Ojota ojota = new Ojota();
+            ojota.Tipo = tipo;
+            this.Atuendo.Calzado = ojota;
+            return this;
+        }
+        public AtuendoBuilder ConCalzado(eTipoZapato tipo)
+        {
+            Zapato zapato = new Zapato();
+            zapato.Tipo = tipo;
+            this.Atuendo.Calzado = zapato;
+            return this;
+        }
+        public AtuendoBuilder ConCalzado(eTipoZapatilla tipo)
+        {
+            Zapatilla zapatilla = new Zapatilla();
+            zapatilla.Tipo = tipo;
+            this.Atuendo.Calzado = zapatilla;
             return this;
         }
         public AtuendoBuilder CalzadoConColorPrincipal(eColor color)
@@ -249,12 +251,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         public AtuendoBuilder CalzadoConColorSecundario(eColor color)
         {
             if (this.Atuendo.Calzado.ColorPrincipal != color)
-            {
                 this.Atuendo.Calzado.ColorSecundario = color;
-            }
             else
             {
-                // DEFINIR EXCEPCIONES
+                // DEFINIR EXCEPCIONES??
             }
             return this;
         }
@@ -263,19 +263,32 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             this.Atuendo.Calzado.EsFavorita = true;
             return this;
         }
-        public AtuendoBuilder CalzadoEsRegalado()
+        public AtuendoBuilder CalzadoEsRegaladoPor(string nombre)
         {
-            this.Atuendo.Calzado.EsRegalo = true;
+            this.Atuendo.Calzado.EsRegaloPor = nombre.ToUpper();
             return this;
         }
-        public AtuendoBuilder CalzadoDeTalle(int talle)
+        public AtuendoBuilder CalzadoDeTalle(eTalleCalzado talle)
         {
             this.Atuendo.Calzado.Talle = talle;
             return this;
         }
-        public AtuendoBuilder CalzadoConMAterial(Calzado.eMaterialCalzado material)
+        public AtuendoBuilder CalzadoConMaterial(eMaterialesOjota material)
         {
-            this.Atuendo.Calzado.Material = material;
+            if (this.Atuendo.Calzado is Ojota)
+                ((Ojota)this.Atuendo.Calzado).Material = material;
+            return this;
+        }
+        public AtuendoBuilder CalzadoConMaterial(eMaterialesZapatilla material)
+        {
+            if (this.Atuendo.Calzado is Zapatilla)
+                ((Zapatilla)this.Atuendo.Calzado).Material = material;
+            return this;
+        }
+        public AtuendoBuilder CalzadoConMaterial(eMaterialesZapato material)
+        {
+            if (this.Atuendo.Calzado is Zapato)
+                ((Zapato)this.Atuendo.Calzado).Material = material;
             return this;
         }
         #endregion CALZADO

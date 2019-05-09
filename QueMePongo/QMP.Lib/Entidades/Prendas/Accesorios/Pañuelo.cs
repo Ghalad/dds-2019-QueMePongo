@@ -2,8 +2,7 @@
 {
     public class Pañuelo : Accesorio
     {
-        public Pañuelo()
-        {
-        }
+        public eMaterialesPañuelos Material { get; set; }
+        public eTipoPañuelo Tipo { get; set; }
     }
 }
