@@ -1,30 +1,24 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Ar.UTN.QMP.Lib.Entidades.Prendas.Prenda;
-using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
+using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Reglas;
 
-namespace QueMePongoTest
+namespace Ar.UTN.QMP.Test
 {
     [TestClass]
     public class PrendasTest
     {
         [TestMethod]
-        public void CrearRemeraDeSeda()
+        public void NoPermiteRemeraDeCuero()
         {
-            Atuendo Atuendo;
-            AtuendoBuilder builder = new AtuendoBuilder();
+            Prenda prenda = new Prenda();
+            prenda.AgregarCaracteristica(new Caracteristica("nombre", "remera"));
+            prenda.AgregarCaracteristica(new Caracteristica("material", "cuero"));
 
-            builder.ConAccesorio(eTipoAnteOjo.DE_SOL)
-                   .AccesorioConColorPrincipal(eColor.PLATEADO)
-                   .AccesorioDeMaterial(eMaterialesAnteojos.METAL)
-                   .ConParteSuperior(eTipoRemera.MANGA_CORTA)
-                   .ParteSuperiorConColorPrincipal(eColor.AZUL)
-                   .ParteSuperiorConColorSecundario(eColor.BLANCO)
-                   .ConParteInferior(eTipoPantalon.CORTO)
-                   .ParteInferiorConColorPrincipal(eColor.NEGRO)
-                   .ConCalzado(eTipoOjota.HAVAIANNA)
-                   .CalzadoConColorPrincipal(eColor.BLANCO);
+            Regla regla = new Regla();
+            regla.Condiciones.Add(new CondicionAfirmativa(new Caracteristica("nombre", "remerA")));
+            regla.Condiciones.Add(new CondicionNegativa(new Caracteristica("material", "cuero")));
 
-            Atuendo = builder.Atuendo;
+            Assert.IsFalse(regla.Validar(prenda));
         }
     }
 }

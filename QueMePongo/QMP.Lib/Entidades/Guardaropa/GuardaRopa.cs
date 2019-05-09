@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
 {

@@ -40,25 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades\Guardaropa\Atuendo.cs" />
-    <Compile Include="Entidades\Guardaropa\AtuendoBuilder.cs" />
+    <Compile Include="Entidades\Atuendos\Atuendo.cs" />
+    <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
+    <Compile Include="Entidades\Reglas\Condicion.cs" />
+    <Compile Include="Entidades\Reglas\CondicionAfirmativa.cs" />
+    <Compile Include="Entidades\Reglas\CondicionNegativa.cs" />
     <Compile Include="Entidades\Guardaropa\GuardaRopa.cs" />
-    <Compile Include="Entidades\Prendas\Accesorio.cs" />
-    <Compile Include="Entidades\Prendas\Accesorios\Anteojos.cs" />
-    <Compile Include="Entidades\Prendas\Accesorios\Pañuelo.cs" />
-    <Compile Include="Entidades\Prendas\Accesorios\Sombrero.cs" />
-    <Compile Include="Entidades\Prendas\Calzado.cs" />
-    <Compile Include="Entidades\Prendas\Calzados\Ojota.cs" />
-    <Compile Include="Entidades\Prendas\Calzados\Zapatilla.cs" />
-    <Compile Include="Entidades\Prendas\Calzados\Zapato.cs" />
-    <Compile Include="Entidades\Prendas\ParteInferior.cs" />
-    <Compile Include="Entidades\Prendas\PartesInferiores\Pantalon.cs" />
-    <Compile Include="Entidades\Prendas\PartesInferiores\Pollera.cs" />
-    <Compile Include="Entidades\Prendas\PartesSuperiores\Camisa.cs" />
-    <Compile Include="Entidades\Prendas\PartesSuperiores\Campera.cs" />
-    <Compile Include="Entidades\Prendas\PartesSuperiores\Remera.cs" />
-    <Compile Include="Entidades\Prendas\ParteSuperior.cs" />
-    <Compile Include="Entidades\Prendas\Prenda.cs" />
+    <Compile Include="Entidades\Atuendos\Prenda.cs" />
+    <Compile Include="Entidades\Reglas\Regla.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
