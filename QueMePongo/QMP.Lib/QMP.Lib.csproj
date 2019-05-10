@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
+    <Compile Include="Entidades\Reglas\Regla1Superior.cs" />
     <Compile Include="Entidades\Reglas\Condicion.cs" />
     <Compile Include="Entidades\Guardaropa\GuardaRopa.cs" />
     <Compile Include="Entidades\Atuendos\Prenda.cs" />
