@@ -14,11 +14,14 @@ namespace Ar.UTN.QMP.Test
             prenda.AgregarCaracteristica(new Caracteristica("nombre", "remera"));
             prenda.AgregarCaracteristica(new Caracteristica("material", "cuero"));
 
-            Regla regla = new Regla();
-            regla.Condiciones.Add(new CondicionAfirmativa(new Caracteristica("nombre", "remerA")));
-            regla.Condiciones.Add(new CondicionNegativa(new Caracteristica("material", "cuero")));
+            ReglaExistencia regla = new ReglaExistencia();
+            regla.AgregarCondicion(new Condicion(new Caracteristica("nombre", "remerA")));
+            regla.AgregarCondicion(new Condicion(new Caracteristica("material", "cuero")));
 
-            Assert.IsFalse(regla.Validar(prenda));
+            Atuendo atuendo = new Atuendo();
+            atuendo.Prendas.Add(prenda);
+
+            Assert.IsFalse(regla.Validar(atuendo));
         }
     }
 }

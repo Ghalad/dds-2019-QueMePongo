@@ -43,11 +43,11 @@
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
     <Compile Include="Entidades\Reglas\Condicion.cs" />
-    <Compile Include="Entidades\Reglas\CondicionAfirmativa.cs" />
-    <Compile Include="Entidades\Reglas\CondicionNegativa.cs" />
     <Compile Include="Entidades\Guardaropa\GuardaRopa.cs" />
     <Compile Include="Entidades\Atuendos\Prenda.cs" />
     <Compile Include="Entidades\Reglas\Regla.cs" />
+    <Compile Include="Entidades\Reglas\ReglaExistencia.cs" />
+    <Compile Include="Entidades\Reglas\ReglaIgualA.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
