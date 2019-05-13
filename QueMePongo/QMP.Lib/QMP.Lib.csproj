@@ -42,13 +42,18 @@
   <ItemGroup>
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
+    <Compile Include="Entidades\Reglas\Condiciones\CondicionComparacion.cs" />
+    <Compile Include="Entidades\Reglas\Condiciones\CondicionMultiple.cs" />
+    <Compile Include="Entidades\Reglas\Condiciones\CondicionUnitaria.cs" />
+    <Compile Include="Entidades\Reglas\Operador.cs" />
+    <Compile Include="Entidades\Reglas\Operadores\OperadorIgual.cs" />
+    <Compile Include="Entidades\Reglas\Operadores\OperadorMayor.cs" />
+    <Compile Include="Entidades\Reglas\Operadores\OperadorMenor.cs" />
     <Compile Include="Entidades\Reglas\Regla1Superior.cs" />
     <Compile Include="Entidades\Reglas\Condicion.cs" />
     <Compile Include="Entidades\Guardaropa\GuardaRopa.cs" />
     <Compile Include="Entidades\Atuendos\Prenda.cs" />
     <Compile Include="Entidades\Reglas\Regla.cs" />
-    <Compile Include="Entidades\Reglas\ReglaExistencia.cs" />
-    <Compile Include="Entidades\Reglas\ReglaIgualA.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
