@@ -17,5 +17,11 @@
                 return true;
             return false;
         }
+
+        public void mostrar()
+        {
+            //mostrar por pantalla Nombre
+        }
+
     }
 }

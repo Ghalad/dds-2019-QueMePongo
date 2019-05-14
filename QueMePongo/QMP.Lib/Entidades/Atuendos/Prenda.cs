@@ -28,5 +28,21 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
+
+        public void mostrar() //muestra por pantalla la prenda
+        {
+            this.caracteristicaDetalle().mostrar();
+        }
+
+        public Caracteristica caracteristicaDetalle()
+        {
+            foreach(Caracteristica c in Caracteristicas)
+            {
+                if( c.nombre() == "Detalle")
+                {
+                    c.mostrar();
+                }
+            }
+        }
     }
 }
