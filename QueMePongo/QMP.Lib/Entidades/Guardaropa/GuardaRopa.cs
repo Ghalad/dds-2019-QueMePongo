@@ -63,33 +63,49 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         }
         */
 
-        public void atuendosPosibles()
+        public void mostrarSiEsValido(Atuendo unAtuendo)
         {
-            Atuendo unAtuendo = new Atuendo();
-
-            //Regla laRegla = Regla.getInstance(); en caso de ser singleton
             Regla laRegla = new Regla();
+            //Regla laRegla = Regla.getInstance(); en caso de ser singleton
+
+            if (laRegla.validar(unAtuendo))
+            {
+                unAtuendo.mostrar(); //atuendos válidos de 2 piezas
+            }
+
+            return;
+        }
 
 
-            foreach(Prenda p in prendas)
+        public void probarConPrendaAdicional(Atuendo unAtuendo, int contador)
+        {
+         
+            foreach (Prenda p in prendas)
             {
                 unAtuendo.agregarPrenda(p);
 
-                foreach(Prenda p2 in prendas)
+                this.mostrarSiEsValido(unAtuendo);
+
+                if(contador < 6)
                 {
-                    unAtuendo.agregarPrenda(p2);
-
-                    if (laRegla.validar(unAtuendo))
-                    {
-                        unAtuendo.mostrar(); //atuendos válidos de 2 piezas
-                    }
-
-                    unAtuendo.quitarPrenda(p2);
+                    contador = contador + 1;
+                    this.probarConPrendaAdicional(unAtuendo, contador);
                 }
 
                 unAtuendo.quitarPrenda(p);
             }
 
+            return;
+        }
+
+        public void atuendosPosibles()
+        {
+            Atuendo unAtuendo = new Atuendo();
+            int contador = 1;
+
+            this.probarConPrendaAdicional(Atuendo, contador);
+
+            return;
         }
 
     }
