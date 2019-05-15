@@ -5,12 +5,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
 {
     public class GuardaRopa
     {
-        public List<Prenda> prendas; 
+        public List<Prenda> prendas;
 
         //public Atuendo UnAtuendo;
         // Me parece mas apropiado que el guardarropa guarde el conjunto de prendas totales que tiene
         // y que los atuendos sea algo dinámico que se vaya definiendo según la combinación de prendas
 
+        /*
         public void atuendosPosibles()
         {
             Atuendos atuendoAux = new Atuendo();
@@ -59,6 +60,36 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
                     atuendoAux.quitarPrenda(p);
                 }
             }
+        }
+        */
+
+        public void atuendosPosibles()
+        {
+            Atuendo unAtuendo = new Atuendo();
+
+            //Regla laRegla = Regla.getInstance(); en caso de ser singleton
+            Regla laRegla = new Regla();
+
+
+            foreach(Prenda p in prendas)
+            {
+                unAtuendo.agregarPrenda(p);
+
+                foreach(Prenda p2 in prendas)
+                {
+                    unAtuendo.agregarPrenda(p2);
+
+                    if (laRegla.validar(unAtuendo))
+                    {
+                        unAtuendo.mostrar(); //atuendos válidos de 2 piezas
+                    }
+
+                    unAtuendo.quitarPrenda(p2);
+                }
+
+                unAtuendo.quitarPrenda(p);
+            }
+
         }
 
     }
