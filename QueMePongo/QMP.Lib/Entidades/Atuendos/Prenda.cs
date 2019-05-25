@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -31,16 +32,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
         public void mostrar() //muestra por pantalla la prenda
         {
-            this.caracteristicaDetalle().mostrar();
+            this.mostrarCaracteristicaDetalle();
         }
 
-        public Caracteristica caracteristicaDetalle()
+        public void mostrarCaracteristicaDetalle()
         {
             foreach(Caracteristica c in Caracteristicas)
             {
-                if( c.nombre() == "Detalle")
+                if( c.getNombre() == "Detalle") //tiene que tener una característica detalle para que sea mostrado
                 {
-                    c.mostrar();
+                    Console.WriteLine( c.getValor() );
                 }
             }
         }

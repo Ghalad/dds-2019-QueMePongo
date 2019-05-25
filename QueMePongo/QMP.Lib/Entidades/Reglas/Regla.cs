@@ -9,27 +9,25 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas
 
         public Regla()
         {
-            //this.Condiciones = new List<Condicion>(); 
+            this.Condiciones = new List<Condicion>(); 
 
             //podríamos usar Singleton para esta instancia 
             
             // |
             // V
 
-            Operador menorATres = new OperadorMenor(2);
-            Caracteristica caractSuperior = new Caracteristica("Zona", "Superior");
-            Condicion unaPrendaSuperior = new CondicionComparacion(cantidadSuperior, caractSuperior);
-            
-            Caracteristica caractInferior = new Caracteristica("Zona", "Inferior");
-            Condicion unaPrendaInferior = new CondicionUnitaria(caractInferior);
+        }
 
-            Caracteristica caractCalzado = new Caracteristica("Zona", "Calzado");
-            Condicion unCalzado = new CondicionUnitaria(caractCalzado);
+        public void agregarCondicion(Condicion unaCondicion)
+        {
+            Condiciones.Add(unaCondicion);
+            return;
+        }
 
-            Condiciones.Add(unaPrendaSuperior);
-            Condiciones.Add(unaPrendaInferior);
-            Condiciones.Add(unCalzado);
-
+        public void quitarCondicion(Condicion unaCondicion)
+        {
+            Condiciones.Remove(unaCondicion);
+            return;
         }
 
         public bool Validar(Atuendo atuendo)

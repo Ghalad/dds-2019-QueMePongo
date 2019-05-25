@@ -5,6 +5,16 @@
         public string Nombre { get; set; }
         public string Valor { get; set; }
 
+        public string getValor()
+        {
+            return Valor;
+        }
+
+        public string getNombre()
+        {
+            return Nombre;
+        }
+
         public Caracteristica(string nombre, string valor)
         {
             this.Nombre = nombre.ToUpper();
@@ -16,11 +26,6 @@
             if (this.Nombre.Equals(caracteristica.Nombre) && this.Valor.Equals(caracteristica.Valor))
                 return true;
             return false;
-        }
-
-        public void mostrar()
-        {
-            //mostrar por pantalla Nombre
         }
 
     }

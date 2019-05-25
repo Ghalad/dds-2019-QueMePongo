@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
@@ -7,6 +8,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
     {
         public List<Prenda> prendas;
 
+
+        public GuardaRopa()
+        {
+            prendas = new List<Prenda>();
+            return;
+        }
         //public Atuendo UnAtuendo;
         // Me parece mas apropiado que el guardarropa guarde el conjunto de prendas totales que tiene
         // y que los atuendos sea algo dinámico que se vaya definiendo según la combinación de prendas
@@ -63,49 +70,57 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         }
         */
 
-        public void mostrarSiEsValido(Atuendo unAtuendo)
+        public void agregarPrenda(Prenda unaPrenda)
         {
-            Regla laRegla = new Regla();
-            //Regla laRegla = Regla.getInstance(); en caso de ser singleton
-
-            if (laRegla.validar(unAtuendo))
-            {
-                unAtuendo.mostrar(); //atuendos válidos de 2 piezas
-            }
-
+            prendas.Add(unaPrenda);
+            return;
+        }
+        public void quitarPrenda(Prenda unaPrenda)
+        {
+            prendas.Remove(unaPrenda);
             return;
         }
 
-
-        public void probarConPrendaAdicional(Atuendo unAtuendo, int contador)
+        public int mostrarSiEsValido(Atuendo unAtuendo, Regla laRegla)
         {
-         
+            if (laRegla.Validar(unAtuendo))
+            {
+                unAtuendo.mostrar(); //atuendos válidos de 2 piezas
+                return 1;
+            }
+
+            return 0;
+        }
+
+
+        public int probarConPrendaAdicional(Atuendo unAtuendo, int contador, Regla laRegla)
+        {
+            int cantidadValidos = 0;
+
             foreach (Prenda p in prendas)
             {
                 unAtuendo.agregarPrenda(p);
 
-                this.mostrarSiEsValido(unAtuendo);
+                cantidadValidos += this.mostrarSiEsValido(unAtuendo, laRegla);
 
                 if(contador < 6)
                 {
                     contador = contador + 1;
-                    this.probarConPrendaAdicional(unAtuendo, contador);
+                    cantidadValidos += this.probarConPrendaAdicional(unAtuendo, contador, laRegla);
                 }
 
                 unAtuendo.quitarPrenda(p);
             }
 
-            return;
+            return cantidadValidos;
         }
 
-        public void atuendosPosibles()
+        public int atuendosPosibles(Regla laRegla)
         {
             Atuendo unAtuendo = new Atuendo();
             int contador = 1;
 
-            this.probarConPrendaAdicional(Atuendo, contador);
-
-            return;
+            return this.probarConPrendaAdicional(unAtuendo, contador, laRegla);
         }
 
     }
