@@ -19,12 +19,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
         public bool Validar(Atuendo atuendo)
         {
             foreach(Prenda prenda in atuendo.Prendas)
-            {
                 if (prenda.TieneCaracteristica(this.Caracteristica))
-                {
-                    return true;
-                }
-            }
+                    return true; // Atuendo INVALIDO
 
             return false;
         }

@@ -4,16 +4,26 @@ using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
 {
-    public class GuardaRopa
+    public class Guardarropa
     {
-        public List<Prenda> prendas;
+        private List<Prenda> Accesorios { get; set; }
+        private List<Prenda> PartesSuperior { get; set; }
+        private List<Prenda> partesInferior { get; set; }
+        private List<Prenda> Calzados { get; set; }
 
+        private List<Atuendo> Atuendos { get; set; }
+        public List<Regla> Reglas { get; set; }
 
-        public GuardaRopa()
+        public Guardarropa()
         {
-            prendas = new List<Prenda>();
-            return;
+            this.Accesorios = new List<Prenda>();
+            this.PartesSuperior = new List<Prenda>();
+            this.partesInferior = new List<Prenda>();
+            this.Calzados = new List<Prenda>();
+            this.Atuendos = new List<Atuendo>();
+            this.Reglas = new List<Regla>();
         }
+
         //public Atuendo UnAtuendo;
         // Me parece mas apropiado que el guardarropa guarde el conjunto de prendas totales que tiene
         // y que los atuendos sea algo dinámico que se vaya definiendo según la combinación de prendas
@@ -70,18 +80,75 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         }
         */
 
-        public void agregarPrenda(Prenda unaPrenda)
+        public void AgregarPrenda(Prenda unaPrenda)
         {
-            prendas.Add(unaPrenda);
-            return;
-        }
-        public void quitarPrenda(Prenda unaPrenda)
-        {
-            prendas.Remove(unaPrenda);
-            return;
+            if (unaPrenda.TieneCaracteristica(new Caracteristica("categoria", "accesorio")))
+                this.Accesorios.Add(unaPrenda);
+            else if (unaPrenda.TieneCaracteristica(new Caracteristica("categoria", "superior")))
+                this.PartesSuperior.Add(unaPrenda);
+            else if (unaPrenda.TieneCaracteristica(new Caracteristica("categoria", "inferior")))
+                this.partesInferior.Add(unaPrenda);
+            else if (unaPrenda.TieneCaracteristica(new Caracteristica("categoria", "calzado")))
+                this.Calzados.Add(unaPrenda);
         }
 
-        public int mostrarSiEsValido(Atuendo unAtuendo, Regla laRegla)
+        public Atuendo ObtenerAtuendo()
+        {
+            bool validoRegla = true;
+
+            foreach (Atuendo atuendo in this.Atuendos)
+            {
+                foreach (Regla regla in this.Reglas)
+                {
+                    if (regla.Validar(atuendo))
+                        validoRegla = true;
+                    else
+                    {
+                        validoRegla = false;
+                        break;
+                    }
+                }
+
+                if (validoRegla && !atuendo.EsUsado)
+                {
+                    atuendo.EsUsado = true;
+                    return atuendo;
+                }
+            }
+            return null;
+        }
+
+        public void GenerarAtuendos()
+        {
+            Atuendo atuendo;
+
+            foreach(Prenda a in this.Accesorios)
+            {
+                foreach (Prenda ps in this.PartesSuperior)
+                {
+                    foreach (Prenda pi in this.partesInferior)
+                    {
+                        foreach (Prenda c in this.Calzados)
+                        {
+                            atuendo = new Atuendo();
+                            atuendo.Prendas.Add(a);
+                            atuendo.Prendas.Add(ps);
+                            atuendo.Prendas.Add(pi);
+                            atuendo.Prendas.Add(c);
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
+        /*
+         * public int mostrarSiEsValido(Atuendo unAtuendo, Regla laRegla)
         {
             if (laRegla.Validar(unAtuendo))
             {
@@ -97,9 +164,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         {
             int cantidadValidos = 0;
 
-            foreach (Prenda p in prendas)
+            foreach (Prenda p in Prendas)
             {
-                unAtuendo.agregarPrenda(p);
+                unAtuendo.AgregarPrenda(p);
 
                 cantidadValidos += this.mostrarSiEsValido(unAtuendo, laRegla);
 
@@ -122,6 +189,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
 
             return this.probarConPrendaAdicional(unAtuendo, contador, laRegla);
         }
-
+        */
     }
 }

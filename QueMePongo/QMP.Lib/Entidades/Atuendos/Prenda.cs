@@ -39,9 +39,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             foreach(Caracteristica c in Caracteristicas)
             {
-                if( c.getNombre() == "Detalle") //tiene que tener una característica detalle para que sea mostrado
+                if( c.Nombre == "Detalle") //tiene que tener una característica detalle para que sea mostrado
                 {
-                    Console.WriteLine( c.getValor() );
+                    Console.WriteLine(c.Valor);
                 }
             }
         }

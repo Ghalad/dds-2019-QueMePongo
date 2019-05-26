@@ -13,7 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
         }
 
         /// <summary>
-        /// Validar que se cumplan TODAS las caracteristicas, sobre una misma prenda
+        /// Si se cumplen TODAS las caracteristicas sobre una misma prenda, esta no es valida.
         /// </summary>
         /// <param name="atuendo"></param>
         /// <returns></returns>
@@ -35,7 +35,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
                 }
 
                 if (match)
-                    return true;
+                    return true; // Atuendo INVALIDO
             }
 
             return false;

@@ -6,24 +6,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     {
         public List<Prenda> Prendas { get; set; }
 
-        public bool Usada { get; set; }        
+        public bool EsUsado { get; set; }        
 
         public Atuendo()
         {
             this.Prendas = new List<Prenda>();
-            this.Usada = false;
+            this.EsUsado = false;
         }
 
-        public void agregarPrenda(Prenda unaPrenda)
+        public void AgregarPrenda(Prenda unaPrenda)
         {
             this.Prendas.Add(unaPrenda);
-            return;
-        }
-
-        public void quitarPrenda(Prenda unaPrenda)
-        {
-            this.Prendas.Remove(unaPrenda);
-            return;
         }
 
         public void mostrar() //muestra por pantalla el atuendo (cada prenda que lo compone)

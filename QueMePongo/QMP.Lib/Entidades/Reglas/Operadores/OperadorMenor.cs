@@ -12,7 +12,7 @@
         public bool Resolver(int valor)
         {
             if (valor < this.ValorReferencia)
-                return true;
+                return true; // Atuendo INVALIDO
             else
                 return false;
         }
