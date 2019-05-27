@@ -5,15 +5,6 @@
         public string Nombre { get; set; }
         public string Valor { get; set; }
 
-        public string getValor()
-        {
-            return Valor;
-        }
-
-        public string getNombre()
-        {
-            return Nombre;
-        }
 
         public Caracteristica(string nombre, string valor)
         {

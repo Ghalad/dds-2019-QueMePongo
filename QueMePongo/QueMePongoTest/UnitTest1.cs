@@ -9,28 +9,25 @@ using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
 namespace Ar.UTN.QMP.Test
 {
     [TestClass]
-    public class FuncionamientoTest
+    public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethod2()
         {
+            //************************
             // Creacion de condiciones
 
             Regla laRegla = new Regla();
-
-            Operador soloUna= new OperadorIgual(1);
+            List<Caracteristica> cCaracteristicas = new List<Caracteristica>();
             Caracteristica caractSuperior = new Caracteristica("Categoría", "Superior");
-            Condicion unaPrendaSuperior = new CondicionComparacion(soloUna, caractSuperior);
-
             Caracteristica caractInferior = new Caracteristica("Categoría", "Inferior");
-            Condicion unaPrendaInferior = new CondicionComparacion(soloUna, caractInferior);
-
             Caracteristica caractCalzado = new Caracteristica("Categoría", "Calzado");
-            Condicion unCalzado = new CondicionComparacion(soloUna, caractCalzado);
+            cCaracteristicas.Add(caractSuperior);
+            cCaracteristicas.Add(caractInferior);
+            cCaracteristicas.Add(caractCalzado);
+            Condicion alMenosUna = new CondicionTodasEstan(cCaracteristicas);
 
-            laRegla.agregarCondicion(unaPrendaSuperior);
-            laRegla.agregarCondicion(unaPrendaInferior);
-            laRegla.agregarCondicion(unCalzado);
+            laRegla.agregarCondicion(alMenosUna);
 
             //************************
             //Creación de guardarropas
@@ -63,6 +60,7 @@ namespace Ar.UTN.QMP.Test
 
             //Mostrar atuendos posibles
 
+            unGuardarropas.atuendosPosibles(laRegla);
             Assert.AreEqual(1, unGuardarropas.atuendosPosibles(laRegla));
 
             Prenda prenda5 = new Prenda();

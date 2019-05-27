@@ -109,6 +109,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
                     cantidadValidos += this.probarConPrendaAdicional(unAtuendo, contador, laRegla);
                 }
 
+                contador = 1;
+
                 unAtuendo.quitarPrenda(p);
             }
 

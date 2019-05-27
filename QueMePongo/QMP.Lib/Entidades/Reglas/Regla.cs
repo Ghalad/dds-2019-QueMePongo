@@ -11,11 +11,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas
         {
             this.Condiciones = new List<Condicion>(); 
 
-            //podríamos usar Singleton para esta instancia 
-            
-            // |
-            // V
-
+         
         }
 
         public void agregarCondicion(Condicion unaCondicion)
@@ -24,23 +20,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas
             return;
         }
 
-        public void quitarCondicion(Condicion unaCondicion)
-        {
-            Condiciones.Remove(unaCondicion);
-            return;
-        }
 
         public bool Validar(Atuendo atuendo)
         {
+
             foreach(Condicion condicion in this.Condiciones)
             {
                 if (!condicion.Validar(atuendo))
                 {
-                    return false; // ATUENDO VALIDA
+                    return false; // ATUENDO INVALIDO
                 }
             }
 
-            return true; // ATUENDO INVALIDO
+            return true; // ATUENDO VALIDO
         }
     }
 }

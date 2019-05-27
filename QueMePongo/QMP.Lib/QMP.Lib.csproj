@@ -44,6 +44,7 @@
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionComparacion.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionMultiple.cs" />
+    <Compile Include="Entidades\Reglas\Condiciones\CondicionTodasEstan.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionUnitaria.cs" />
     <Compile Include="Entidades\Reglas\Operadores\Operador.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorIgual.cs" />
