@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static Ar.UTN.QMP.Lib.Entidades.Atuendos.Tipos;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -30,20 +31,38 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return false;
         }
 
-        public void mostrar() //muestra por pantalla la prenda
+        public bool TieneCaracteristica(string clave, string valor)
         {
-            this.mostrarCaracteristicaDetalle();
+            foreach (Caracteristica c in this.Caracteristicas)
+                if (c.Nombre.Equals(clave.ToUpper()) && c.Valor.Equals(valor.ToUpper()))
+                    return true;
+            return false;
         }
 
-        public void mostrarCaracteristicaDetalle()
+        public bool TieneCaracteristica(string clave)
         {
-            foreach(Caracteristica c in Caracteristicas)
-            {
-                if( c.Nombre == "Detalle") //tiene que tener una característica detalle para que sea mostrado
+            foreach (Caracteristica c in this.Caracteristicas)
+                if (c.Nombre.Equals(clave.ToUpper()))
+                    return true;
+            return false;
+        }
+
+        public bool TieneColorPrimario(TColores color)
+        {
+            foreach (Caracteristica c in this.Caracteristicas)
+                if (c.Nombre.Equals("COLOR_PRIMARIO"))
                 {
-                    Console.WriteLine(c.Valor);
+                    switch (color)
+                    {
+                        case TColores.NEGRO:  if (c.Valor.Equals("NEGRO")) return true; break;
+                        case TColores.BLANCO: if (c.Valor.Equals("BLANCO")) return true; break;
+                        case TColores.AZUL:   if (c.Valor.Equals("AZUL")) return true; break;
+                        case TColores.VERDE:  if (c.Valor.Equals("VERDE")) return true; break;
+                        case TColores.ROJO:   if (c.Valor.Equals("ROJO")) return true; break;
+                        default: break;
+                    }
                 }
-            }
+            return false;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
-using Ar.UTN.QMP.Lib.Entidades.Combinaciones;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using System;
 using System.Collections.Generic;
@@ -34,9 +33,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         public Atuendo ObtenerAtuendo()
         {
             bool validoRegla = true;
-            List<Atuendo> AtuendosNoUsados = this.Atuendos.FindAll(a => !a.Usado);
+            if (this.Atuendos.Count.Equals(0) || this.Atuendos.FindAll(a => !a.Usado).Count.Equals(0)) this.GenerarCombinacionesDePrendas();
 
-            foreach (Atuendo atuendo in AtuendosNoUsados)
+            foreach (Atuendo atuendo in this.Atuendos.FindAll(a => !a.Usado))
             {
                 foreach (Regla regla in this.Reglas)
                 {
@@ -69,10 +68,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             Atuendo atuendo;
             this.Atuendos = new List<Atuendo>();
 
-            foreach (var row in new Combination(this.Prendas.Count, n).GetRows())
+            foreach (var row in new Combinaciones.Combinaciones(this.Prendas.Count, n).GetRows())
             {
                 atuendo = new Atuendo();
-                foreach (var seleccion in Combination.Permute(row, this.Prendas))
+                foreach (var seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
                     atuendo.Prendas.Add(seleccion);
                 this.Atuendos.Add(atuendo);
             }

@@ -19,14 +19,5 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             //TODO Faltaria agregar limitaciones a la insercion de prendas para evitar duplicidad
             this.Prendas.Add(unaPrenda);
         }
-
-        public void mostrar() //muestra por pantalla el atuendo (cada prenda que lo compone)
-        {
-            foreach(Prenda p in Prendas)
-            {
-                p.mostrar();
-            }
-            return;
-        }
     }
 }

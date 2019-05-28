@@ -1,18 +1,23 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
+using System;
 using System.Collections.Generic;
+using static Ar.UTN.QMP.Lib.Entidades.Atuendos.Tipos;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 {
     public class Usuario
     {
-        public string User { get; set; }
-        public string Pass { get; set; }
         public List<Guardarropa> Guardarropas { get; set; }
 
         public Usuario()
         {
             this.Guardarropas = new List<Guardarropa>();
+        }
+
+        public void CrearGuardarropa(string id)
+        {
+            this.Guardarropas.Add(new Guardarropa(id));
         }
 
 
@@ -26,14 +31,128 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
             return this.Guardarropas.Find(g => g.Id.Equals(guardarropa)).ObtenerAtuendo();
         }
 
+
+        private void AgregarPrenda(string guardarropa, Prenda prenda)
+        {
+            this.Guardarropas.Find(g => g.Id.Equals(guardarropa)).AgregarPrenda(prenda);
+        }
+
         /// <summary>
-        /// Agregar una <see cref="Prenda"/> a un <see cref="Guardarropa"/> determinado
+        /// Crea una <see cref="Prenda"/> y la asigna a un <see cref="Guardarropa"/> determinado
         /// </summary>
         /// <param name="prenda"></param>
         /// <param name="guardarropa"></param>
-        public void AgregarPrenda(Prenda prenda, string guardarropa)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoAccesorio tipo, TMateriales material, TColores color)
         {
-            this.Guardarropas.Find(g => g.Id.Equals(guardarropa)).AgregarPrenda(prenda);
+            PrendaBuilder p = new PrendaBuilder();
+
+            Prenda prenda = p.CrerPrenda()
+                             .DeCategoria(categoria)
+                             .DeTipo(tipo)
+                             .DeMaterial(material)
+                             .DeColorPrimario(color)
+                             .ObtenerPrenda();
+
+            this.AgregarPrenda(guardarropa, prenda);
+        }
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoSuperior tipo, TMateriales material, TColores color)
+        {
+            PrendaBuilder p = new PrendaBuilder();
+
+            Prenda prenda = p.CrerPrenda()
+                             .DeCategoria(categoria)
+                             .DeTipo(tipo)
+                             .DeMaterial(material)
+                             .DeColorPrimario(color)
+                             .ObtenerPrenda();
+
+            this.AgregarPrenda(guardarropa, prenda);
+        }
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoInferior tipo, TMateriales material, TColores color)
+        {
+            PrendaBuilder p = new PrendaBuilder();
+
+            Prenda prenda = p.CrerPrenda()
+                             .DeCategoria(categoria)
+                             .DeTipo(tipo)
+                             .DeMaterial(material)
+                             .DeColorPrimario(color)
+                             .ObtenerPrenda();
+
+            this.AgregarPrenda(guardarropa, prenda);
+        }
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoCalzado tipo, TMateriales material, TColores color)
+        {
+            PrendaBuilder p = new PrendaBuilder();
+
+            Prenda prenda = p.CrerPrenda()
+                             .DeCategoria(categoria)
+                             .DeTipo(tipo)
+                             .DeMaterial(material)
+                             .DeColorPrimario(color)
+                             .ObtenerPrenda();
+
+            this.AgregarPrenda(guardarropa, prenda);
+        }
+
+
+
+
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoAccesorio tipo, TMateriales material, TColores colorP, TColores colorS)
+        {
+            PrendaBuilder p = new PrendaBuilder();
+
+            Prenda prenda = p.CrerPrenda()
+                             .DeCategoria(categoria)
+                             .DeTipo(tipo)
+                             .DeMaterial(material)
+                             .DeColorPrimario(colorP)
+                             .DeColorSecundario(colorS)
+                             .ObtenerPrenda();
+
+            this.AgregarPrenda(guardarropa, prenda);
+        }
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoSuperior tipo, TMateriales material, TColores colorP, TColores colorS)
+        {
+            PrendaBuilder p = new PrendaBuilder();
+
+            Prenda prenda = p.CrerPrenda()
+                             .DeCategoria(categoria)
+                             .DeTipo(tipo)
+                             .DeMaterial(material)
+                             .DeColorPrimario(colorP)
+                             .DeColorSecundario(colorS)
+                             .ObtenerPrenda();
+
+            this.AgregarPrenda(guardarropa, prenda);
+        }
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoInferior tipo, TMateriales material, TColores colorP, TColores colorS)
+        {
+            PrendaBuilder p = new PrendaBuilder();
+
+            Prenda prenda = p.CrerPrenda()
+                             .DeCategoria(categoria)
+                             .DeTipo(tipo)
+                             .DeMaterial(material)
+                             .DeColorPrimario(colorP)
+                             .DeColorSecundario(colorS)
+                             .ObtenerPrenda();
+
+            this.AgregarPrenda(guardarropa, prenda);
+        }
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoCalzado tipo, TMateriales material, TColores colorP, TColores colorS)
+        {
+            PrendaBuilder p = new PrendaBuilder();
+
+            Prenda prenda = p.CrerPrenda()
+                             .DeCategoria(categoria)
+                             .DeTipo(tipo)
+                             .DeMaterial(material)
+                             .DeColorPrimario(colorP)
+                             .DeColorSecundario(colorS)
+                             .ObtenerPrenda();
+
+            this.AgregarPrenda(guardarropa, prenda);
         }
     }
 }
