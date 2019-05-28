@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores;
 using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
+using System.Linq;
+using System;
 
 namespace Ar.UTN.QMP.Test
 {
@@ -31,7 +33,7 @@ namespace Ar.UTN.QMP.Test
 
             regla.AgregarCondicion(c);
 
-            Assert.IsTrue(regla.Validar(atuendo));
+            Assert.IsFalse(regla.Validar(atuendo));
         }
 
         [TestMethod]
@@ -65,7 +67,7 @@ namespace Ar.UTN.QMP.Test
 
             regla.AgregarCondicion(c);
 
-            Assert.IsTrue(regla.Validar(atuendo));
+            Assert.IsFalse(regla.Validar(atuendo));
         }
 
         [TestMethod]
@@ -83,7 +85,7 @@ namespace Ar.UTN.QMP.Test
 
             regla.AgregarCondicion(c);
 
-            Assert.IsTrue(regla.Validar(atuendo));
+            Assert.IsFalse(regla.Validar(atuendo));
         }
 
         [TestMethod]
@@ -113,7 +115,7 @@ namespace Ar.UTN.QMP.Test
 
             regla.AgregarCondicion(c);
 
-            Assert.IsTrue(regla.Validar(atuendo));
+            Assert.IsFalse(regla.Validar(atuendo));
         }
 
         [TestMethod]
@@ -144,7 +146,7 @@ namespace Ar.UTN.QMP.Test
             CondicionMultiple conMultiple = new CondicionMultiple(listaC);
             regla.AgregarCondicion(conMultiple);
 
-            Assert.IsFalse(regla.Validar(atuendo));
+            Assert.IsTrue(regla.Validar(atuendo));
         }
 
         [TestMethod]
@@ -203,26 +205,68 @@ namespace Ar.UTN.QMP.Test
         }
 
 
-        public void asdasd()
+        [TestMethod]
+        public void GenerarAtuendosDeNPrendas()
         {
+            Prenda p1 = new Prenda();
+            p1.AgregarCaracteristica(new Caracteristica("nombre", "Remera1"));
+            p1.AgregarCaracteristica(new Caracteristica("Categoria", "Superior"));
+            p1.AgregarCaracteristica(new Caracteristica("mangas", "Cortas"));
+            p1.AgregarCaracteristica(new Caracteristica("color", "Azul"));
 
-            //Guardarropa unGuardarropas = new Guardarropa();
-            //unGuardarropas.agregarPrenda(prenda1);
-            //unGuardarropas.agregarPrenda(prenda2);
-            //unGuardarropas.agregarPrenda(prenda3);
-            //unGuardarropas.agregarPrenda(prenda4);
-            //Mostrar atuendos posibles
+            Prenda p2 = new Prenda();
+            p2.AgregarCaracteristica(new Caracteristica("nombre", "campera1"));
+            p2.AgregarCaracteristica(new Caracteristica("Categoria", "Superior"));
+            p2.AgregarCaracteristica(new Caracteristica("tela", "cuero"));
+            p2.AgregarCaracteristica(new Caracteristica("color", "marron"));
 
-            //Assert.AreEqual(1, unGuardarropas.atuendosPosibles(laRegla));
+            Prenda p3 = new Prenda();
+            p3.AgregarCaracteristica(new Caracteristica("nombre", "pantalon1"));
+            p3.AgregarCaracteristica(new Caracteristica("Categoria", "inferior"));
+            p3.AgregarCaracteristica(new Caracteristica("tela", "jean"));
 
-            //Prenda prenda5 = new Prenda();
-            //Caracteristica c51 = new Caracteristica("Detalle", "Botas de Cuero");
-            //prenda4.AgregarCaracteristica(c51);
-            //prenda4.AgregarCaracteristica(caractCalzado);
-            //
-            //unGuardarropas.agregarPrenda(prenda5);
-            //
-            //Assert.AreEqual(2, unGuardarropas.atuendosPosibles(laRegla));
+            Prenda p4 = new Prenda();
+            p4.AgregarCaracteristica(new Caracteristica("nombre", "botas1"));
+            p4.AgregarCaracteristica(new Caracteristica("Categoria", "calzado"));
+            p4.AgregarCaracteristica(new Caracteristica("tela", "goma"));
+
+            Prenda p5 = new Prenda();
+            p5.AgregarCaracteristica(new Caracteristica("nombre", "Remera2"));
+            p5.AgregarCaracteristica(new Caracteristica("Categoria", "Superior"));
+            p5.AgregarCaracteristica(new Caracteristica("mangas", "Cortas"));
+            p5.AgregarCaracteristica(new Caracteristica("color", "Azul"));
+
+            Prenda p6 = new Prenda();
+            p6.AgregarCaracteristica(new Caracteristica("nombre", "campera2"));
+            p6.AgregarCaracteristica(new Caracteristica("Categoria", "Superior"));
+            p6.AgregarCaracteristica(new Caracteristica("tela", "cuero"));
+            p6.AgregarCaracteristica(new Caracteristica("color", "marron"));
+
+            Prenda p7 = new Prenda();
+            p7.AgregarCaracteristica(new Caracteristica("nombre", "pantalon2"));
+            p7.AgregarCaracteristica(new Caracteristica("Categoria", "inferior"));
+            p7.AgregarCaracteristica(new Caracteristica("tela", "jean"));
+
+            Prenda p8 = new Prenda();
+            p8.AgregarCaracteristica(new Caracteristica("nombre", "botas2"));
+            p8.AgregarCaracteristica(new Caracteristica("Categoria", "calzado"));
+            p8.AgregarCaracteristica(new Caracteristica("tela", "goma"));
+
+            Guardarropa g = new Guardarropa("123");
+            g.Prendas.Add(p1);
+            g.Prendas.Add(p2);
+            g.Prendas.Add(p3);
+            g.Prendas.Add(p4);
+            g.Prendas.Add(p5);
+            g.Prendas.Add(p6);
+            g.Prendas.Add(p7);
+            g.Prendas.Add(p8);
+
+            g.GenerarCombinacionesDePrendas(2);
+
+            // Formula de combinaciones
+            // n! / (r!(n-r)!)
+            Assert.IsTrue(g.Atuendos.Count == 28);
         }
     }
 }

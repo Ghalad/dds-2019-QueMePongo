@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
+    <Compile Include="Entidades\Combinaciones\Combination.cs" />
+    <Compile Include="Entidades\Combinaciones\Combinatoric.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionComparacion.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionMultiple.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionUnitaria.cs" />

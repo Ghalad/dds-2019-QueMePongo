@@ -1,102 +1,42 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Combinaciones;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
+using System;
 using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
 {
     public class Guardarropa
     {
-        private List<Prenda> Accesorios { get; set; }
-        private List<Prenda> PartesSuperior { get; set; }
-        private List<Prenda> partesInferior { get; set; }
-        private List<Prenda> Calzados { get; set; }
-
-        private List<Atuendo> Atuendos { get; set; }
+        public string Id { get; set; }
+        public List<Prenda> Prendas { get; set; }
+        public List<Atuendo> Atuendos { get; set; }
         public List<Regla> Reglas { get; set; }
 
-        public Guardarropa()
+        public Guardarropa(string id)
         {
-            this.Accesorios = new List<Prenda>();
-            this.PartesSuperior = new List<Prenda>();
-            this.partesInferior = new List<Prenda>();
-            this.Calzados = new List<Prenda>();
+            this.Id = id;
             this.Atuendos = new List<Atuendo>();
             this.Reglas = new List<Regla>();
+            this.Prendas = new List<Prenda>();
         }
 
-        //public Atuendo UnAtuendo;
-        // Me parece mas apropiado que el guardarropa guarde el conjunto de prendas totales que tiene
-        // y que los atuendos sea algo dinámico que se vaya definiendo según la combinación de prendas
-
-        /*
-        public void atuendosPosibles()
+        public void AgregarPrenda(Prenda prenda)
         {
-            Atuendos atuendoAux = new Atuendo();
-
-            Caracteristica caractSuperior = new Caracteristica("Zona", "Superior");
-            Caracteristica caractInferior = new Caracteristica("Zona", "Inferior");
-            Caracteristica caractCalzado = new Caracteristica("Zona", "Calzado");
-            Caracteristica caractAccesorio = new Caracteristica("Zona", "Accesorio");
-
-            foreach (Prenda p in prendas)
-            {
-                if( p.tieneCaracteristica(caractSuperior))
-                {
-                    atuendoAux.agregarPrenda(p);
-
-                    foreach ( Prenda p2 in prendas)
-                    {
-                        if( p2.tieneCaracteristica(caractInferior))
-                        {
-                            atuendoAux.agregarPrenda(p2);
-                            atuendoAux.mostrar(); //acá lo mostraría descalzo. solo prenda superior e inferior
-
-                            foreach( Prenda p3 in prendas)
-                            {
-                                if( p3.tieneCaracteristica(caractCalzado))
-                                {
-                                    atuendoAux.agregarPrenda(p3);
-                                    atuendoAux.mostrar(); //hasta acá lo muestra con calzado sin accesorios
-                                    foreach( Prenda p4 in prendas)
-                                    {
-                                        if( p4.tieneCaracteristica(caractAccesorio))
-                                        {
-                                            atuendoAux.agregarPrenda(p4);
-                                            atuendoAux.mostrar(); //acá lo muestra con un accesorio
-                                            atuendoAux.quitarPrenda(p4);
-                                        }
-                                    }
-                                    atuendoAux.quitarPrenda(p3);
-                                }
-                            }
-
-                            atuendoAux.quitarPrenda(p2);
-                        }
-                    }
-
-                    atuendoAux.quitarPrenda(p);
-                }
-            }
-        }
-        */
-
-        public void AgregarPrenda(Prenda unaPrenda)
-        {
-            if (unaPrenda.TieneCaracteristica(new Caracteristica("categoria", "accesorio")))
-                this.Accesorios.Add(unaPrenda);
-            else if (unaPrenda.TieneCaracteristica(new Caracteristica("categoria", "superior")))
-                this.PartesSuperior.Add(unaPrenda);
-            else if (unaPrenda.TieneCaracteristica(new Caracteristica("categoria", "inferior")))
-                this.partesInferior.Add(unaPrenda);
-            else if (unaPrenda.TieneCaracteristica(new Caracteristica("categoria", "calzado")))
-                this.Calzados.Add(unaPrenda);
+            //TODO Faltaria agregar logica para limitar la insercion de prendas
+            this.Prendas.Add(prenda);
         }
 
+        /// <summary>
+        /// Obtiene un <see cref="Atuendo"/> que no haya sido usado antes
+        /// </summary>
+        /// <returns></returns>
         public Atuendo ObtenerAtuendo()
         {
             bool validoRegla = true;
+            List<Atuendo> AtuendosNoUsados = this.Atuendos.FindAll(a => !a.Usado);
 
-            foreach (Atuendo atuendo in this.Atuendos)
+            foreach (Atuendo atuendo in AtuendosNoUsados)
             {
                 foreach (Regla regla in this.Reglas)
                 {
@@ -109,86 +49,50 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
                     }
                 }
 
-                if (validoRegla && !atuendo.EsUsado)
+                if (validoRegla)
                 {
-                    atuendo.EsUsado = true;
+                    atuendo.Usado = true;
                     return atuendo;
                 }
             }
             return null;
         }
 
-        public void GenerarAtuendos()
+        /// <summary>
+        /// Setea una coleccion de <see cref="Atuendo"/>s con todas las combinaciones de <see cref="Prenda"/>s posibles agrupadas en "n" elementos.
+        /// Formula de combinaciones:
+        /// n! / (r!(n-r)!)
+        /// </summary>
+        /// <param name="n"></param>
+        private void CombinarPrendas(int n)
         {
             Atuendo atuendo;
+            this.Atuendos = new List<Atuendo>();
 
-            foreach(Prenda a in this.Accesorios)
+            foreach (var row in new Combination(this.Prendas.Count, n).GetRows())
             {
-                foreach (Prenda ps in this.PartesSuperior)
-                {
-                    foreach (Prenda pi in this.partesInferior)
-                    {
-                        foreach (Prenda c in this.Calzados)
-                        {
-                            atuendo = new Atuendo();
-                            atuendo.Prendas.Add(a);
-                            atuendo.Prendas.Add(ps);
-                            atuendo.Prendas.Add(pi);
-                            atuendo.Prendas.Add(c);
-                        }
-                    }
-                }
+                atuendo = new Atuendo();
+                foreach (var seleccion in Combination.Permute(row, this.Prendas))
+                    atuendo.Prendas.Add(seleccion);
+                this.Atuendos.Add(atuendo);
             }
         }
 
-
-
-
-
-
-
-        /*
-         * public int mostrarSiEsValido(Atuendo unAtuendo, Regla laRegla)
+        /// <summary>
+        /// Genera <see cref="Atuendo"/>s con un numero fijo de <see cref="Prenda"/>s
+        /// </summary>
+        /// <param name="agrupacion"></param>
+        public void GenerarCombinacionesDePrendas(int agrupacion)
         {
-            if (laRegla.Validar(unAtuendo))
-            {
-                unAtuendo.mostrar(); //atuendos válidos de 2 piezas
-                return 1;
-            }
-
-            return 0;
+            this.CombinarPrendas(agrupacion);
         }
 
-
-        public int probarConPrendaAdicional(Atuendo unAtuendo, int contador, Regla laRegla)
+        /// <summary>
+        /// Genera <see cref="Atuendo"/>s con un numero aleatorio de <see cref="Prenda"/>s
+        /// </summary>
+        public void GenerarCombinacionesDePrendas()
         {
-            int cantidadValidos = 0;
-
-            foreach (Prenda p in Prendas)
-            {
-                unAtuendo.AgregarPrenda(p);
-
-                cantidadValidos += this.mostrarSiEsValido(unAtuendo, laRegla);
-
-                if(contador < 6)
-                {
-                    contador = contador + 1;
-                    cantidadValidos += this.probarConPrendaAdicional(unAtuendo, contador, laRegla);
-                }
-
-                unAtuendo.quitarPrenda(p);
-            }
-
-            return cantidadValidos;
+            this.CombinarPrendas((new Random()).Next());
         }
-
-        public int atuendosPosibles(Regla laRegla)
-        {
-            Atuendo unAtuendo = new Atuendo();
-            int contador = 1;
-
-            return this.probarConPrendaAdicional(unAtuendo, contador, laRegla);
-        }
-        */
     }
 }
