@@ -6,7 +6,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     {
         private Prenda prenda { get; set; }
 
-        public PrendaBuilder CrerPrenda()
+        public PrendaBuilder CrearPrenda()
         {
             this.prenda = new Prenda();
             return this;

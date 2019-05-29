@@ -46,7 +46,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             PrendaBuilder p = new PrendaBuilder();
 
-            Prenda prenda = p.CrerPrenda()
+            Prenda prenda = p.CrearPrenda()
                              .DeCategoria(categoria)
                              .DeTipo(tipo)
                              .DeMaterial(material)
@@ -59,7 +59,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             PrendaBuilder p = new PrendaBuilder();
 
-            Prenda prenda = p.CrerPrenda()
+            Prenda prenda = p.CrearPrenda()
                              .DeCategoria(categoria)
                              .DeTipo(tipo)
                              .DeMaterial(material)
@@ -72,7 +72,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             PrendaBuilder p = new PrendaBuilder();
 
-            Prenda prenda = p.CrerPrenda()
+            Prenda prenda = p.CrearPrenda()
                              .DeCategoria(categoria)
                              .DeTipo(tipo)
                              .DeMaterial(material)
@@ -85,7 +85,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             PrendaBuilder p = new PrendaBuilder();
 
-            Prenda prenda = p.CrerPrenda()
+            Prenda prenda = p.CrearPrenda()
                              .DeCategoria(categoria)
                              .DeTipo(tipo)
                              .DeMaterial(material)
@@ -102,7 +102,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             PrendaBuilder p = new PrendaBuilder();
 
-            Prenda prenda = p.CrerPrenda()
+            Prenda prenda = p.CrearPrenda()
                              .DeCategoria(categoria)
                              .DeTipo(tipo)
                              .DeMaterial(material)
@@ -116,7 +116,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             PrendaBuilder p = new PrendaBuilder();
 
-            Prenda prenda = p.CrerPrenda()
+            Prenda prenda = p.CrearPrenda()
                              .DeCategoria(categoria)
                              .DeTipo(tipo)
                              .DeMaterial(material)
@@ -130,7 +130,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             PrendaBuilder p = new PrendaBuilder();
 
-            Prenda prenda = p.CrerPrenda()
+            Prenda prenda = p.CrearPrenda()
                              .DeCategoria(categoria)
                              .DeTipo(tipo)
                              .DeMaterial(material)
@@ -144,7 +144,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             PrendaBuilder p = new PrendaBuilder();
 
-            Prenda prenda = p.CrerPrenda()
+            Prenda prenda = p.CrearPrenda()
                              .DeCategoria(categoria)
                              .DeTipo(tipo)
                              .DeMaterial(material)
