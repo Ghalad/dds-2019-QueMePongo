@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos.Caracteristicas;
+using System.Collections.Generic;
 using static Ar.UTN.QMP.Lib.Entidades.Atuendos.Tipos;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
@@ -62,6 +63,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                             this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", "NEGRO")); return true;
                     default: return false;
                 }
+            }
+            catch { return false; }
+        }
+
+        public bool TieneColorPrimario(int color)
+        {
+            try
+            {
+                this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", Colores.GetInstance().ObtenerColor(color)));
+                return true;
             }
             catch { return false; }
         }

@@ -41,7 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
+    <Compile Include="Entidades\Atuendos\Builders\AccesorioBuilder.cs" />
+    <Compile Include="Entidades\Atuendos\Builders\CalzadosBuilder.cs" />
+    <Compile Include="Entidades\Atuendos\Builders\ParteInferiorBuilder.cs" />
+    <Compile Include="Entidades\Atuendos\Builders\ParteSuperiorBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
+    <Compile Include="Entidades\Atuendos\Caracteristicas\Colores.cs" />
+    <Compile Include="Entidades\Atuendos\Caracteristicas\Materiales.cs" />
     <Compile Include="Entidades\Atuendos\PrendaBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Tipos.cs" />
     <Compile Include="Entidades\Combinaciones\Combinaciones.cs" />
