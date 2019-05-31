@@ -115,72 +115,24 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return this;
         }
 
-        public PrendaBuilder DeMaterial(TMateriales material)
+        public PrendaBuilder DeMaterial(string material)
         {
-            string str = "MATERIAL";
             if (this.prenda != null)
-            {
-                switch (material)
-                {
-                    case TMateriales.ALGODON:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "ALGODON")); break;
-                    case TMateriales.CORDEROY:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "CARDEROY")); break;
-                    case TMateriales.CUERO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "CUERO")); break;
-                    case TMateriales.HILO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "HILO")); break;
-                    case TMateriales.JEAN:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "JEAN")); break;
-                    default: break;
-                }
-            }
+                this.prenda.AgregarCaracteristica(new Caracteristica("MATERIAL", material));
             return this;
         }
 
-        public PrendaBuilder DeColorPrimario(TColores color)
+        public PrendaBuilder DeColorPrimario(string color)
         {
-            string str = "COLOR_PRIMARIO";
             if (this.prenda != null)
-            {
-                switch (color)
-                {
-                    case TColores.NEGRO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "NEGRO")); break;
-                    case TColores.BLANCO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "BLANCO")); break;
-                    case TColores.AZUL:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "AZUL")); break;
-                    case TColores.VERDE:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "VERDE")); break;
-                    case TColores.ROJO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "ROJO")); break;
-                    default: break;
-                }
-            }
+                this.prenda.AgregarCaracteristica(new Caracteristica("COLOR_PRIMARIO", color));
             return this;
         }
 
-        public PrendaBuilder DeColorSecundario(TColores color)
+        public PrendaBuilder DeColorSecundario(string color)
         {
-            string str = "COLOR_PRIMARIO";
             if (this.prenda != null && !this.prenda.TieneColorPrimario(color))
-            {
-                switch (color)
-                {
-                    case TColores.NEGRO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "NEGRO")); break;
-                    case TColores.BLANCO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "BLANCO")); break;
-                    case TColores.AZUL:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "AZUL")); break;
-                    case TColores.VERDE:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "VERDE")); break;
-                    case TColores.ROJO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "ROJO")); break;
-                    default: break;
-                }
-            }
+                this.prenda.AgregarCaracteristica(new Caracteristica("COLOR_SECUNDARIO", color));
             return this;
         }
 

@@ -45,36 +45,27 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return false;
         }
 
-        public bool TieneColorPrimario(TColores color)
+        public bool TieneColorPrimario(string color)
         {
             try
             {
-                switch (color)
-                {
-                    case TColores.NEGRO:
-                            this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", "NEGRO")); return true;
-                    case TColores.BLANCO:
-                            this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", "NEGRO")); return true;
-                    case TColores.AZUL:
-                            this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", "NEGRO")); return true;
-                    case TColores.VERDE:
-                            this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", "NEGRO")); return true;
-                    case TColores.ROJO:
-                            this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", "NEGRO")); return true;
-                    default: return false;
-                }
+                this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", color));
+                return true;
             }
             catch { return false; }
         }
 
-        public bool TieneColorPrimario(int color)
+        public bool EsLaMisma(Prenda prenda)
         {
-            try
-            {
-                this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", Colores.GetInstance().ObtenerColor(color)));
-                return true;
-            }
-            catch { return false; }
+            foreach(Caracteristica c in this.Caracteristicas)
+                if (!prenda.TieneCaracteristica(c))
+                    return false;
+            return true;
+        }
+
+        public int CantidadDeCaracteristicas()
+        {
+            return this.Caracteristicas.Count;
         }
     }
 }

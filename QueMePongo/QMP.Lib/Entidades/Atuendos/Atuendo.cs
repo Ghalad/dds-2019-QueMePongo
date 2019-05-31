@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -14,10 +15,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Usado = false;
         }
 
-        public void AgregarPrenda(Prenda unaPrenda)
+        public void AgregarPrenda(Prenda prenda)
         {
-            //TODO Faltaria agregar limitaciones a la insercion de prendas para evitar duplicidad
-            this.Prendas.Add(unaPrenda);
+            if (this.Prendas.Count == 0)
+                this.Prendas.Add(prenda);
+            else
+                if (!this.Prendas.Any<Prenda>(p => p.EsLaMisma(prenda)))
+                 this.Prendas.Add(prenda);
         }
     }
 }

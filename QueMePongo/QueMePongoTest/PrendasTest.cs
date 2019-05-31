@@ -252,7 +252,7 @@ namespace Ar.UTN.QMP.Test
             usr.CrearGuardarropa("123");
             try
             {
-                usr.CrearPrenda("123", Tipos.TCategoria.CALZADO, Tipos.TTipoSuperior.REMERA_MANGA_CORTA, Tipos.TMateriales.ALGODON, Tipos.TColores.AZUL, Tipos.TColores.BLANCO);
+                usr.CrearPrenda("123", Tipos.TCategoria.CALZADO, Tipos.TTipoSuperior.REMERA_MANGA_CORTA, "ALGODON", "AZUL", "BLANCO");
             }
             catch
             {
@@ -270,7 +270,7 @@ namespace Ar.UTN.QMP.Test
             usr.CrearGuardarropa("123");
             try
             {
-                usr.CrearPrenda("123", Tipos.TCategoria.PARTE_SUPERIOR, Tipos.TTipoSuperior.REMERA_MANGA_CORTA, Tipos.TMateriales.ALGODON, Tipos.TColores.AZUL, Tipos.TColores.BLANCO);
+                usr.CrearPrenda("123", Tipos.TCategoria.PARTE_SUPERIOR, Tipos.TTipoSuperior.REMERA_MANGA_CORTA, "ALGODON", "AZUL", "BLANCO");
             }
             catch
             {
@@ -288,37 +288,13 @@ namespace Ar.UTN.QMP.Test
             List<string> l =  c.GetLista();
         }
 
-        /*[TestMethod]
-        public void ObtenerSugerenciasDesdeVariosGuardarropas()
+        [TestMethod]
+        public void asdasdasd()
         {
-            Usuario usr = new Usuario();
-            bool match = false;
+            this.prenda1.AgregarCaracteristica(new Caracteristica("asd", "123"));
+            this.prenda1.AgregarCaracteristica(new Caracteristica("asd", "123"));
 
-            usr.CrearGuardarropa("1");
-            usr.CrearGuardarropa("2");
-            try
-            {
-                usr.CrearPrenda("1", Tipos.TCategoria.PARTE_SUPERIOR, Tipos.TTipoSuperior.REMERA_MANGA_CORTA, Tipos.TMateriales.ALGODON, Tipos.TColores.AZUL, Tipos.TColores.BLANCO);
-                usr.CrearPrenda("1", Tipos.TCategoria.PARTE_INFERIOR, Tipos.TTipoInferior.PANTALON_CORTO, Tipos.TMateriales.CUERO, Tipos.TColores.VERDE);
-                usr.CrearPrenda("1", Tipos.TCategoria.CALZADO, Tipos.TTipoCalzado.ZAPATILLA_OUTDOOR, Tipos.TMateriales.CUERO, Tipos.TColores.AZUL, Tipos.TColores.NEGRO);
-                usr.CrearPrenda("1", Tipos.TCategoria.CALZADO, Tipos.TTipoCalzado.ZAPATO_MOCASIN, Tipos.TMateriales.CUERO, Tipos.TColores.NEGRO);
-
-                usr.CrearPrenda("2", Tipos.TCategoria.PARTE_SUPERIOR, Tipos.TTipoSuperior.REMERA_MANGA_CORTA, Tipos.TMateriales.ALGODON, Tipos.TColores.AZUL, Tipos.TColores.BLANCO);
-                usr.CrearPrenda("2", Tipos.TCategoria.PARTE_SUPERIOR, Tipos.TTipoSuperior.REMERA_MANGA_LARGA, Tipos.TMateriales.CUERO, Tipos.TColores.AZUL, Tipos.TColores.BLANCO);
-                usr.CrearPrenda("2", Tipos.TCategoria.PARTE_SUPERIOR, Tipos.TTipoInferior.PANTALON_CORTO, Tipos.TMateriales.JEAN, Tipos.TColores.AZUL, Tipos.TColores.BLANCO);
-                usr.CrearPrenda("2", Tipos.TCategoria.PARTE_SUPERIOR, Tipos.TTipoInferior.POLLERA, Tipos.TMateriales.JEAN, Tipos.TColores.AZUL, Tipos.TColores.BLANCO);
-            }catch{}
-
-            usr.Guardarropas[0].GenerarCombinacionesDePrendas(4);
-            usr.Guardarropas[1].GenerarCombinacionesDePrendas(4);
-            Atuendo a1 = usr.ObtenerAtuendo("1");
-            Atuendo a2 = usr.ObtenerAtuendo("2");
-
-            foreach (Prenda p in a1.Prendas)
-            {
-                //if
-            }
-                
-        }*/
+            Assert.IsTrue(this.prenda1.CantidadDeCaracteristicas() == 1);
+        }
     }
 }

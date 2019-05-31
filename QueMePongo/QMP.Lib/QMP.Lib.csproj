@@ -43,6 +43,7 @@
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
     <Compile Include="Entidades\Atuendos\Builders\AccesorioBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Builders\CalzadosBuilder.cs" />
+    <Compile Include="Entidades\Atuendos\Builders\IPrendaBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Builders\ParteInferiorBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Builders\ParteSuperiorBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />

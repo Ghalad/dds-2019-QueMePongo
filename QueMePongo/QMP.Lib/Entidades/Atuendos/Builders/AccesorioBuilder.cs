@@ -1,75 +1,42 @@
-﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos.Caracteristicas;
-using static Ar.UTN.QMP.Lib.Entidades.Atuendos.Tipos;
-
-namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Builders
+﻿namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Builders
 {
-    public class AccesorioBuilder
+    public class AccesorioBuilder : IPrendaBuilder
     {
         private Prenda prenda { get; set; }
 
-        public AccesorioBuilder CrearPrenda()
+        public IPrendaBuilder CrearPrenda()
         {
             this.prenda = new Prenda();
             this.prenda.AgregarCaracteristica(new Caracteristica("CATEGORIA", "ACCESORIO"));
             return this;
         }
 
-        public AccesorioBuilder DeTipo(TTipoAccesorio tipo)
+        public IPrendaBuilder DeTipo(string tipo)
         {
-            string str = "TIPO";
             if (this.prenda != null)
-            {
-                switch (tipo)
-                {
-                    case TTipoAccesorio.GORRO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "GORRO")); break;
-                    case TTipoAccesorio.ARO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "ARO")); break;
-                    default: break;
-                }
-            }
-            else
-                throw new System.Exception("NO SE PUEDE");
+                this.prenda.AgregarCaracteristica(new Caracteristica("TIPO", tipo));
             return this;
         }
        
 
-        public AccesorioBuilder DeMaterial(TMateriales material)
+        public IPrendaBuilder DeMaterial(string material)
         {
-            string str = "MATERIAL";
             if (this.prenda != null)
-            {
-                switch (material)
-                {
-                    case TMateriales.ALGODON:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "ALGODON")); break;
-                    case TMateriales.CORDEROY:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "CORDEROY")); break;
-                    case TMateriales.CUERO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "CUERO")); break;
-                    case TMateriales.HILO:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "HILO")); break;
-                    case TMateriales.JEAN:
-                        this.prenda.AgregarCaracteristica(new Caracteristica(str, "JEAN")); break;
-                    default: break;
-                }
-            }
+                this.prenda.AgregarCaracteristica(new Caracteristica("MATERIAL", material));
             return this;
         }
 
-        public AccesorioBuilder DeColorPrimario(int color)
+        public IPrendaBuilder DeColorPrimario(string color)
         {
             if (this.prenda != null)
-                this.prenda.AgregarCaracteristica(new Caracteristica("COLOR_PRIMARIO", Colores.GetInstance().ObtenerColor(color)));
+                this.prenda.AgregarCaracteristica(new Caracteristica("COLOR_PRIMARIO", color));
             return this;
         }
 
-        public AccesorioBuilder DeColorSecundario(int color)
+        public IPrendaBuilder DeColorSecundario(string color)
         {
             if (this.prenda != null && !this.prenda.TieneColorPrimario(color))
-            {
-                this.prenda.AgregarCaracteristica(new Caracteristica("COLOR_PRIMARIO", Colores.GetInstance().ObtenerColor(color)));
-            }
+                this.prenda.AgregarCaracteristica(new Caracteristica("COLOR_PRIMARIO", color));
             return this;
         }
 

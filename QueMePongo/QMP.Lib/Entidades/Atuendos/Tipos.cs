@@ -35,24 +35,5 @@
             ZAPATO_MOCASIN,
             ZAPATO_OXFORD
         }
-
-
-        public enum TMateriales
-        {
-            ALGODON,
-            CUERO,
-            HILO,
-            CORDEROY,
-            JEAN
-        }
-
-        public enum TColores
-        {
-            NEGRO,
-            BLANCO,
-            ROJO,
-            VERDE,
-            AZUL,
-        }
     }
 }

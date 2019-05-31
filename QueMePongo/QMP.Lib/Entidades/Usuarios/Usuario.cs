@@ -42,7 +42,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         /// </summary>
         /// <param name="prenda"></param>
         /// <param name="guardarropa"></param>
-        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoAccesorio tipo, TMateriales material, TColores color)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoAccesorio tipo, string material, string color)
         {
             PrendaBuilder p = new PrendaBuilder();
 
@@ -55,7 +55,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
             this.AgregarPrenda(guardarropa, prenda);
         }
-        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoSuperior tipo, TMateriales material, TColores color)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoSuperior tipo, string material, string color)
         {
             PrendaBuilder p = new PrendaBuilder();
 
@@ -68,7 +68,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
             this.AgregarPrenda(guardarropa, prenda);
         }
-        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoInferior tipo, TMateriales material, TColores color)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoInferior tipo, string material, string color)
         {
             PrendaBuilder p = new PrendaBuilder();
 
@@ -81,7 +81,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
             this.AgregarPrenda(guardarropa, prenda);
         }
-        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoCalzado tipo, TMateriales material, TColores color)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoCalzado tipo, string material, string color)
         {
             PrendaBuilder p = new PrendaBuilder();
 
@@ -98,7 +98,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
 
 
-        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoAccesorio tipo, TMateriales material, TColores colorP, TColores colorS)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoAccesorio tipo, string material, string colorP, string colorS)
         {
             PrendaBuilder p = new PrendaBuilder();
 
@@ -112,7 +112,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
             this.AgregarPrenda(guardarropa, prenda);
         }
-        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoSuperior tipo, TMateriales material, TColores colorP, TColores colorS)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoSuperior tipo, string material, string colorP, string colorS)
         {
             PrendaBuilder p = new PrendaBuilder();
 
@@ -126,7 +126,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
             this.AgregarPrenda(guardarropa, prenda);
         }
-        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoInferior tipo, TMateriales material, TColores colorP, TColores colorS)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoInferior tipo, string material, string colorP, string colorS)
         {
             PrendaBuilder p = new PrendaBuilder();
 
@@ -140,7 +140,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
             this.AgregarPrenda(guardarropa, prenda);
         }
-        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoCalzado tipo, TMateriales material, TColores colorP, TColores colorS)
+        public void CrearPrenda(string guardarropa, TCategoria categoria, TTipoCalzado tipo, string material, string colorP, string colorS)
         {
             PrendaBuilder p = new PrendaBuilder();
 
