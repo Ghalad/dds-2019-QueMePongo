@@ -1,19 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
-using System.Collections.Generic;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores;
-using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
-using System.Linq;
-using System;
-using Ar.UTN.QMP.Lib.Entidades.Usuarios;
-using Ar.UTN.QMP.Lib.Entidades.Atuendos.Caracteristicas;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
-namespace Ar.UTN.QMP.Test
+namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
 {
     [TestClass]
-    public class PrendasTest
+    public class GuardarropaTest
     {
         Prenda prenda1, prenda2, prenda3, prenda4, prenda5, prenda6, prenda7, prenda8;
         Atuendo atuendo1;
@@ -90,7 +85,7 @@ namespace Ar.UTN.QMP.Test
             this.prenda1.AgregarCaracteristica(new Caracteristica("nombre", "remera"));
             this.prenda1.AgregarCaracteristica(new Caracteristica("material", "algodon"));
             this.atuendo1.Prendas.Add(this.prenda1);
-            
+
             CondicionComparacion c = new CondicionComparacion(new OperadorIgual(0), new Caracteristica("categoria", "calzado"));
 
             this.regla1.AgregarCondicion(c);
@@ -116,7 +111,7 @@ namespace Ar.UTN.QMP.Test
             this.prenda1.AgregarCaracteristica(new Caracteristica("nombre", "ojotas"));
             this.prenda1.AgregarCaracteristica(new Caracteristica("categoria", "calzado"));
             this.atuendo1.Prendas.Add(this.prenda1);
-            
+
             CondicionComparacion c = new CondicionComparacion(new OperadorMayor(1), new Caracteristica("categoria", "calzado"));
 
             this.regla1.AgregarCondicion(c);
@@ -138,9 +133,9 @@ namespace Ar.UTN.QMP.Test
             this.prenda1.AgregarCaracteristica(new Caracteristica("nombre", "pantalon"));
             this.prenda1.AgregarCaracteristica(new Caracteristica("color", "azul"));
             this.atuendo1.Prendas.Add(this.prenda1);
-            
+
             this.regla1.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), new Caracteristica("categoria", "calzado")));
-            
+
             this.listaCar.Add(new Caracteristica("nombre", "remerA"));
             this.listaCar.Add(new Caracteristica("material", "cuero"));
             this.regla1.AgregarCondicion(new CondicionMultiple(this.listaCar));
@@ -155,31 +150,31 @@ namespace Ar.UTN.QMP.Test
             Operador operador = new OperadorMayor(1);
             Condicion unaPrendaSuperior = new CondicionComparacion(operador, new Caracteristica("Categoria", "Superior"));
             Condicion unaPrendaInferior = new CondicionComparacion(operador, new Caracteristica("Categoria", "Inferior"));
-            Condicion unCalzado         = new CondicionComparacion(operador, new Caracteristica("Categoria", "Calzado"));
+            Condicion unCalzado = new CondicionComparacion(operador, new Caracteristica("Categoria", "Calzado"));
 
             this.regla1.AgregarCondicion(unaPrendaSuperior);
             this.regla1.AgregarCondicion(unaPrendaInferior);
             this.regla1.AgregarCondicion(unCalzado);
-            
+
             //Creación de guardarropas
             this.prenda1.AgregarCaracteristica(new Caracteristica("nombre", "Remera"));
             this.prenda1.AgregarCaracteristica(new Caracteristica("Categoria", "Superior"));
             this.prenda1.AgregarCaracteristica(new Caracteristica("mangas", "Cortas"));
             this.prenda1.AgregarCaracteristica(new Caracteristica("color", "Azul"));
-            
+
             this.prenda2.AgregarCaracteristica(new Caracteristica("nombre", "campera"));
             this.prenda2.AgregarCaracteristica(new Caracteristica("Categoria", "Superior"));
             this.prenda2.AgregarCaracteristica(new Caracteristica("tela", "cuero"));
             this.prenda2.AgregarCaracteristica(new Caracteristica("color", "marron"));
-            
+
             this.prenda3.AgregarCaracteristica(new Caracteristica("nombre", "pantalon"));
             this.prenda3.AgregarCaracteristica(new Caracteristica("Categoria", "inferior"));
             this.prenda3.AgregarCaracteristica(new Caracteristica("tela", "jean"));
-            
+
             this.prenda4.AgregarCaracteristica(new Caracteristica("nombre", "botas"));
             this.prenda4.AgregarCaracteristica(new Caracteristica("Categoria", "calzado"));
             this.prenda4.AgregarCaracteristica(new Caracteristica("tela", "goma"));
-            
+
             this.atuendo1.AgregarPrenda(this.prenda1);
             this.atuendo1.AgregarPrenda(this.prenda2);
             this.atuendo1.AgregarPrenda(this.prenda3);
@@ -196,7 +191,7 @@ namespace Ar.UTN.QMP.Test
             this.prenda1.AgregarCaracteristica(new Caracteristica("Categoria", "Superior"));
             this.prenda1.AgregarCaracteristica(new Caracteristica("mangas", "Cortas"));
             this.prenda1.AgregarCaracteristica(new Caracteristica("color", "Azul"));
-            
+
             this.prenda2.AgregarCaracteristica(new Caracteristica("nombre", "campera1"));
             this.prenda2.AgregarCaracteristica(new Caracteristica("Categoria", "Superior"));
             this.prenda2.AgregarCaracteristica(new Caracteristica("tela", "cuero"));
@@ -227,74 +222,21 @@ namespace Ar.UTN.QMP.Test
             this.prenda8.AgregarCaracteristica(new Caracteristica("nombre", "botas2"));
             this.prenda8.AgregarCaracteristica(new Caracteristica("Categoria", "calzado"));
             this.prenda8.AgregarCaracteristica(new Caracteristica("tela", "goma"));
-            
-            this.guardarropa1.AgregarPrenda(this.prenda1);
-            this.guardarropa1.AgregarPrenda(this.prenda2);
-            this.guardarropa1.AgregarPrenda(this.prenda3);
-            this.guardarropa1.AgregarPrenda(this.prenda4);
-            this.guardarropa1.AgregarPrenda(this.prenda5);
-            this.guardarropa1.AgregarPrenda(this.prenda6);
-            this.guardarropa1.AgregarPrenda(this.prenda7);
-            this.guardarropa1.AgregarPrenda(this.prenda8);
+
+            this.guardarropa1.Prendas.Add(this.prenda1);
+            this.guardarropa1.Prendas.Add(this.prenda2);
+            this.guardarropa1.Prendas.Add(this.prenda3);
+            this.guardarropa1.Prendas.Add(this.prenda4);
+            this.guardarropa1.Prendas.Add(this.prenda5);
+            this.guardarropa1.Prendas.Add(this.prenda6);
+            this.guardarropa1.Prendas.Add(this.prenda7);
+            this.guardarropa1.Prendas.Add(this.prenda8);
 
             this.guardarropa1.GenerarCombinacionesDePrendas(2);
 
             // Formula de combinaciones
             // n! / (r!(n-r)!)
             Assert.IsTrue(this.guardarropa1.Atuendos.Count == 28);
-        }
-
-        [TestMethod]
-        public void CrearPrendaIncorrecta()
-        {
-            Usuario usr = new Usuario();
-
-            usr.CrearGuardarropa("123");
-            try
-            {
-                usr.CrearPrenda("123", Tipos.TCategoria.CALZADO, Tipos.TTipoSuperior.REMERA_MANGA_CORTA, "ALGODON", "AZUL", "BLANCO");
-            }
-            catch
-            {
-
-            }
-
-            Assert.IsTrue(usr.Guardarropas[0].Prendas.Count == 0);
-        }
-
-        [TestMethod]
-        public void CrearPrendaCorrecta()
-        {
-            Usuario usr = new Usuario();
-
-            usr.CrearGuardarropa("123");
-            try
-            {
-                usr.CrearPrenda("123", Tipos.TCategoria.PARTE_SUPERIOR, Tipos.TTipoSuperior.REMERA_MANGA_CORTA, "ALGODON", "AZUL", "BLANCO");
-            }
-            catch
-            {
-
-            }
-
-            Assert.IsTrue(usr.Guardarropas[0].Prendas.Count == 1);
-        }
-
-        [TestMethod]
-        public void RepetirColorPrimario()
-        {
-            Colores c = Colores.GetInstance();
-            c.CargarColores();
-            List<string> l =  c.GetLista();
-        }
-
-        [TestMethod]
-        public void asdasdasd()
-        {
-            this.prenda1.AgregarCaracteristica(new Caracteristica("asd", "123"));
-            this.prenda1.AgregarCaracteristica(new Caracteristica("asd", "123"));
-
-            Assert.IsTrue(this.prenda1.CantidadDeCaracteristicas() == 1);
         }
     }
 }

@@ -20,11 +20,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             this.Prendas = new List<Prenda>();
         }
 
-        public void AgregarPrenda(Prenda prenda)
-        {
-            //TODO Faltaria agregar logica para limitar la insercion de prendas
-            this.Prendas.Add(prenda);
-        }
 
         /// <summary>
         /// Obtiene un <see cref="Atuendo"/> que no haya sido usado antes
@@ -72,7 +67,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             {
                 atuendo = new Atuendo();
                 foreach (var seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
-                    atuendo.Prendas.Add(seleccion);
+                    atuendo.AgregarPrenda(seleccion);
                 this.Atuendos.Add(atuendo);
             }
         }

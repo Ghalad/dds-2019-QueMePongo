@@ -19,9 +19,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             if (this.Prendas.Count == 0)
                 this.Prendas.Add(prenda);
-            else
-                if (!this.Prendas.Any<Prenda>(p => p.EsLaMisma(prenda)))
-                 this.Prendas.Add(prenda);
+            else if (!this.Prendas.Any<Prenda>(p => p.EsLaMisma(prenda)))
+                this.Prendas.Add(prenda);
+        }
+
+        public bool TienePrenda(Prenda prenda)
+        {
+            foreach(Prenda p in this.Prendas)
+                if (p.EsLaMisma(prenda))
+                    return true;
+            return false;
         }
     }
 }

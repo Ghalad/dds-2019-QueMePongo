@@ -20,14 +20,14 @@
 
         public bool EsLaMisma(string clave, string valor)
         {
-            if (this.Clave.Equals(clave) && this.Valor.Equals(valor))
+            if (this.Clave.Equals(clave.ToUpper()) && this.Valor.Equals(valor.ToUpper()))
                 return true;
             return false;
         }
 
         public bool EsMismaClave(string clave)
         {
-            if (this.Clave.Equals(clave))
+            if (this.Clave.Equals(clave.ToUpper()))
                 return true;
             return false;
         }

@@ -1,6 +1,4 @@
-﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos.Caracteristicas;
-using System.Collections.Generic;
-using static Ar.UTN.QMP.Lib.Entidades.Atuendos.Tipos;
+﻿using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -13,6 +11,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas = new List<Caracteristica>();
         }
 
+
+
         public void AgregarCaracteristica(Caracteristica caracteristica)
         {
             foreach(Caracteristica c in this.Caracteristicas)
@@ -20,6 +20,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return;
             this.Caracteristicas.Add(caracteristica);
         }
+
+        public void AgregarCaracteristica(string clave, string valor)
+        {
+            foreach (Caracteristica c in this.Caracteristicas)
+                if (c.EsLaMisma(clave.ToUpper(), valor.ToUpper()))
+                    return;
+            this.Caracteristicas.Add(new Caracteristica(clave.ToUpper(), valor.ToUpper()));
+        }
+
+
 
         public bool TieneCaracteristica(Caracteristica caracteristica)
         {
@@ -45,15 +55,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return false;
         }
 
-        public bool TieneColorPrimario(string color)
-        {
-            try
-            {
-                this.Caracteristicas.Find(c => c.EsLaMisma("COLOR_PRIMARIO", color));
-                return true;
-            }
-            catch { return false; }
-        }
+
 
         public bool EsLaMisma(Prenda prenda)
         {
@@ -62,6 +64,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return false;
             return true;
         }
+
+
 
         public int CantidadDeCaracteristicas()
         {
