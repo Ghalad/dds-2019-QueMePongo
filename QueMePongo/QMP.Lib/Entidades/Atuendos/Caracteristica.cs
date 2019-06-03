@@ -3,7 +3,7 @@
     public class Caracteristica
     {
         private string Clave { get; set; }
-        private string Valor { get; set; }
+        public string Valor { get; private set; }
 
         public Caracteristica(string clave, string valor)
         {
@@ -25,7 +25,7 @@
             return false;
         }
 
-        public bool EsMismaClave(string clave)
+        public bool EsLaMismaClave(string clave)
         {
             if (this.Clave.Equals(clave.ToUpper()))
                 return true;

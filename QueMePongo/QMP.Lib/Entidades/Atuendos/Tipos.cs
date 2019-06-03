@@ -4,57 +4,72 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
     public class Tipos
     {
-        public List<string> TCategorias { get; set; }
-        public List<string> TTipos { get; set; }
-        public List<string> TMateriales { get; set; }
-        public List<string> TColores { get; set; }
+        private static Tipos Instancia { get; set; }
 
+        private List<string> TipoCaracteristicas { get; set; }
+        private List<Caracteristica> Caracteristicas { get; set; }
 
-        public Tipos()
+        public static Tipos GetInstance()
         {
-            this.TCategorias = new List<string>();
-            this.TTipos = new List<string>();
-            this.TMateriales = new List<string>();
-            this.TColores = new List<string>();
+            if (Instancia == null) Instancia = new Tipos();
+            return Instancia;
         }
 
 
-        public void CargarDatos()
+        private Tipos()
         {
-            // LOS VALORES SE VAN A CARGAR POR JSON HASTA QUE INCORPOREMOS LA DB
-            this.TCategorias.Clear();
-            this.TCategorias.Add("ACCESORIO");
-            this.TCategorias.Add("SUPERIOR");
-            this.TCategorias.Add("INFERIOR");
-            this.TCategorias.Add("CALZADO");
+            this.TipoCaracteristicas = new List<string>();
+            this.Caracteristicas = new List<Caracteristica>();
 
+            // LOS VALORES SE VAN A CARGAR POR JSON HASTA QUE INCORPOREMOS LA DB (TABLA TIPO_CARACTERISTICAS)
+            this.TipoCaracteristicas.Add("CATEGORIA");
+            this.TipoCaracteristicas.Add("TIPO");
+            this.TipoCaracteristicas.Add("MATERIAL");
+            this.TipoCaracteristicas.Add("COLOR");
 
-            // LOS VALORES SE VAN A CARGAR POR JSON HASTA QUE INCORPOREMOS LA DB
-            this.TTipos.Clear();
-            this.TTipos.Add("GORRA");
-            this.TTipos.Add("REMERA");
-            this.TTipos.Add("CAMPERA");
-            this.TTipos.Add("PANTALON");
-            this.TTipos.Add("SHORT");
-            this.TTipos.Add("ZAPATO");
+            // LOS VALORES SE VAN A CARGAR POR JSON HASTA QUE INCORPOREMOS LA DB (TABLA CARACTERISTICAS)
+            this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "ACCESORIO"));
+            this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "SUPERIOR"));
+            this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "INFERIOR"));
+            this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "CALZADO"));
+            
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "GORRA"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "SOMBRERO"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "REMERA_MANGA_CORTA"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "REMERA_MANGA_LARGA"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "MUSCULOSA"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "CAMPERA_DE_ABRIGO"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "CAMPERA_DE_LLUVIA"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "PANTALON_CORTO"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "PANTALON_LARGO"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "POLLERA"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATO_TACO_ALTO"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATO_TACO_BAJO"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATILLA_DE_CORRER"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATILLA_DE_TREKING"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "OJOTAS"));
+            
+            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "ALGODON"));
+            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "CUERO"));
+            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "HILO"));
+            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "CORDEROY"));
+            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "JEAN"));
+            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "GOMA"));
 
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "NEGRO"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "BLANCO"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "ROJO"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "VERDE"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "AZUL"));
+        }
 
-            // LOS VALORES SE VAN A CARGAR POR JSON HASTA QUE INCORPOREMOS LA DB
-            this.TMateriales.Clear();
-            this.TMateriales.Add("ALGODON");
-            this.TMateriales.Add("CUERO");
-            this.TMateriales.Add("HILO");
-            this.TMateriales.Add("CORDEROY");
-            this.TMateriales.Add("JEAN");
-
-
-            // LOS VALORES SE VAN A CARGAR POR JSON HASTA QUE INCORPOREMOS LA DB
-            this.TColores.Clear();
-            this.TColores.Add("NEGRO");
-            this.TColores.Add("BLANCO");
-            this.TColores.Add("ROJO");
-            this.TColores.Add("VERDE");
-            this.TColores.Add("AZUL");
+        public bool ExisteCaracteristica(string clave, string valor)
+        {
+            if (this.TipoCaracteristicas.Contains(clave.ToUpper()))
+                foreach (Caracteristica c in this.Caracteristicas)
+                    if (c.EsLaMisma(clave.ToUpper(), valor.ToUpper()))
+                        return true;
+            return false;
         }
     }
 }

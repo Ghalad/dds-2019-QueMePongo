@@ -30,5 +30,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
+
+        public bool EsElMismo(Atuendo atuendo)
+        {
+            foreach (Prenda prenda in this.Prendas)
+                if (!atuendo.TienePrenda(prenda))
+                    return false;
+            return true;
+        }
     }
 }

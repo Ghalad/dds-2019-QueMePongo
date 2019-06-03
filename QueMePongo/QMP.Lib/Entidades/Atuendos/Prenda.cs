@@ -50,7 +50,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public bool TieneCaracteristica(string clave)
         {
             foreach (Caracteristica c in this.Caracteristicas)
-                if (c.EsMismaClave(clave.ToUpper()))
+                if (c.EsLaMismaClave(clave.ToUpper()))
                     return true;
             return false;
         }
@@ -70,6 +70,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public int CantidadDeCaracteristicas()
         {
             return this.Caracteristicas.Count;
+        }
+        
+        public int CantidadDeCaracteristica(string clave)
+        {
+            int i = 0;
+            foreach (Caracteristica c in this.Caracteristicas)
+                if (c.EsLaMismaClave(clave))
+                    i++;
+            return i;
+        }
+        
+        public string ObtenerCaracteristica(string clave)
+        {
+            foreach (Caracteristica c in this.Caracteristicas)
+                if (c.EsLaMismaClave(clave.ToUpper()))
+                    return c.Valor;
+            return null;
         }
     }
 }
