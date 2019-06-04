@@ -20,7 +20,20 @@
             if (this.Prenda != null && Tipos.GetInstance().ExisteCaracteristica(clave, valor))
             {
                 if (!this.Prenda.TieneCaracteristica(clave))
-                    this.Prenda.AgregarCaracteristica(clave, valor);
+                {
+                    if (clave.ToUpper().Equals("TIPO"))
+                    {
+                        if(Tipos.GetInstance().ValidarTipo(valor.ToUpper(), this.Prenda.ObtenerCaracteristica("CATEGORIA")))
+                            this.Prenda.AgregarCaracteristica(clave, valor);
+                    }
+                    else if (clave.ToUpper().Equals("CATEGORIA"))
+                    {
+                        if (Tipos.GetInstance().ValidarCategoria(valor.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
+                            this.Prenda.AgregarCaracteristica(clave, valor);
+                    }
+                    else
+                        this.Prenda.AgregarCaracteristica(clave, valor);
+                }
                 else
                     if (clave.ToUpper().Equals("COLOR") &&
                         this.Prenda.CantidadDeCaracteristica(clave) == 1 &&

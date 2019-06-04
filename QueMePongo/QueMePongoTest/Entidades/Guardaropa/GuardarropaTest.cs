@@ -30,8 +30,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
         public void NoPermiteRemeraDeCueroUnaPrenda()
         {
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "cuero");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
 
@@ -49,18 +49,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
         public void NoPermiteRemeraDeCueroMuchasPrendas()
         {
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "pantalon_corto")
-                   .AgregarCaracteristica("Categoria", "inferior");
+                   .AgregarCaracteristica("Categoria", "inferior")
+                   .AgregarCaracteristica("tipo", "pantalon_corto");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "zapato_taco_bajo")
-                   .AgregarCaracteristica("Categoria", "calzado");
+                   .AgregarCaracteristica("Categoria", "calzado")
+                   .AgregarCaracteristica("tipo", "zapato_taco_bajo");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
 
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "cuero");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
 
@@ -78,8 +78,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
         public void NoPermiteAtuendoSinCalzado()
         {
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "algodon");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
 
@@ -94,23 +94,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
         public void NoPermiteAtuendosConMasDeUnCalzado()
         {
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "algodon");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "zapatillas_de_correr")
                    .AgregarCaracteristica("Categoria", "calzado")
+                   .AgregarCaracteristica("tipo", "zapatillas_de_correr")
                    .AgregarCaracteristica("material", "cuero");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "pantalon_largo")
                    .AgregarCaracteristica("Categoria", "inferior")
+                   .AgregarCaracteristica("tipo", "pantalon_largo")
                    .AgregarCaracteristica("color", "azul");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "ojotas")
                    .AgregarCaracteristica("Categoria", "calzado")
+                   .AgregarCaracteristica("tipo", "ojotas")
                    .AgregarCaracteristica("material", "goma");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
 
@@ -130,13 +130,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
                    .AgregarCaracteristica("material", "algodon");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "zapatillas_de_correr")
                    .AgregarCaracteristica("Categoria", "calzado")
+                   .AgregarCaracteristica("tipo", "zapatillas_de_correr")
                    .AgregarCaracteristica("material", "cuero");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "pantalon_largo")
                    .AgregarCaracteristica("Categoria", "inferior")
+                   .AgregarCaracteristica("tipo", "pantalon_largo")
                    .AgregarCaracteristica("color", "azul");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
 
@@ -163,24 +163,24 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
             this.regla1.AgregarCondicion(unCalzado);
             
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "algodon");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "campera_de_abrigo")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "campera_de_abrigo")
                    .AgregarCaracteristica("color", "verde")
                    .AgregarCaracteristica("material", "cuero");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "pantalon_largo")
                    .AgregarCaracteristica("Categoria", "inferior")
+                   .AgregarCaracteristica("tipo", "pantalon_largo")
                    .AgregarCaracteristica("material", "jean");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "zapatillas_de_correr")
                    .AgregarCaracteristica("Categoria", "calzado")
+                   .AgregarCaracteristica("tipo", "zapatillas_de_correr")
                    .AgregarCaracteristica("material", "goma");
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
 
@@ -192,48 +192,48 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
         public void GenerarAtuendosDeNPrendas()
         {
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "algodon")
                    .AgregarCaracteristica("color","azul");
             this.guardarropa1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "campera_de_abrigo")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "campera_de_abrigo")
                    .AgregarCaracteristica("color", "verde")
                    .AgregarCaracteristica("material", "cuero");
             this.guardarropa1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "pantalon_largo")
                    .AgregarCaracteristica("Categoria", "inferior")
+                   .AgregarCaracteristica("tipo", "pantalon_largo")
                    .AgregarCaracteristica("material", "jean");
             this.guardarropa1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "zapatillas_de_correr")
                    .AgregarCaracteristica("Categoria", "calzado")
+                   .AgregarCaracteristica("tipo", "zapatillas_de_correr")
                    .AgregarCaracteristica("material", "goma");
             this.guardarropa1.Prendas.Add(this.pb.ObtenerPrenda());
 
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_larga")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_larga")
                    .AgregarCaracteristica("material", "cuero")
                    .AgregarCaracteristica("color", "negro");
             this.guardarropa1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "campera_de_lluvia")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "campera_de_lluvia")
                    .AgregarCaracteristica("color", "blanco")
                    .AgregarCaracteristica("material", "cuero");
             this.guardarropa1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "pantalon_corto")
                    .AgregarCaracteristica("Categoria", "inferior")
+                   .AgregarCaracteristica("tipo", "pantalon_corto")
                    .AgregarCaracteristica("material", "jean");
             this.guardarropa1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "zapato_taco_bajo")
                    .AgregarCaracteristica("Categoria", "calzado")
+                   .AgregarCaracteristica("tipo", "zapato_taco_bajo")
                    .AgregarCaracteristica("material", "goma");
             this.guardarropa1.Prendas.Add(this.pb.ObtenerPrenda());
 

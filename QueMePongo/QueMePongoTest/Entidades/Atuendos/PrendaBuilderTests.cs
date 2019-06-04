@@ -57,7 +57,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
         }
 
         [TestMethod()]
-        public void NoPErmiteAgregarCaracteristicasInvalidas()
+        public void NoPermiteAgregarCaracteristicasInvalidas1()
         {
             PrendaBuilder pb = new PrendaBuilder();
 
@@ -68,6 +68,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
               .AgregarCaracteristica("color", "superior");
 
             Assert.IsTrue(pb.ObtenerPrenda().CantidadDeCaracteristicas() == 0);
+        }
+
+        [TestMethod()]
+        public void NoPermiteAgregarCaracteristicasInvalidas2()
+        {
+            PrendaBuilder pb = new PrendaBuilder();
+
+            pb.CrearPrenda()
+              .AgregarCaracteristica("categoria", "superior")
+              .AgregarCaracteristica("tipo", "ojotas");
+
+            Assert.IsTrue(pb.ObtenerPrenda().CantidadDeCaracteristicas() == 1);
         }
     }
 }

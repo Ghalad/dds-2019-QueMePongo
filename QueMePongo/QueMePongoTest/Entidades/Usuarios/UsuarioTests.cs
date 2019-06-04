@@ -35,16 +35,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios.Tests
         {
             this.usr.CrearGuardarropa("g1");
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "cuero");
             this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
 
 
             this.usr.CrearGuardarropa("g2");
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_larga")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_larga")
                    .AgregarCaracteristica("material", "cuero");
             this.usr.AgregarPrenda("g2", this.pb.ObtenerPrenda());
 
@@ -59,16 +59,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios.Tests
         {
             this.usr.CrearGuardarropa("g1");
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "cuero");
             this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
 
 
             this.usr.CrearGuardarropa("g2");
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
                    .AgregarCaracteristica("material", "cuero");
             this.usr.AgregarPrenda("g2", this.pb.ObtenerPrenda());
 
