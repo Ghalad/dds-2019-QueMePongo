@@ -30,5 +30,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             this.Guardarropas.Find(g => g.Id.Equals(guardarropa)).Prendas.Add(prenda);
         }
+        
     }
 }
