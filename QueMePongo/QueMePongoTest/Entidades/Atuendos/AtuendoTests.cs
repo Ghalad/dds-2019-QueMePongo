@@ -23,7 +23,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
             this.prenda1.AgregarCaracteristica(new Caracteristica("categoria", "superior"));
             this.prenda2.AgregarCaracteristica(new Caracteristica("categoria", "superior"));
             this.atuendo1.AgregarPrenda(this.prenda1);
+            this.atuendo1.AgregarPrenda(this.prenda2);
             Assert.IsTrue(this.atuendo1.TienePrenda(this.prenda2));
+            Assert.IsTrue(this.atuendo1.TienePrenda(this.prenda1)); // ESTE ESTA MAL
         }
 
         [TestMethod()]

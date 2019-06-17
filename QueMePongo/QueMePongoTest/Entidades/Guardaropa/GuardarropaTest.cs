@@ -153,6 +153,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
         public void NoPermiteDosParteSuperior()
         {
             // Creacion de condiciones
+            Prenda p;
             Operador operador = new OperadorMayor(1);
             Condicion unaPrendaSuperior = new CondicionComparacion(operador, new Caracteristica("Categoria", "Superior"));
             Condicion unaPrendaInferior = new CondicionComparacion(operador, new Caracteristica("Categoria", "Inferior"));
@@ -172,6 +173,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
                    .AgregarCaracteristica("tipo", "campera_de_abrigo")
                    .AgregarCaracteristica("color", "verde")
                    .AgregarCaracteristica("material", "cuero");
+            p = this.pb.ObtenerPrenda();
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
                    .AgregarCaracteristica("Categoria", "inferior")
@@ -185,6 +187,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa.Tests
             this.atuendo1.Prendas.Add(this.pb.ObtenerPrenda());
 
             Assert.IsFalse(this.regla1.Validar(this.atuendo1));
+            this.atuendo1.Prendas.Remove(p);
+            Assert.IsTrue(this.regla1.Validar(this.atuendo1));
         }
 
 
