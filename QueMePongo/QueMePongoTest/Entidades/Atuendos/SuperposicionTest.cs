@@ -24,6 +24,19 @@ namespace Ar.UTN.QMP.Test.Entidades.Atuendos
         }
 
         [TestMethod]
+        public void NumeroSuperposicion()
+        {
+            this.pb.CrearPrenda()
+                   .AgregarCaracteristica("Categoria", "superior")
+                   .AgregarCaracteristica("tipo", "remera_manga_corta")
+                   .AgregarCaracteristica("material", "algodon")
+                   .AgregarCaracteristica("superposicion", "1");
+            prenda1 = pb.ObtenerPrenda();
+
+            Assert.AreEqual(1, prenda1.NumeroSuperposicion());
+        }
+
+        [TestMethod]
         public void DistintaSuperposicion()
         {
             this.pb.CrearPrenda()
