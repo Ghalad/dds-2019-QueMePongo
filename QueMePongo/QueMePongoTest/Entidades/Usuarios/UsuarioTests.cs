@@ -27,7 +27,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios.Tests
             this.regla1 = new Regla();
             this.listaCar = new List<Caracteristica>();
             this.pb = new PrendaBuilder();
-            this.usr = new Usuario();
+            this.usr = new UsrPremium();
         }
 
         [TestMethod()]

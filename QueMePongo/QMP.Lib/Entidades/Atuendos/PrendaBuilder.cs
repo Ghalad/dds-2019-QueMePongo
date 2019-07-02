@@ -46,5 +46,123 @@
             
             return this;
         }
+
+
+
+
+
+
+        public PrendaBuilder ConCategoria(string categoria)
+        {
+            string car = "CATEGORIA";
+
+            if (this.Prenda != null)
+            {
+                if (Tipos.GetInstance().ExisteCaracteristica(car, categoria.ToUpper()))
+                {
+                    if(!this.Prenda.TieneCaracteristica(car))
+                    {
+                        if (this.Prenda.TieneCaracteristica("TIPO"))
+                        {
+                            if (this.CorrespondeCaracteristica(categoria.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
+                            {
+                                this.Prenda.AgregarCaracteristica(car, categoria.ToUpper());
+                            }
+                        }
+                        else
+                        {
+                            this.Prenda.AgregarCaracteristica(car, categoria.ToUpper());
+                        }
+                    }
+                }
+            }
+
+            return this;
+        }
+
+        public PrendaBuilder ConTipo(string tipo)
+        {
+            string car = "TIPO";
+
+            if (this.Prenda != null)
+            {
+                if (Tipos.GetInstance().ExisteCaracteristica(car, tipo.ToUpper()))
+                {
+                    if (!this.Prenda.TieneCaracteristica(car))
+                    {
+                        if (this.Prenda.TieneCaracteristica("CATEGORIA"))
+                        {
+                            if (this.CorrespondeCaracteristica(this.Prenda.ObtenerCaracteristica("CATEGORIA"), tipo.ToUpper()))
+                            {
+                                this.Prenda.AgregarCaracteristica(car, tipo.ToUpper());
+                                this.Prenda.AgregarCaracteristica("SUPERPOCICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
+                            }
+                        }
+                        else
+                        {
+                            this.Prenda.AgregarCaracteristica(car, tipo.ToUpper());
+                            this.Prenda.AgregarCaracteristica("SUPERPOCICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
+                        }
+                    }
+                }
+            }
+
+            return this;
+        }
+
+        public PrendaBuilder ConMaterial(string material)
+        {
+            string car = "MATERIAL";
+
+            if (this.Prenda != null)
+            {
+                if (Tipos.GetInstance().ExisteCaracteristica(car, material.ToUpper()))
+                {
+                    if (!this.Prenda.TieneCaracteristica(car))
+                    {
+                        this.Prenda.AgregarCaracteristica(car, material.ToUpper());
+                    }
+                }
+            }
+            return this;
+        }
+
+        public PrendaBuilder ConColor(string color)
+        {
+            string car = "COLOR";
+
+            if (this.Prenda != null)
+            {
+                if (Tipos.GetInstance().ExisteCaracteristica(car, color.ToUpper()))
+                {
+                    if (!this.Prenda.TieneCaracteristica(car))
+                    {
+                        // color primario
+                        this.Prenda.AgregarCaracteristica(car, color.ToUpper());
+                    }
+                    else if (this.Prenda.CantidadDeCaracteristica(car) < 2)
+                    {
+                        // color secundario
+                        this.Prenda.AgregarCaracteristica(car, color.ToUpper());
+                    }
+                }
+            }
+            return this;
+        }
+
+
+        #region PRIVADO
+        private bool CorrespondeCaracteristica(string car1, string car2)
+        {
+            if (this.Prenda != null)
+            {
+                if (Tipos.GetInstance().ExisteCaracteristicaXTipo(car1, car2))
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+        #endregion PRIVADO
     }
 }

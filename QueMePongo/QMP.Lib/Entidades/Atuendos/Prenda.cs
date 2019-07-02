@@ -5,6 +5,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     public class Prenda
     {
         private List<Caracteristica> Caracteristicas { get; set; }
+        public byte[] Foto { get; set; }
 
         public Prenda()
         {

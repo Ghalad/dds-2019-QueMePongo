@@ -8,13 +8,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
     public class Guardarropa
     {
         public string Id { get; set; }
-        public List<Prenda> Prendas { get; set; }
+        private List<Prenda> Prendas { get; set; }
         public List<Atuendo> Atuendos { get; set; }
         public List<Regla> Reglas { get; set; }
+        private int MaximoPrendas { get; set; }
 
-        public Guardarropa(string id)
+        public Guardarropa(string id, int maximoPrendas)
         {
             this.Id = id;
+            this.MaximoPrendas = maximoPrendas;
             this.Atuendos = new List<Atuendo>();
             this.Reglas = new List<Regla>();
             this.Prendas = new List<Prenda>();
@@ -87,6 +89,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         public void GenerarCombinacionesDePrendas()
         {
             this.CombinarPrendas((new Random()).Next());
+        }
+
+        public void AgregarPrenda(Prenda prenda)
+        {
+            if (this.MaximoPrendas == 0)
+                this.Prendas.Add(prenda);
+            else if (this.Prendas.Count < this.MaximoPrendas)
+                this.Prendas.Add(prenda);
+            else
+                throw new Exception("No se pueden agregar mas prendas");
         }
     }
 }

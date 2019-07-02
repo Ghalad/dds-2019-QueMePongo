@@ -81,5 +81,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
 
             Assert.IsTrue(pb.ObtenerPrenda().CantidadDeCaracteristicas() == 1);
         }
+
+        [TestMethod]
+        public void NoPermiteAgregarCaracteristicasInvalidas3()
+        {
+            PrendaBuilder pb = new PrendaBuilder();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("MUSCULOSA");
+
+            Assert.IsTrue(pb.ObtenerPrenda().CantidadDeCaracteristicas() == 2);
+        }
     }
 }
