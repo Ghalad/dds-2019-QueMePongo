@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -88,6 +89,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 if (c.EsLaMismaClave(clave.ToUpper()))
                     return c.Valor;
             return null;
+        }
+
+        public int NumeroSuperposicion()
+        {
+            foreach(Caracteristica c in Caracteristicas)
+            {
+                if (c.EsLaMismaClave("superposicion"))
+                {
+                    return Convert.ToInt32(c.Valor);
+                }
+            }
+
+            return -1;
         }
     }
 }

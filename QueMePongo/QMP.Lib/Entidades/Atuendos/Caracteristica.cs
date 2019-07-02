@@ -1,4 +1,6 @@
-﻿namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
+﻿using System;
+
+namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
     public class Caracteristica
     {
@@ -31,5 +33,6 @@
                 return true;
             return false;
         }
+
     }
 }

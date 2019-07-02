@@ -33,7 +33,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.TipoCaracteristicas.Add("TIPO");
             this.TipoCaracteristicas.Add("MATERIAL");
             this.TipoCaracteristicas.Add("COLOR");
-            this.TipoCaracteristicas.Add("SUPERPOCICION");
+            this.TipoCaracteristicas.Add("SUPERPOSICION");
             this.TipoCaracteristicas.Add("ABRIGO");
 
             // LOS VALORES SE VAN A CARGAR POR JSON HASTA QUE INCORPOREMOS LA DB (TABLA CARACTERISTICAS)
@@ -99,10 +99,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "1"));
             this.Superposiones.Add(new Caracteristica("OJOTAS",               "1"));
 
-            this.Caracteristicas.Add(new Caracteristica("SUPERPOCICION", "1"));
-            this.Caracteristicas.Add(new Caracteristica("SUPERPOCICION", "2"));
-            this.Caracteristicas.Add(new Caracteristica("SUPERPOCICION", "3"));
-            this.Caracteristicas.Add(new Caracteristica("SUPERPOCICION", "4"));
+            this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "1"));
+            this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "2"));
+            this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "3"));
+            this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "4"));
 
             this.Caracteristicas.Add(new Caracteristica("MATERIAL", "ALGODON"));
             this.Caracteristicas.Add(new Caracteristica("MATERIAL", "CUERO"));
