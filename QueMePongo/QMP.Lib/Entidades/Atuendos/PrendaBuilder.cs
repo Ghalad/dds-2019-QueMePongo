@@ -64,7 +64,7 @@
                     {
                         if (this.Prenda.TieneCaracteristica("TIPO"))
                         {
-                            if (this.CorrespondeCaracteristica(categoria.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
+                            if (this.CorrespondeCategoriaTipo(categoria.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
                             {
                                 this.Prenda.AgregarCaracteristica(car, categoria.ToUpper());
                             }
@@ -92,7 +92,7 @@
                     {
                         if (this.Prenda.TieneCaracteristica("CATEGORIA"))
                         {
-                            if (this.CorrespondeCaracteristica(this.Prenda.ObtenerCaracteristica("CATEGORIA"), tipo.ToUpper()))
+                            if (this.CorrespondeCategoriaTipo(this.Prenda.ObtenerCaracteristica("CATEGORIA"), tipo.ToUpper()))
                             {
                                 this.Prenda.AgregarCaracteristica(car, tipo.ToUpper());
                                 this.Prenda.AgregarCaracteristica("SUPERPOCICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
@@ -150,9 +150,27 @@
             return this;
         }
 
+        public PrendaBuilder ConEvento(string evento)
+        {
+            string car = "EVENTO";
+
+            if (this.Prenda != null)
+            {
+                if (Tipos.GetInstance().ExisteCaracteristica(car, evento.ToUpper()))
+                {
+                    if (!this.Prenda.TieneCaracteristica(car, evento.ToUpper()))
+                    {
+                        this.Prenda.AgregarCaracteristica(car, evento.ToUpper());
+                    }
+                }
+            }
+
+            return this;
+        }
+
 
         #region PRIVADO
-        private bool CorrespondeCaracteristica(string car1, string car2)
+        private bool CorrespondeCategoriaTipo(string car1, string car2)
         {
             if (this.Prenda != null)
             {

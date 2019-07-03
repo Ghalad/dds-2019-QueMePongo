@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         public List<Atuendo> Atuendos { get; set; }
         public List<Regla> Reglas { get; set; }
         private int MaximoPrendas { get; set; }
+        private List<Evento> Eventos { get; set; }
 
         public Guardarropa(string id, int maximoPrendas)
         {

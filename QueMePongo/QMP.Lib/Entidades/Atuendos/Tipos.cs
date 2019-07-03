@@ -13,6 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public List<Caracteristica> Caracteristicas { get; set; }
         public List<Caracteristica> Superposiones { get; set; }
 
+
         public static Tipos GetInstance()
         {
             if (Instancia == null) Instancia = new Tipos();
@@ -35,8 +36,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.TipoCaracteristicas.Add("COLOR");
             this.TipoCaracteristicas.Add("SUPERPOSICION");
             this.TipoCaracteristicas.Add("ABRIGO");
-
-            // LOS VALORES SE VAN A CARGAR POR JSON HASTA QUE INCORPOREMOS LA DB (TABLA CARACTERISTICAS)
+            this.TipoCaracteristicas.Add("EVENTO");
+            
             this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "ACCESORIO"));
             this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "SUPERIOR"));
             this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "INFERIOR"));
@@ -80,24 +81,24 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATILLA_DE_TREKING"));
             this.Caracteristicas.Add(new Caracteristica("TIPO", "OJOTAS"));
 
-            this.Superposiones.Add(new Caracteristica("GORRA",                "0"));
-            this.Superposiones.Add(new Caracteristica("SOMBRERO",             "0"));
-            this.Superposiones.Add(new Caracteristica("MUSCULOSA",            "0"));
-            this.Superposiones.Add(new Caracteristica("REMERA_MANGA_CORTA",   "0"));
-            this.Superposiones.Add(new Caracteristica("REMERA_MANGA_LARGA",   "0"));
-            this.Superposiones.Add(new Caracteristica("CAMISA_MANGA_CORTA",   "1"));
-            this.Superposiones.Add(new Caracteristica("CAMISA_MANGA_LARGA",   "1"));
-            this.Superposiones.Add(new Caracteristica("SWEATER",              "2"));
-            this.Superposiones.Add(new Caracteristica("CAMPERA_DE_ABRIGO",    "3"));
-            this.Superposiones.Add(new Caracteristica("CAMPERA_DE_LLUVIA",    "3"));
-            this.Superposiones.Add(new Caracteristica("PANTALON_CORTO",       "1"));
-            this.Superposiones.Add(new Caracteristica("PANTALON_LARGO",       "1"));
-            this.Superposiones.Add(new Caracteristica("POLLERA",              "1"));
-            this.Superposiones.Add(new Caracteristica("ZAPATO_TACO_ALTO",     "1"));
-            this.Superposiones.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "1"));
-            this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "1"));
-            this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "1"));
-            this.Superposiones.Add(new Caracteristica("OJOTAS",               "1"));
+            this.Superposiones.Add(new Caracteristica("GORRA",                "1"));
+            this.Superposiones.Add(new Caracteristica("SOMBRERO",             "1"));
+            this.Superposiones.Add(new Caracteristica("MUSCULOSA",            "1"));
+            this.Superposiones.Add(new Caracteristica("REMERA_MANGA_CORTA",   "1"));
+            this.Superposiones.Add(new Caracteristica("REMERA_MANGA_LARGA",   "1"));
+            this.Superposiones.Add(new Caracteristica("CAMISA_MANGA_CORTA",   "2"));
+            this.Superposiones.Add(new Caracteristica("CAMISA_MANGA_LARGA",   "2"));
+            this.Superposiones.Add(new Caracteristica("SWEATER",              "3"));
+            this.Superposiones.Add(new Caracteristica("CAMPERA_DE_ABRIGO",    "4"));
+            this.Superposiones.Add(new Caracteristica("CAMPERA_DE_LLUVIA",    "4"));
+            this.Superposiones.Add(new Caracteristica("PANTALON_CORTO",       "2"));
+            this.Superposiones.Add(new Caracteristica("PANTALON_LARGO",       "2"));
+            this.Superposiones.Add(new Caracteristica("POLLERA",              "2"));
+            this.Superposiones.Add(new Caracteristica("ZAPATO_TACO_ALTO",     "2"));
+            this.Superposiones.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "2"));
+            this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "2"));
+            this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "2"));
+            this.Superposiones.Add(new Caracteristica("OJOTAS",               "2"));
 
             this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "1"));
             this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "2"));
@@ -116,6 +117,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(new Caracteristica("COLOR", "ROJO"));
             this.Caracteristicas.Add(new Caracteristica("COLOR", "VERDE"));
             this.Caracteristicas.Add(new Caracteristica("COLOR", "AZUL"));
+
+            this.Caracteristicas.Add(new Caracteristica("EVENTO", "TRABAJO"));
+            this.Caracteristicas.Add(new Caracteristica("EVENTO", "SALIDA_AMIGOS"));
+            this.Caracteristicas.Add(new Caracteristica("EVENTO", "CUMPLEAÑOS"));
+            this.Caracteristicas.Add(new Caracteristica("EVENTO", "CASAMIENTO"));
         }
 
         internal bool ValidarCategoria(string categoria, string tipo)
