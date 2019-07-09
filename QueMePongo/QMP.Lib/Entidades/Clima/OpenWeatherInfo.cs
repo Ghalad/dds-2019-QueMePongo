@@ -2,17 +2,19 @@
 
 namespace Ar.UTN.QMP.Lib.Entidades.Clima
 {
-    public class WeatherInfo
+    public class OpenWeatherInfo
     {
         public string Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<Weather> Weather { get; set; }
         public string Visibility { get; set; }
         public string dt { get; set; }
+        public System Sys { get; set; }
         public Main Main { get; set; }
-        public Wind wind { get; set; }
+        public Wind Wind { get; set; }
         public Clouds Clouds { get; set; }
         public Coord Coord { get; set; }
+        public Error Error { get; set; }
     }
 
     public class Weather
@@ -20,6 +22,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         public string Id { get; set; }
         public string Main { get; set; }
         public string Description { get; set; }
+    }
+
+    public class System
+    {
+        public string Type { get; set; }
+        public string Id { get; set; }
+        public string Message { get; set; }
+        public string Country { get; set; }
+        public string Sunrise { get; set; }
+        public string Sunset { get; set; }
     }
 
     public class Main
@@ -46,5 +58,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
     {
         public string Lon { get; set; }
         public string Lat { get; set; }
+    }
+
+    public class Error
+    {
+        public string Code { get; set; }
+        public string Message { get; set; }
     }
 }

@@ -4,31 +4,31 @@ using System.Net;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Clima
 {
-    public class OpenWeatherService : WeatherServiceAdapter
+    public class ApiXuService : WeatherServiceAdapter
     {
-        private OpenWeatherInfo Data { get; set; }
-        private string AppId { get; set; }  //"8ed5caa2f1d3f297ff245132e0235d16";
+        private ApiUxInfo Data { get; set; }
+        private string AppId { get; set; }  //"745e46f80f49463d88422016192806";
         private string Ciudad { get; set; } //"Buenos Aires";
         private string CiudadAnterior { get; set; }
-        private string Pais { get; set; }
+        public string Pais { get; set; }
         private string @Url { get; set; }
         private const int TIEMPO_DE_OBSOLENCIA = 1;
 
 
         #region CONSTRUCTOR
-        public OpenWeatherService(string pais, string ciudad)
+        public ApiXuService(string pais, string ciudad)
         {
             if (pais != null && ciudad != null)
             {
-                this.AppId = "8ed5caa2f1d3f297ff245132e0235d16";
+                this.AppId = "745e46f80f49463d88422016192806";
                 this.Ciudad = ciudad;
                 this.CiudadAnterior = this.Ciudad;
                 this.Pais = pais;
-                this.Url = string.Format("http://api.openweathermap.org/data/2.5/weather?q={0},{1}&mode=json&units=metric&APPID={2}", this.Ciudad, this.Pais, this.AppId);
+                this.Url = string.Format("http://api.apixu.com/v1/current.json?key={0}&q={1},{2}", this.AppId, this.Ciudad, this.Pais);
             }
             else
             {
-                throw new Exception("Debe definir el pais y la ciudad");
+                throw new Exception();
             }
         }
         #endregion CONSTRUCTOR
@@ -43,21 +43,20 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
                 this.Pais = pais;
                 this.CiudadAnterior = this.Ciudad;
                 this.Ciudad = ciudad;
-                this.Url = string.Format("http://api.openweathermap.org/data/2.5/weather?q={0},{1}&mode=json&units=metric&APPID={2}", this.Ciudad, this.Pais, this.AppId);
+                this.Url = string.Format("http://api.apixu.com/v1/current.json?key={0}&q={1},{2}", this.AppId, this.Ciudad, this.Pais);
             }
             else
             {
-                throw new Exception("Debe definir el pais y la ciudad");
+                throw new Exception();
             }
         }
-
 
         public decimal ObtenerHumedad()
         {
             this.RefrescarSiDatosObsoletos();
             try
             {
-                return Decimal.Parse(this.Data.Main.Humidity);
+                return Decimal.Parse(this.Data.Current.Humidity);
             }
             catch
             {
@@ -71,7 +70,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
             this.RefrescarSiDatosObsoletos();
             try
             {
-                return Decimal.Parse(this.Data.Main.Pressure);
+                return Decimal.Parse(this.Data.Current.Pressure_mb);
             }
             catch
             {
@@ -85,7 +84,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
             this.RefrescarSiDatosObsoletos();
             try
             {
-                return Decimal.Parse(this.Data.Main.Temp);
+                return Decimal.Parse(this.Data.Current.Temp_c);
             }
             catch
             {
@@ -104,28 +103,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         {
             using (WebClient client = new WebClient())
             {
-                string json = string.Empty;
-                try
+                string json = client.DownloadString(this.Url);
+                this.Data = JsonConvert.DeserializeObject<ApiUxInfo>(json);
+                if (this.Data.Location.Region.ToUpper() != this.Ciudad.ToUpper())
                 {
-                    json = client.DownloadString(this.Url);
-                    this.Data = JsonConvert.DeserializeObject<OpenWeatherInfo>(json);
-                    if (this.Data.Name.ToUpper() != this.Ciudad.ToUpper())
-                    {
-                        throw new Exception();
-                    }
-                }
-                catch(WebException wex)
-                {
-                    this.Data = new OpenWeatherInfo();
-                    this.Data.Error = new Error();
-                    this.Data.Error.Code = ((HttpWebResponse)wex.Response).StatusCode.ToString();
-                    this.Data.Error.Message = wex.Message;
-                }
-                catch(Exception ex)
-                {
-                    this.Data = new OpenWeatherInfo();
-                    this.Data.Error = new Error();
-                    this.Data.Error.Message = ex.Message;
+                    throw new Exception();
                 }
             }
         }
@@ -140,7 +122,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
             else
             {
                 DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                dt = dt.AddSeconds(Int32.Parse(this.Data.dt)).ToLocalTime(); // fecha de ultima obtencion de datos
+                dt = dt.AddSeconds(Int32.Parse(this.Data.Current.Last_updated_epoch)).ToLocalTime(); // fecha de ultima obtencion de datos
                 dt = dt.AddMinutes(TIEMPO_DE_OBSOLENCIA);
 
                 if (dt.CompareTo(DateTime.Now) > 0)

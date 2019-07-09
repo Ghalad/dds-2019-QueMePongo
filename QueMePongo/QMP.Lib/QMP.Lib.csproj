@@ -55,9 +55,12 @@
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
     <Compile Include="Entidades\Atuendos\PrendaBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Tipos.cs" />
+    <Compile Include="Entidades\Clima\ApiUxInfo.cs" />
+    <Compile Include="Entidades\Clima\ApiXuService.cs" />
+    <Compile Include="Entidades\Clima\WeatherServiceAdapter.cs" />
     <Compile Include="Entidades\Eventos\Evento.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherService.cs" />
-    <Compile Include="Entidades\Clima\WeatherInfo.cs" />
+    <Compile Include="Entidades\Clima\OpenWeatherInfo.cs" />
     <Compile Include="Entidades\Combinaciones\Combinaciones.cs" />
     <Compile Include="Entidades\Combinaciones\Combinatoric.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionComparacion.cs" />

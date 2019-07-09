@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Entidades\Atuendos\PrendaBuilderTests.cs" />
     <Compile Include="Entidades\Atuendos\SuperposicionTest.cs" />
+    <Compile Include="Entidades\Clima\WeatherServiceTest.cs" />
     <Compile Include="Entidades\Guardaropa\GuardarropaTest.cs" />
     <Compile Include="Entidades\Atuendos\AtuendoTests.cs" />
     <Compile Include="Entidades\Usuarios\UsuarioTests.cs" />

@@ -1,3 +1,4 @@
 page  =https://www.apixu.com/my/
 key   =745e46f80f49463d88422016192806
 Sample=http://api.apixu.com/v1/current.json?key=745e46f80f49463d88422016192806&q=Buenos%20aires,AR
+doc   =https://www.apixu.com/doc/current.aspx

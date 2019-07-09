@@ -1,2 +1,14 @@
 https://openweathermap.org/current#current_JSON
 https://openweathermap.org/weather-conditions
+
+
+switch (webResp.StatusCode)
+{
+case HttpStatusCode.NotFound: // 404
+break;
+case HttpStatusCode.InternalServerError: // 500
+break;
+default:
+break;
+}
+}
