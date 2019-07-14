@@ -14,7 +14,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         public Wind Wind { get; set; }
         public Clouds Clouds { get; set; }
         public Coord Coord { get; set; }
-        public Error Error { get; set; }
+        public string Cod { get; set; }
+        public string Message { get; set; }
     }
 
     public class Weather
@@ -58,11 +59,5 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
     {
         public string Lon { get; set; }
         public string Lat { get; set; }
-    }
-
-    public class Error
-    {
-        public string Code { get; set; }
-        public string Message { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Clima
@@ -108,24 +109,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
                 try
                 {
                     json = client.DownloadString(this.Url);
-                    this.Data = JsonConvert.DeserializeObject<OpenWeatherInfo>(json);
-                    if (this.Data.Name.ToUpper() != this.Ciudad.ToUpper())
-                    {
-                        throw new Exception();
-                    }
                 }
                 catch(WebException wex)
                 {
-                    this.Data = new OpenWeatherInfo();
-                    this.Data.Error = new Error();
-                    this.Data.Error.Code = ((HttpWebResponse)wex.Response).StatusCode.ToString();
-                    this.Data.Error.Message = wex.Message;
+                    json = new StreamReader(wex.Response.GetResponseStream()).ReadToEnd();
                 }
-                catch(Exception ex)
+
+                this.Data = JsonConvert.DeserializeObject<OpenWeatherInfo>(json);
+                if (this.Data.Cod != "200")
                 {
-                    this.Data = new OpenWeatherInfo();
-                    this.Data.Error = new Error();
-                    this.Data.Error.Message = ex.Message;
+                    throw new Exception(this.Data.Message);
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Clima
@@ -103,11 +104,24 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         {
             using (WebClient client = new WebClient())
             {
-                string json = client.DownloadString(this.Url);
-                this.Data = JsonConvert.DeserializeObject<ApiUxInfo>(json);
-                if (this.Data.Location.Region.ToUpper() != this.Ciudad.ToUpper())
+                string json = string.Empty;
+                try
                 {
-                    throw new Exception();
+                    json = client.DownloadString(this.Url);
+                }
+                catch (WebException wex)
+                {
+                    json = new StreamReader(wex.Response.GetResponseStream()).ReadToEnd();
+                }
+
+                this.Data = JsonConvert.DeserializeObject<ApiUxInfo>(json);
+                if (this.Data.Error!= null && this.Data.Error.Code != "200")
+                {
+                    throw new Exception(this.Data.Error.Message);
+                }
+                if (this.Data.Location.Country.ToUpper() != "ARGENTINA" || this.Data.Location.Name.ToUpper() != this.Ciudad.ToUpper())
+                {
+                    throw new Exception("Ciudad no encontrada");
                 }
             }
         }

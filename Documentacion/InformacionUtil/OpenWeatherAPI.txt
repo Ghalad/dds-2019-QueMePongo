@@ -1,5 +1,8 @@
-https://openweathermap.org/current#current_JSON
-https://openweathermap.org/weather-conditions
+page  = http://api.openweathermap.org
+key   = 8ed5caa2f1d3f297ff245132e0235d16
+Sample= http://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires,AR&mode=json&units=metric&APPID=8ed5caa2f1d3f297ff245132e0235d16
+doc   = https://openweathermap.org/current#current_JSON
+        https://openweathermap.org/weather-conditions
 
 
 switch (webResp.StatusCode)
