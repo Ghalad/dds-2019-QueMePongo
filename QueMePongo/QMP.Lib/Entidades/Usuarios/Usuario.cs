@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
 using System.Collections.Generic;
 
@@ -23,6 +24,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         public Atuendo ObtenerAtuendo(string guardarropa)
         {
             return this.Guardarropas.Find(g => g.Id.Equals(guardarropa)).ObtenerAtuendo();
+        }
+
+        public List<Atuendo> ObtenerAtuendosEvento(Evento evento)
+        {
+            return evento.ObtenerAtuendos(this.Guardarropas);
         }
 
         public void AgregarPrenda(string guardarropa, Prenda prenda)

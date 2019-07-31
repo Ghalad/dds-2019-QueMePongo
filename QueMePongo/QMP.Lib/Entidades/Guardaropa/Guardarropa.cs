@@ -24,6 +24,24 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             this.Prendas = new List<Prenda>();
         }
 
+        internal List<Atuendo> ObtenerAtuendosTemperatura(decimal temperatura)
+        {
+            if (temperatura < 11)
+            {
+                CombinarPrendas(6);
+            }
+            else if (temperatura < 17)
+            {
+                CombinarPrendas(5);
+            }
+            else
+            {
+                CombinarPrendasVersion2(4);
+            }
+
+            return this.Atuendos;
+        }
+
 
         /// <summary>
         /// Obtiene un <see cref="Atuendo"/> que no haya sido usado antes
@@ -74,7 +92,28 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
                     atuendo.AgregarPrenda(seleccion);
                 this.Atuendos.Add(atuendo);
             }
+
         }
+
+        private void CombinarPrendasVersion2(int n)
+        {
+            Atuendo atuendo;
+            this.Atuendos = new List<Atuendo>();
+
+            while(n!=0){
+
+                foreach (var row in new Combinaciones.Combinaciones(this.Prendas.Count, n).GetRows())
+                {
+                    atuendo = new Atuendo();
+                    foreach (var seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
+                        atuendo.AgregarPrenda(seleccion);
+                    this.Atuendos.Add(atuendo);
+                }
+
+                n = n-1;
+            }
+        }
+
 
         /// <summary>
         /// Genera <see cref="Atuendo"/>s con un numero fijo de <see cref="Prenda"/>s
