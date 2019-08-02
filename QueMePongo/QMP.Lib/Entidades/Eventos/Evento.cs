@@ -14,7 +14,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
 
         internal List<Atuendo> ObtenerAtuendos(List<Guardarropa> guardarropas)
         {
-            WeatherServiceAdapter clima = new OpenWeatherService("AR", "Bu2enos Aires");
+            WeatherService clima = new WeatherService("AR", "Bu2enos Aires");
             decimal temperatura = clima.ObtenerTemperatura();
 
             List<Atuendo> atuendoAux = new List<Atuendo>();
