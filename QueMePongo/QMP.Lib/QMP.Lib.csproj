@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,7 +57,8 @@
     <Compile Include="Entidades\Atuendos\PrendaBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Tipos.cs" />
     <Compile Include="Entidades\Clima\ApiUxInfo.cs" />
-    <Compile Include="Entidades\Clima\ApiXuService.cs" />
+    <Compile Include="Entidades\Clima\ApiUxService.cs" />
+    <Compile Include="Entidades\Clima\WeatherService.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceAdapter.cs" />
     <Compile Include="Entidades\Eventos\Evento.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherService.cs" />
@@ -66,15 +68,17 @@
     <Compile Include="Entidades\Reglas\Condiciones\CondicionComparacion.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionMultiple.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionSuperpuesto.cs" />
-    <Compile Include="Entidades\Reglas\Condiciones\CondicionUnitaria.cs" />
     <Compile Include="Entidades\Reglas\Operadores\Operador.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorIgual.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorMayor.cs" />
+    <Compile Include="Entidades\Reglas\Operadores\OperadorMayorIgual.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorMenor.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\Condicion.cs" />
     <Compile Include="Entidades\Guardaropa\Guardarropa.cs" />
     <Compile Include="Entidades\Atuendos\Prenda.cs" />
+    <Compile Include="Entidades\Reglas\Operadores\OperadorMenorIgual.cs" />
     <Compile Include="Entidades\Reglas\Regla.cs" />
+    <Compile Include="Entidades\Sistema\QueMePongo.cs" />
     <Compile Include="Entidades\Usuarios\UsrGratis.cs" />
     <Compile Include="Entidades\Usuarios\UsrPremium.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />

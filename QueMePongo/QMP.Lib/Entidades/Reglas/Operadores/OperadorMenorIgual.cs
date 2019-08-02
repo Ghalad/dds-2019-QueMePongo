@@ -1,17 +1,17 @@
 ﻿namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores
 {
-    public class OperadorIgual : Operador
+    public class OperadorMenorIgual : Operador
     {
         public int ValorReferencia { get; set; }
 
-        public OperadorIgual(int valorReferencia)
+        public OperadorMenorIgual(int valorReferencia)
         {
             this.ValorReferencia = valorReferencia;
         }
 
         public bool Resolver(int valor)
         {
-            if (valor == this.ValorReferencia)
+            if (valor <= this.ValorReferencia)
                 return true; // Atuendo INVALIDO
             else
                 return false; // Atuendo VALIDO

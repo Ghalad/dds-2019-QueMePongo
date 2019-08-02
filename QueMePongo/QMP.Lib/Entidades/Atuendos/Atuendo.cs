@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -17,13 +16,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
         public void AgregarPrenda(Prenda prenda)
         {
-            if (this.Prendas.Count == 0)
+            if (prenda != null)
+            {
                 this.Prendas.Add(prenda);
-            else if (!this.Prendas.Any<Prenda>(p => p.EsLaMisma(prenda)))
-                this.Prendas.Add(prenda);
+            }
         }
 
-        public bool TienePrenda(Prenda prenda)
+        public int CantidadDePrendas()
+        {
+            return this.Prendas.Count;
+        }
+
+        /*public bool TienePrenda(Prenda prenda)
         {
             foreach(Prenda p in this.Prendas)
                 if (p.EsLaMisma(prenda))
@@ -37,6 +41,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 if (!atuendo.TienePrenda(prenda))
                     return false;
             return true;
-        }
+        }*/
     }
 }

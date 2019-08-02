@@ -60,6 +60,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "ZAPATO_TACO_BAJO"));
             this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "ZAPATILLA_DE_CORRER"));
             this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "ZAPATILLA_DE_TREKING"));
+            this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "SLIP_ON"));
             this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "OJOTAS"));
 
             this.Caracteristicas.Add(new Caracteristica("TIPO", "GORRA"));
@@ -79,6 +80,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATO_TACO_BAJO"));
             this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATILLA_DE_CORRER"));
             this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATILLA_DE_TREKING"));
+            this.Caracteristicas.Add(new Caracteristica("TIPO", "SLIP_ON"));
             this.Caracteristicas.Add(new Caracteristica("TIPO", "OJOTAS"));
 
             this.Superposiones.Add(new Caracteristica("GORRA",                "1"));
@@ -98,6 +100,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Superposiones.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "2"));
             this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "2"));
             this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "2"));
+            this.Superposiones.Add(new Caracteristica("SLIP_ON",              "2"));
             this.Superposiones.Add(new Caracteristica("OJOTAS",               "2"));
 
             this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "1"));
@@ -111,12 +114,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(new Caracteristica("MATERIAL", "CORDEROY"));
             this.Caracteristicas.Add(new Caracteristica("MATERIAL", "JEAN"));
             this.Caracteristicas.Add(new Caracteristica("MATERIAL", "GOMA"));
+            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "LANA"));
+            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "POLIESTER"));
 
             this.Caracteristicas.Add(new Caracteristica("COLOR", "NEGRO"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "BLANCO"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "ROJO"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "VERDE"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "GRIS"));
             this.Caracteristicas.Add(new Caracteristica("COLOR", "AZUL"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "VERDE"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "VIOLETA"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "ROJO"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "NARANJA"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "AMARILLO"));
+            this.Caracteristicas.Add(new Caracteristica("COLOR", "BLANCO"));
 
             this.Caracteristicas.Add(new Caracteristica("EVENTO", "TRABAJO"));
             this.Caracteristicas.Add(new Caracteristica("EVENTO", "SALIDA_AMIGOS"));
@@ -124,7 +133,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(new Caracteristica("EVENTO", "CASAMIENTO"));
         }
 
-        internal bool ValidarCategoria(string categoria, string tipo)
+        public bool ValidarCategoria(string categoria, string tipo)
         {
             if (tipo == null) return true;
             foreach (Caracteristica c in this.CategoriaxTipo)
@@ -133,7 +142,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return false;
         }
 
-        internal bool ValidarTipo(string tipo, string categoria)
+        public bool ValidarTipo(string tipo, string categoria)
         {
             if (categoria == null) return true;
             foreach (Caracteristica c in this.CategoriaxTipo)

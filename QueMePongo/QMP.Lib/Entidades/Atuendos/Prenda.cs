@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
     public class Prenda
     {
         private List<Caracteristica> Caracteristicas { get; set; }
-        public byte[] Foto { get; set; }
+        private Bitmap Foto { get; set; }
 
         public Prenda()
         {
@@ -22,13 +23,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return;
             this.Caracteristicas.Add(caracteristica);
         }
-
         public void AgregarCaracteristica(string clave, string valor)
         {
             foreach (Caracteristica c in this.Caracteristicas)
-                if (c.EsLaMisma(clave.ToUpper(), valor.ToUpper()))
+                if (c.EsLaMisma(clave, valor))
                     return;
-            this.Caracteristicas.Add(new Caracteristica(clave.ToUpper(), valor.ToUpper()));
+            this.Caracteristicas.Add(new Caracteristica(clave, valor));
+        }
+        public void AgregarImagen(Bitmap imagen)
+        {
+            if (imagen != null)
+            {
+                this.Foto = imagen;
+            }
         }
 
 
@@ -40,19 +47,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
-
         public bool TieneCaracteristica(string clave, string valor)
         {
             foreach (Caracteristica c in this.Caracteristicas)
-                if (c.EsLaMisma(clave.ToUpper(), valor.ToUpper()))
+                if (c.EsLaMisma(clave, valor))
                     return true;
             return false;
         }
-
         public bool TieneCaracteristica(string clave)
         {
             foreach (Caracteristica c in this.Caracteristicas)
-                if (c.EsLaMismaClave(clave.ToUpper()))
+                if (c.EsLaMismaClave(clave))
                     return true;
             return false;
         }
@@ -94,12 +99,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public int NumeroSuperposicion()
         {
             foreach(Caracteristica c in Caracteristicas)
-            {
                 if (c.EsLaMismaClave("superposicion"))
-                {
                     return Convert.ToInt32(c.Valor);
-                }
-            }
 
             return -1;
         }

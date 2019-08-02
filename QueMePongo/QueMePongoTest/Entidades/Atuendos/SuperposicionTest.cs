@@ -10,84 +10,73 @@ namespace Ar.UTN.QMP.Test.Entidades.Atuendos
     [TestClass]
     public class SuperposicionTest
     {
-        Atuendo atuendo1;
-        Regla regla1;
-        Prenda prenda1, prenda2;
+        Atuendo a1;
+        Regla r1;
+        Prenda p1, p2;
         PrendaBuilder pb;
 
         [TestInitialize]
         public void Initialize()
         {
             this.pb = new PrendaBuilder();
-            this.atuendo1 = new Atuendo();
-            this.regla1 = new Regla();
+            this.a1 = new Atuendo();
+            this.r1 = new Regla("R1");
         }
 
         [TestMethod]
         public void NumeroSuperposicion()
         {
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("Categoria", "superior")
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
-                   .AgregarCaracteristica("material", "algodon")
-                   .AgregarCaracteristica("superposicion", "1");
-            prenda1 = pb.ObtenerPrenda();
+                .ConCategoria("superior")
+                .ConTipo("remera_manga_corta")
+                .ConMaterial("algodon");
+            this.p1 = pb.ObtenerPrenda();
 
-            Assert.AreEqual(1, prenda1.NumeroSuperposicion());
+            Assert.AreEqual(1, p1.NumeroSuperposicion());
         }
 
         [TestMethod]
         public void DistintaSuperposicion()
         {
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("Categoria", "superior")
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
-                   .AgregarCaracteristica("material", "algodon")
-                   .AgregarCaracteristica("superposicion", "1");
-            prenda1 = pb.ObtenerPrenda();
+                   .ConCategoria("superior")
+                   .ConTipo("remera_manga_corta")
+                   .ConMaterial("algodon");
+            a1.AgregarPrenda(pb.ObtenerPrenda());
 
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("Categoria", "superior")
-                   .AgregarCaracteristica("tipo", "camisa_manga_larga")
-                   .AgregarCaracteristica("material", "algodon")
-                   .AgregarCaracteristica("superposicion", "2");
-            prenda2 = pb.ObtenerPrenda();
-
-            atuendo1.AgregarPrenda(prenda1);
-            atuendo1.AgregarPrenda(prenda2);
+                   .ConCategoria("superior")
+                   .ConTipo("camisa_manga_larga")
+                   .ConMaterial("algodon");
+            a1.AgregarPrenda(pb.ObtenerPrenda());
 
             CondicionSuperpuesto c = new CondicionSuperpuesto();
 
-            regla1.AgregarCondicion(c);
+            r1.AgregarCondicion(c);
 
-            Assert.IsTrue(regla1.Validar(atuendo1));
+            Assert.IsTrue(r1.Validar(a1));
         }
 
         [TestMethod]
         public void MismaSuperposicion()
         {
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("Categoria", "superior")
-                   .AgregarCaracteristica("tipo", "remera_manga_corta")
-                   .AgregarCaracteristica("material", "algodon")
-                   .AgregarCaracteristica("superposicion", "1");
-            prenda1 = pb.ObtenerPrenda();
+                   .ConCategoria("superior")
+                   .ConTipo("remera_manga_corta")
+                   .ConMaterial("algodon");
+            a1.AgregarPrenda(pb.ObtenerPrenda());
 
             this.pb.CrearPrenda()
-                   .AgregarCaracteristica("Categoria", "superior")
-                   .AgregarCaracteristica("tipo", "remera_manga_larga")
-                   .AgregarCaracteristica("material", "hilo")
-                   .AgregarCaracteristica("superposicion", "1");
-            prenda2 = pb.ObtenerPrenda();
-
-            atuendo1.AgregarPrenda(prenda1);
-            atuendo1.AgregarPrenda(prenda2);
+                   .ConCategoria("superior")
+                   .ConTipo("remera_manga_larga")
+                   .ConMaterial("hilo");
+            a1.AgregarPrenda(pb.ObtenerPrenda());
 
             CondicionSuperpuesto c = new CondicionSuperpuesto();
 
-            regla1.AgregarCondicion(c);
+            r1.AgregarCondicion(c);
 
-            Assert.IsFalse(regla1.Validar(atuendo1));
+            Assert.IsFalse(r1.Validar(a1));
         }
     }
 }

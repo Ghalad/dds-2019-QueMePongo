@@ -5,8 +5,9 @@ using System.Net;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Clima
 {
-    public class ApiXuService : WeatherServiceAdapter
+    public class ApiUxService : WeatherServiceAdapter
     {
+        private static ApiUxService Instance { get; set; }
         private ApiUxInfo Data { get; set; }
         private string AppId { get; set; }  //"745e46f80f49463d88422016192806";
         private string Ciudad { get; set; } //"Buenos Aires";
@@ -17,20 +18,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
 
 
         #region CONSTRUCTOR
-        public ApiXuService(string pais, string ciudad)
+        public static ApiUxService GetInstance()
         {
-            if (pais != null && ciudad != null)
-            {
-                this.AppId = "745e46f80f49463d88422016192806";
-                this.Ciudad = ciudad;
-                this.CiudadAnterior = this.Ciudad;
-                this.Pais = pais;
-                this.Url = string.Format("http://api.apixu.com/v1/current.json?key={0}&q={1},{2}", this.AppId, this.Ciudad, this.Pais);
-            }
-            else
-            {
-                throw new Exception();
-            }
+            if (Instance == null) Instance = new ApiUxService();
+            return Instance;
+        }
+
+        private ApiUxService()
+        {
+            this.AppId = "745e46f80f49463d88422016192806";
         }
         #endregion CONSTRUCTOR
 
@@ -48,50 +44,26 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
             }
             else
             {
-                throw new Exception();
+                throw new Exception("Pais o ciudad invalidos");
             }
         }
 
         public decimal ObtenerHumedad()
         {
             this.RefrescarSiDatosObsoletos();
-            try
-            {
-                return Decimal.Parse(this.Data.Current.Humidity);
-            }
-            catch
-            {
-                //TODO MANEJO DE EXCEPCIONES
-                throw new InvalidCastException();
-            }
+            return Decimal.Parse(this.Data.Current.Humidity);
         }
 
         public decimal ObtenerPresion()
         {
             this.RefrescarSiDatosObsoletos();
-            try
-            {
-                return Decimal.Parse(this.Data.Current.Pressure_mb);
-            }
-            catch
-            {
-                //TODO MANEJO DE EXCEPCIONES
-                throw new InvalidCastException();
-            }
+            return Decimal.Parse(this.Data.Current.Pressure_mb);
         }
 
         public decimal ObtenerTemperatura()
         {
             this.RefrescarSiDatosObsoletos();
-            try
-            {
-                return Decimal.Parse(this.Data.Current.Temp_c);
-            }
-            catch
-            {
-                //TODO MANEJO DE EXCEPCIONES
-                throw new InvalidCastException();
-            }
+            return Decimal.Parse(this.Data.Current.Temp_c);
         }
         #endregion PUBLICO
 

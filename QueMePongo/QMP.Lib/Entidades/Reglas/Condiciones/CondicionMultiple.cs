@@ -38,7 +38,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
                     return true; // Atuendo INVALIDO
             }
 
-            return false;
+            return false;  // Atuendo VALIDO
         }
     }
 }

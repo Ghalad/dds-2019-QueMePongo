@@ -8,7 +8,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima.Tests
         [TestMethod()]
         public void ObtenerTemperaturaOpenWeatherTest()
         {
-            WeatherServiceAdapter clima = new OpenWeatherService("AR", "Bu2enos Aires");
+            WeatherServiceAdapter clima = OpenWeatherService.GetInstance();
+            clima.SetCiudad("AR", "Buenos Aires");
             decimal temperatura = clima.ObtenerTemperatura();
             Assert.IsTrue(temperatura < 15);
         }
@@ -16,7 +17,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima.Tests
         [TestMethod()]
         public void ObtenerTemperaturaApiUxTest()
         {
-            WeatherServiceAdapter clima = new ApiXuService("AR", "mer1lo");
+            WeatherServiceAdapter clima = ApiUxService.GetInstance();
+            clima.SetCiudad("AR", "merlo");
             decimal temperatura = clima.ObtenerTemperatura();
             Assert.IsTrue(temperatura < 15);
         }

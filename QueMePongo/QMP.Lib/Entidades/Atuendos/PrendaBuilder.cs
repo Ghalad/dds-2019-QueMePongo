@@ -1,4 +1,7 @@
-﻿namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
+﻿using System;
+using System.Drawing;
+
+namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
     public class PrendaBuilder
     {
@@ -15,6 +18,7 @@
             return this.Prenda;
         }
 
+        [Obsolete("Metodo obsoleto, Utilizar especificos 'ConCategoria, ConTipo, ConMaterial, etc...'")]
         public PrendaBuilder AgregarCaracteristica(string clave, string valor)
         {
             if (this.Prenda != null && Tipos.GetInstance().ExisteCaracteristica(clave, valor))
@@ -54,24 +58,24 @@
 
         public PrendaBuilder ConCategoria(string categoria)
         {
-            string car = "CATEGORIA";
+            string clave = "CATEGORIA";
 
             if (this.Prenda != null)
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(car, categoria.ToUpper()))
+                if (Tipos.GetInstance().ExisteCaracteristica(clave, categoria.ToUpper()))
                 {
-                    if(!this.Prenda.TieneCaracteristica(car))
+                    if(!this.Prenda.TieneCaracteristica(clave))
                     {
                         if (this.Prenda.TieneCaracteristica("TIPO"))
                         {
                             if (this.CorrespondeCategoriaTipo(categoria.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
                             {
-                                this.Prenda.AgregarCaracteristica(car, categoria.ToUpper());
+                                this.Prenda.AgregarCaracteristica(clave, categoria.ToUpper());
                             }
                         }
                         else
                         {
-                            this.Prenda.AgregarCaracteristica(car, categoria.ToUpper());
+                            this.Prenda.AgregarCaracteristica(clave, categoria.ToUpper());
                         }
                     }
                 }
@@ -82,26 +86,26 @@
 
         public PrendaBuilder ConTipo(string tipo)
         {
-            string car = "TIPO";
+            string clave = "TIPO";
 
             if (this.Prenda != null)
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(car, tipo.ToUpper()))
+                if (Tipos.GetInstance().ExisteCaracteristica(clave, tipo.ToUpper()))
                 {
-                    if (!this.Prenda.TieneCaracteristica(car))
+                    if (!this.Prenda.TieneCaracteristica(clave))
                     {
                         if (this.Prenda.TieneCaracteristica("CATEGORIA"))
                         {
                             if (this.CorrespondeCategoriaTipo(this.Prenda.ObtenerCaracteristica("CATEGORIA"), tipo.ToUpper()))
                             {
-                                this.Prenda.AgregarCaracteristica(car, tipo.ToUpper());
-                                this.Prenda.AgregarCaracteristica("SUPERPOCICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
+                                this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
+                                this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
                             }
                         }
                         else
                         {
-                            this.Prenda.AgregarCaracteristica(car, tipo.ToUpper());
-                            this.Prenda.AgregarCaracteristica("SUPERPOCICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
+                            this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
+                            this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
                         }
                     }
                 }
@@ -112,15 +116,15 @@
 
         public PrendaBuilder ConMaterial(string material)
         {
-            string car = "MATERIAL";
+            string clave = "MATERIAL";
 
             if (this.Prenda != null)
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(car, material.ToUpper()))
+                if (Tipos.GetInstance().ExisteCaracteristica(clave, material.ToUpper()))
                 {
-                    if (!this.Prenda.TieneCaracteristica(car))
+                    if (!this.Prenda.TieneCaracteristica(clave))
                     {
-                        this.Prenda.AgregarCaracteristica(car, material.ToUpper());
+                        this.Prenda.AgregarCaracteristica(clave, material.ToUpper());
                     }
                 }
             }
@@ -129,21 +133,21 @@
 
         public PrendaBuilder ConColor(string color)
         {
-            string car = "COLOR";
+            string clave = "COLOR";
 
             if (this.Prenda != null)
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(car, color.ToUpper()))
+                if (Tipos.GetInstance().ExisteCaracteristica(clave, color.ToUpper()))
                 {
-                    if (!this.Prenda.TieneCaracteristica(car))
+                    if (!this.Prenda.TieneCaracteristica(clave))
                     {
                         // color primario
-                        this.Prenda.AgregarCaracteristica(car, color.ToUpper());
+                        this.Prenda.AgregarCaracteristica(clave, color.ToUpper());
                     }
-                    else if (this.Prenda.CantidadDeCaracteristica(car) < 2)
+                    else if (this.Prenda.CantidadDeCaracteristica(clave) < 2)
                     {
                         // color secundario
-                        this.Prenda.AgregarCaracteristica(car, color.ToUpper());
+                        this.Prenda.AgregarCaracteristica(clave, color.ToUpper());
                     }
                 }
             }
@@ -152,16 +156,45 @@
 
         public PrendaBuilder ConEvento(string evento)
         {
-            string car = "EVENTO";
+            string clave = "EVENTO";
 
             if (this.Prenda != null)
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(car, evento.ToUpper()))
+                if (Tipos.GetInstance().ExisteCaracteristica(clave, evento.ToUpper()))
                 {
-                    if (!this.Prenda.TieneCaracteristica(car, evento.ToUpper()))
+                    if (!this.Prenda.TieneCaracteristica(clave, evento.ToUpper()))
                     {
-                        this.Prenda.AgregarCaracteristica(car, evento.ToUpper());
+                        this.Prenda.AgregarCaracteristica(clave, evento.ToUpper());
                     }
+                }
+            }
+
+            return this;
+        }
+
+        public PrendaBuilder ConFoto(Bitmap imagen)
+        {
+            /*
+             * FromFile
+             * There are two direct ways to read an image file and load it into either a Bitmap or Image. Behold the C# code:
+             * A) Image myImg = Image.FromFile("path here");
+             * B) Bitmap myBmp = Bitmap.FromFile("path here");
+             * 
+             * Alternatively a Bitmap object can also be loaded with:
+             * C)Bitmap myBmp = new Bitmap("path here");
+             * The code above does not work with Image objects though, so it is best to stick with FromFile.
+             * 
+             * Dialog Box
+             * Finally, to write an application that loads an image from a file, your C# program needs a dialogbox to select files. Using the .Net OpenFileDialog is simple enough.
+             * Just apply the image-loading code to the Filename chosen by the user, so for example:
+             * D)Bitmap loadedBitmap = Bitmap.FromFile(openFileDialog1.Filename);
+             * */
+
+            if (this.Prenda != null)
+            {
+                 if (imagen != null)
+                {
+                    this.Prenda.AgregarImagen(imagen);
                 }
             }
 

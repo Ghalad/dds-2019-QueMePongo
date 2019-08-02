@@ -7,6 +7,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
 {
     public class OpenWeatherService : WeatherServiceAdapter
     {
+        private static OpenWeatherService Instance { get; set; }
         private OpenWeatherInfo Data { get; set; }
         private string AppId { get; set; }  //"8ed5caa2f1d3f297ff245132e0235d16";
         private string Ciudad { get; set; } //"Buenos Aires";
@@ -17,20 +18,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
 
 
         #region CONSTRUCTOR
-        public OpenWeatherService(string pais, string ciudad)
+        public static OpenWeatherService GetInstance()
         {
-            if (pais != null && ciudad != null)
-            {
-                this.AppId = "8ed5caa2f1d3f297ff245132e0235d16";
-                this.Ciudad = ciudad;
-                this.CiudadAnterior = this.Ciudad;
-                this.Pais = pais;
-                this.Url = string.Format("http://api.openweathermap.org/data/2.5/weather?q={0},{1}&mode=json&units=metric&APPID={2}", this.Ciudad, this.Pais, this.AppId);
-            }
-            else
-            {
-                throw new Exception("Debe definir el pais y la ciudad");
-            }
+            if (Instance == null) Instance = new OpenWeatherService();
+            return Instance;
+        }
+
+        private OpenWeatherService()
+        {
+            this.AppId = "8ed5caa2f1d3f297ff245132e0235d16";
         }
         #endregion CONSTRUCTOR
 
@@ -48,7 +44,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
             }
             else
             {
-                throw new Exception("Debe definir el pais y la ciudad");
+                throw new Exception("Pais o ciudad invalidos");
             }
         }
 
@@ -56,43 +52,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         public decimal ObtenerHumedad()
         {
             this.RefrescarSiDatosObsoletos();
-            try
-            {
-                return Decimal.Parse(this.Data.Main.Humidity);
-            }
-            catch
-            {
-                //TODO MANEJO DE EXCEPCIONES
-                throw new InvalidCastException();
-            }
+            return Decimal.Parse(this.Data.Main.Humidity);
         }
 
         public decimal ObtenerPresion()
         {
             this.RefrescarSiDatosObsoletos();
-            try
-            {
-                return Decimal.Parse(this.Data.Main.Pressure);
-            }
-            catch
-            {
-                //TODO MANEJO DE EXCEPCIONES
-                throw new InvalidCastException();
-            }
+            return Decimal.Parse(this.Data.Main.Pressure);
         }
 
         public decimal ObtenerTemperatura()
         {
             this.RefrescarSiDatosObsoletos();
-            try
-            {
-                return Decimal.Parse(this.Data.Main.Temp);
-            }
-            catch
-            {
-                //TODO MANEJO DE EXCEPCIONES
-                throw new InvalidCastException();
-            }
+            return Decimal.Parse(this.Data.Main.Temp);
         }
         #endregion PUBLICO
 

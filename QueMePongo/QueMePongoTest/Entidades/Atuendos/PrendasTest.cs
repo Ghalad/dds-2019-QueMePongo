@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
 {

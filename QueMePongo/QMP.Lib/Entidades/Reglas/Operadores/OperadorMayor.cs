@@ -14,7 +14,7 @@
             if (valor > this.ValorReferencia)
                 return true; // Atuendo INVALIDO
             else
-                return false;
+                return false; // Atuendo VALIDO
         }
     }
 }

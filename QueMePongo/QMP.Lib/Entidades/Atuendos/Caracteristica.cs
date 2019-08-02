@@ -9,8 +9,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
         public Caracteristica(string clave, string valor)
         {
-            this.Clave = clave.ToUpper();
-            this.Valor = valor.ToUpper();
+            if(!string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
+            {
+                this.Clave = clave.ToUpper();
+                this.Valor = valor.ToUpper();
+            }
+            else
+            {
+                throw new Exception("No se puede instanciar una caracteristica con clave o valor nulos.");
+            }
         }
 
         public bool EsLaMisma(Caracteristica caracteristica)
@@ -22,17 +29,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
         public bool EsLaMisma(string clave, string valor)
         {
-            if (this.Clave.Equals(clave.ToUpper()) && this.Valor.Equals(valor.ToUpper()))
-                return true;
+            if (!string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
+                if (this.Clave.Equals(clave.ToUpper()) && this.Valor.Equals(valor.ToUpper()))
+                    return true;
             return false;
         }
 
         public bool EsLaMismaClave(string clave)
         {
-            if (this.Clave.Equals(clave.ToUpper()))
-                return true;
+            if (!string.IsNullOrWhiteSpace(clave))
+                if (this.Clave.Equals(clave.ToUpper()))
+                    return true;
             return false;
         }
-
     }
 }
