@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Drawing;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
 {
@@ -105,6 +107,35 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
             this.prenda1.AgregarCaracteristica(new Caracteristica("categoria", "superior"));
             this.prenda2.AgregarCaracteristica(new Caracteristica("categoria", "inferior"));
             Assert.IsFalse(this.prenda1.EsLaMisma(this.prenda2));
+        }
+
+
+
+
+
+        [TestMethod]
+        public void ImagenesTest()
+        {
+            // https://jwcooney.com/2014/01/31/c-example-code-to-save-and-resize-images-from-your-database-to-a-system-folder/
+
+            // La imagen se toma y se guarda la pc cliente. Pero la implementacion real solcita al usuario una imagen y la almacena ne la base de datos
+            string rutaImagen = @"C:\Users\guido\Source\Repos\dds-2019-QueMePongo\imagenOriginal.jpg";
+            string rutaDestino = @"C:\Users\guido\Source\Repos\dds-2019-QueMePongo\imagenNormalizada.jpg";
+
+            Image tmpOriginalImage = Image.FromFile(rutaImagen);
+
+            double dblScaleImg = (double)1920 / (double)tmpOriginalImage.Width;
+
+            Graphics tmpGraphics = default(Graphics);
+            Bitmap tmpResizedImage = new Bitmap(Convert.ToInt32(dblScaleImg * tmpOriginalImage.Width), Convert.ToInt32(dblScaleImg * tmpOriginalImage.Height));
+            tmpGraphics = Graphics.FromImage(tmpResizedImage);
+
+            tmpGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+
+            tmpGraphics.DrawImage(tmpOriginalImage, 0, 0, tmpResizedImage.Width + 1, tmpResizedImage.Height + 1);
+
+            Image imageOut = tmpResizedImage;
+            imageOut.Save(rutaDestino, System.Drawing.Imaging.ImageFormat.Jpeg);
         }
     }
 }

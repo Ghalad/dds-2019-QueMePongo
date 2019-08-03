@@ -172,24 +172,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return this;
         }
 
-        public PrendaBuilder ConFoto(Bitmap imagen)
+        public PrendaBuilder ConFoto(Image imagen)
         {
-            /*
-             * FromFile
-             * There are two direct ways to read an image file and load it into either a Bitmap or Image. Behold the C# code:
-             * A) Image myImg = Image.FromFile("path here");
-             * B) Bitmap myBmp = Bitmap.FromFile("path here");
-             * 
-             * Alternatively a Bitmap object can also be loaded with:
-             * C)Bitmap myBmp = new Bitmap("path here");
-             * The code above does not work with Image objects though, so it is best to stick with FromFile.
-             * 
-             * Dialog Box
-             * Finally, to write an application that loads an image from a file, your C# program needs a dialogbox to select files. Using the .Net OpenFileDialog is simple enough.
-             * Just apply the image-loading code to the Filename chosen by the user, so for example:
-             * D)Bitmap loadedBitmap = Bitmap.FromFile(openFileDialog1.Filename);
-             * */
-
             if (this.Prenda != null)
             {
                  if (imagen != null)

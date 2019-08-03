@@ -7,7 +7,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     public class Prenda
     {
         private List<Caracteristica> Caracteristicas { get; set; }
-        private Bitmap Foto { get; set; }
+        private Image Foto { get; set; }
+        private static int SCALE_IMAGEN = 140;
 
         public Prenda()
         {
@@ -30,11 +31,26 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return;
             this.Caracteristicas.Add(new Caracteristica(clave, valor));
         }
-        public void AgregarImagen(Bitmap imagen)
+        public void AgregarImagen(Image imagen)
         {
             if (imagen != null)
             {
-                this.Foto = imagen;
+                #region NORMALIZACION
+                try
+                {
+                    double escala = (double)SCALE_IMAGEN / (double)imagen.Width;
+                    Graphics tmpGraphics = default(Graphics);
+                    Bitmap tmpResizedImage = new Bitmap(Convert.ToInt32(escala * imagen.Width), Convert.ToInt32(escala * imagen.Height));
+                    tmpGraphics = Graphics.FromImage(tmpResizedImage);
+                    tmpGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+                    tmpGraphics.DrawImage(imagen, 0, 0, tmpResizedImage.Width + 1, tmpResizedImage.Height + 1);
+                    this.Foto = tmpResizedImage;
+                }
+                catch
+                {
+                    //TODO manejo de excepciones
+                }
+                #endregion NORMALIZACION
             }
         }
 

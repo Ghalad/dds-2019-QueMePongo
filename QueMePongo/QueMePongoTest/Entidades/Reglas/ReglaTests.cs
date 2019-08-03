@@ -21,7 +21,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
         }
 
 
-        [TestMethod()]
+        [TestMethod]
         public void ReglaParaValidarSuperposicion_1()
         {
             #region ATUENDO
@@ -98,7 +98,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
             Assert.IsTrue(regla.Validar(this.atuendo));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReglaParaValidarSuperposicion_2()
         {
             #region ATUENDO
@@ -175,7 +175,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
             Assert.IsFalse(this.regla.Validar(this.atuendo));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReglaParaValidarAtuendoInvalido_1()
         {
             #region ATUENDO
@@ -208,7 +208,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
             Assert.IsFalse(this.regla.Validar(this.atuendo));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReglaParaValidarAtuendoSinCalzado()
         {
             #region ATUENDO
@@ -231,7 +231,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
             Assert.IsFalse(this.regla.Validar(this.atuendo));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReglaParaValidarAtuendoConMasDeUnCalzado()
         {
             #region ATUENDO
