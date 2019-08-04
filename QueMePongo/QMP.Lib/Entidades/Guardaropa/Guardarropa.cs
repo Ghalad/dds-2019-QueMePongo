@@ -95,7 +95,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
 
         }
 
-        private void CombinarPrendasVersion2(int n)
+        public void CombinarPrendasVersion2(int n)
         {
             Atuendo atuendo;
             this.Atuendos = new List<Atuendo>();

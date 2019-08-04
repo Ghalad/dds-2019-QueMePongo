@@ -22,6 +22,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             }
         }
 
+
         public int CantidadDePrendas()
         {
             return this.Prendas.Count;
