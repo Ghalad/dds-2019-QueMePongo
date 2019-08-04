@@ -6,9 +6,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
     public class Prenda
     {
+        private static int SCALE_IMAGEN = 140;
         private List<Caracteristica> Caracteristicas { get; set; }
         private Image Foto { get; set; }
-        private static int SCALE_IMAGEN = 140;
 
         public Prenda()
         {

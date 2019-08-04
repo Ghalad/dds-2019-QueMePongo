@@ -9,8 +9,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
     {
         public List<Guardarropa> Guardarropas { get; set; }
         private int Maximo { get; set; }
+        public string Id { get; set; }
 
-        public Usuario(int maximo)
+        protected Usuario(int maximo)
         {
             this.Guardarropas = new List<Guardarropa>();
             this.Maximo = maximo;
@@ -35,6 +36,5 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             this.Guardarropas.Find(g => g.Id.Equals(guardarropa)).AgregarPrenda(prenda);
         }
-        
     }
 }

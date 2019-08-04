@@ -3,15 +3,3 @@ key   = 8ed5caa2f1d3f297ff245132e0235d16
 Sample= http://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires,AR&mode=json&units=metric&APPID=8ed5caa2f1d3f297ff245132e0235d16
 doc   = https://openweathermap.org/current#current_JSON
         https://openweathermap.org/weather-conditions
-
-
-switch (webResp.StatusCode)
-{
-case HttpStatusCode.NotFound: // 404
-break;
-case HttpStatusCode.InternalServerError: // 500
-break;
-default:
-break;
-}
-}

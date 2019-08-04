@@ -125,13 +125,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
         }
 
         /// <summary>
-        /// Genera <see cref="Atuendo"/>s con un numero aleatorio de <see cref="Prenda"/>s
+        /// Genera atuendos con un numero aleatorio de Prendas
         /// </summary>
         public void GenerarCombinacionesDePrendas()
         {
             this.CombinarPrendas((new Random()).Next());
         }
 
+
+        /// <summary>
+        /// Agrega Prendas al guardarropas.
+        /// Si el guardarropas pertenece a un usuario Gratuito, agregara la prenda siempre y cuando tenga cupo.
+        /// </summary>
+        /// <param name="prenda"></param>
         public void AgregarPrenda(Prenda prenda)
         {
             if (this.MaximoPrendas == 0)
