@@ -60,6 +60,7 @@
     <Compile Include="Entidades\Clima\ApiUxService.cs" />
     <Compile Include="Entidades\Clima\WeatherService.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceAdapter.cs" />
+    <Compile Include="Entidades\Core\AtuendosGestor.cs" />
     <Compile Include="Entidades\Core\Pedido.cs" />
     <Compile Include="Entidades\Eventos\Evento.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherService.cs" />
