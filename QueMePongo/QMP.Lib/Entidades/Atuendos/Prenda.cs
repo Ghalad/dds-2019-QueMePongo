@@ -120,5 +120,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
             return -1;
         }
+        public void MostrarPorPantalla()
+        {
+            foreach (Caracteristica c in Caracteristicas)
+            {
+                if (c.GetClave() == "TIPO")
+                {
+                    Console.WriteLine(c.GetValor());
+                }
+            }
+        }
     }
 }

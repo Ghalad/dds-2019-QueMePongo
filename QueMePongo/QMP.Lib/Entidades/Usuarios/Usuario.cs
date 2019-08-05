@@ -58,6 +58,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
             else
                 throw new Exception("Regla requerida.");
         }
+        public List<Guardarropa> GetGuardarropas()
+        {
+            return Guardarropas;
+        }
 
     }
 }

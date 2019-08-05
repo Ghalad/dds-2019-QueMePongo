@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
@@ -13,6 +14,7 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
     [TestClass]
     public class EventoTest
     {
+        List<Atuendo> atuendos;
         Regla regla;
         List<Caracteristica> listaCar;
         Evento evento;
@@ -22,6 +24,7 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
         [TestInitialize]
         public void Initialize()
         {
+            this.atuendos = new List<Atuendo>();
             this.listaCar = new List<Caracteristica>();
             this.regla = new Regla();
             this.evento = new Evento("trabajo");
@@ -75,7 +78,7 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
 
             listaCar.Add(new Caracteristica("categoria", "calzado"));
             listaCar.Add(new Caracteristica("categoria", "inferior"));
-            
+
             //Como estoy teniendo problema con entender *todavia* las condiciones
             //voy a aclarar lo que ENTIENDO que hace cada condicion/lo que quiero que hagan
 
@@ -86,6 +89,15 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
             //invalida los atuendos superpuestos
             regla.AgregarCondicion(new CondicionSuperpuesto());
 
+            AtuendosGestor atg = AtuendosGestor.GetInstance();
+
+            atg.GenerarTodosLosAtuendosPosibles(usr);
+            atg.MostrarAtuendos(atuendos);
+            atg.FiltrarAtuendosRegla(regla);
+            atg.MostrarAtuendos(atuendos);
+            atg.FiltrarAtuendosTemperatura(14);
+
+           
             //Assert.AreEqual(1, this.usr.Guardarropas[0].ObtenerAtuendosTemperatura(6).Count);
 
             //este falla.. espero 4 porque las combinaciones posibles tendrían que ser 4 pero falla.. 

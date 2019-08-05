@@ -42,5 +42,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
+        public string GetClave()
+        {
+            return Clave.ToUpper();
+        }
+
+        public string GetValor()
+        {
+            return Valor.ToUpper();
+        }
+
+
     }
 }
