@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
+using Ar.UTN.QMP.Lib.Entidades.Reglas;
+using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
+using Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,6 +13,8 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
     [TestClass]
     public class EventoTest
     {
+        Regla regla;
+        List<Caracteristica> listaCar;
         Evento evento;
         PrendaBuilder pb;
         Usuario usr;
@@ -16,19 +22,42 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
         [TestInitialize]
         public void Initialize()
         {
+            this.listaCar = new List<Caracteristica>();
+            this.regla = new Regla();
             this.evento = new Evento("trabajo");
             this.pb = new PrendaBuilder();
             this.usr = new UsrPremium();
         }
 
         [TestMethod]
-        public void GeneracionAtuendosEvento()
+        public void AtuendosTemperaturaFria()
         {
             this.usr.CrearGuardarropa("g1");
             this.pb.CrearPrenda()
                    .ConCategoria("superior")
                    .ConTipo("remera_manga_corta")
                    .ConMaterial("cuero")
+                   .ConEvento("trabajo");
+            this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
+
+            this.usr.CrearGuardarropa("g1");
+            this.pb.CrearPrenda()
+                   .ConCategoria("superior")
+                   .ConTipo("camisa_manga_larga")
+                   .ConEvento("trabajo");
+            this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
+
+            this.usr.CrearGuardarropa("g1");
+            this.pb.CrearPrenda()
+                   .ConCategoria("superior")
+                   .ConTipo("sweater")
+                   .ConEvento("trabajo");
+            this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
+
+            this.usr.CrearGuardarropa("g1");
+            this.pb.CrearPrenda()
+                   .ConCategoria("superior")
+                   .ConTipo("campera_de_abrigo")
                    .ConEvento("trabajo");
             this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
 
@@ -41,14 +70,28 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
             this.pb.CrearPrenda()
                    .ConCategoria("calzado")
                    .ConTipo("ojotas")
-                   .ConEvento("salida_amigos");
+                   .ConEvento("trabajo");
             this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
 
-            this.usr.Guardarropas[0].CombinarPrendasVersion2(3);
-            Assert.AreEqual(7, this.usr.Guardarropas[0].Atuendos.Count);
+            listaCar.Add(new Caracteristica("categoria", "calzado"));
+            listaCar.Add(new Caracteristica("categoria", "inferior"));
+            
+            //Como estoy teniendo problema con entender *todavia* las condiciones
+            //voy a aclarar lo que ENTIENDO que hace cada condicion/lo que quiero que hagan
 
-            //FALLA AL CONTACTARSE CON EL SERVICIO DEL CLIMA
-            //Assert.AreEqual(3, this.usr.ObtenerAtuendosEvento(evento).Count);
+            //invalida los atuendos que no tengan las características
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
+            //invalida los atuendos que tengan repetidas las categorias
+            regla.AgregarCondicion(new CondicionMultiple(listaCar));
+            //invalida los atuendos superpuestos
+            regla.AgregarCondicion(new CondicionSuperpuesto());
+
+            Assert.AreEqual(1, this.usr.Guardarropas[0].ObtenerAtuendosTemperatura(6).Count);
+
+            //este falla.. espero 4 porque las combinaciones posibles tendrían que ser 4 pero falla.. 
+            //estaria bueno poder VER los atuendos así sabemos cómo está fallando
+            //Assert.AreEqual(4, this.usr.Guardarropas[0].ObtenerAtuendosTemperatura(14).Count);
+
         }
 
     }

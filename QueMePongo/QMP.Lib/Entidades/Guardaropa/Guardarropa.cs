@@ -24,15 +24,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
             this.Prendas = new List<Prenda>();
         }
 
-        internal List<Atuendo> ObtenerAtuendosTemperatura(decimal temperatura)
+        public List<Atuendo> ObtenerAtuendosTemperatura(decimal temperatura)
         {
             if (temperatura < 11)
             {
-                CombinarPrendas(6);
+                this.GenerarCombinacionesDePrendas(6);
             }
             else if (temperatura < 17)
             {
-                CombinarPrendas(5);
+                this.GenerarCombinacionesDePrendas(5);
             }
             else
             {
@@ -140,6 +140,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Guardaropa
                 this.Prendas.Add(prenda);
             else
                 throw new Exception("No se pueden agregar mas prendas");
+        }
+
+        public int CantidadPrendas()
+        {
+            return this.Prendas.Count;
         }
     }
 }
