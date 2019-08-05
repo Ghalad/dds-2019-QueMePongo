@@ -76,7 +76,7 @@
     <Compile Include="Entidades\Reglas\Operadores\OperadorMayorIgual.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorMenor.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\Condicion.cs" />
-    <Compile Include="Entidades\Guardaropa\Guardarropa.cs" />
+    <Compile Include="Entidades\Atuendos\Guardarropa.cs" />
     <Compile Include="Entidades\Atuendos\Prenda.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorMenorIgual.cs" />
     <Compile Include="Entidades\Reglas\Regla.cs" />

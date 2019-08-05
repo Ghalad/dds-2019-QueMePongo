@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Clima;
-using Ar.UTN.QMP.Lib.Entidades.Guardaropa;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores;
@@ -35,7 +34,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
             List<Atuendo> atuendoList = new List<Atuendo>();
             foreach (Guardarropa guardarropa in guardarropas)
             {
-                atuendoList = atuendoList.Concat(guardarropa.ObtenerAtuendosTemperatura(temperatura)).ToList();
+                //atuendoList = atuendoList.Concat(guardarropa.ObtenerAtuendosTemperatura(temperatura)).ToList();
             }
 
         #region FILTRAR ATUENDOS QUE NO COINCIDEN EL EVENTO

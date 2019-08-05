@@ -2,10 +2,8 @@
 {
     public class UsrPremium : Usuario
     {
-
         public UsrPremium() : base(0)
         {
-
         }
     }
 }

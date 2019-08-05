@@ -54,7 +54,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 try
                 {
                     pedido = NuevosPedidos.Dequeue();
-                    // Procesar pedido
+                    pedido.Resolver();
                     Console.WriteLine(string.Format("Pedido {0} atendido", pedido.Id));
                 }
                 catch (InvalidOperationException)

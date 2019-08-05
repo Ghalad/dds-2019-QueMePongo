@@ -17,7 +17,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Console.WriteLine("Main thread Start.");
             for (int i = 0; i < 10; i++)
             {
-                qmp.AgregarPedido(new Pedido(usr, i.ToString()));
+                //qmp.AgregarPedido(new Pedido(usr., i.ToString()));
                 Thread.Sleep(1000);
             }
 

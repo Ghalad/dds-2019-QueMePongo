@@ -4,7 +4,6 @@
     {
         public UsrGratis(int maximo) : base(maximo)
         {
-
         }
     }
 }
