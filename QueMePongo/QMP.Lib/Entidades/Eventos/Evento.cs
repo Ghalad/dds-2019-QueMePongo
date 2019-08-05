@@ -24,6 +24,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
             }
 
         }
+        public Caracteristica GetEstilo()
+        {
+            return Estilo;
+        }
 
         internal List<Atuendo> ObtenerAtuendos(List<Guardarropa> guardarropas)
         {

@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Clima;
+using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
+using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
+using Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
@@ -15,7 +19,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private static AtuendosGestor Instance { get; set; }
 
         #region CONSTRUCTOR
-        private AtuendosGestor() { }
+        private AtuendosGestor() { atuendos = new List<Atuendo>(); }
         public static AtuendosGestor GetInstance()
         {
             if (Instance == null) Instance = new AtuendosGestor();
@@ -23,8 +27,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
         #endregion CONSTRUCTOR
 
-        public void FiltrarAtuendosTemperatura(int temperatura)
+        public void FiltrarAtuendosTemperatura()
         {
+            WeatherServiceAdapter clima = OpenWeatherService.GetInstance();
+            clima.SetCiudad("AR", "Buenos Aires");
+            decimal temperatura = clima.ObtenerTemperatura();
+
             int minimoPrendas;
             int maximoPrendas;
             if (temperatura < 11)
@@ -51,7 +59,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 }
             }
         }
-
         public void FiltrarAtuendosRegla(Regla regla)
         {
             foreach (Atuendo a in this.atuendos)
@@ -62,8 +69,21 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 }
             }
         }
+        public void FiltrarAtuendosEvento(Evento evento)
+        {
+            Regla unaRegla = new Regla();
+            List<Caracteristica> listaCar = new List<Caracteristica>();
+            listaCar.Add(evento.GetEstilo());
+            unaRegla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
 
-        public void GenerarTodosLosAtuendosPosibles(Usuario usr)
+            this.FiltrarAtuendosRegla(unaRegla);
+        }
+
+        #region FILTRAR ATUENDOS QUE NO COINCIDEN EL EVENTO
+
+
+    #endregion
+    public void GenerarTodosLosAtuendosPosibles(Usuario usr)
         {
             Atuendo atuendo;
             List<Prenda> prendas;
@@ -88,8 +108,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 }
             }
         }
-
-        public void MostrarAtuendos(List<Atuendo> atuendos)
+        public void MostrarAtuendos()
         {
             int i = 1;
             foreach (Atuendo a in atuendos)

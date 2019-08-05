@@ -33,7 +33,7 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
         }
 
         [TestMethod]
-        public void AtuendosTemperaturaFria()
+        public void AtuendosTemperaturaMedia()
         {
             this.usr.CrearGuardarropa("g1");
             this.pb.CrearPrenda()
@@ -76,12 +76,20 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
                    .ConEvento("trabajo");
             this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
 
+            this.pb.CrearPrenda()
+                   .ConCategoria("calzado")
+                   .ConTipo("zapatilla_de_correr")
+                   .ConEvento("trabajo");
+            this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
+
             listaCar.Add(new Caracteristica("categoria", "calzado"));
             listaCar.Add(new Caracteristica("categoria", "inferior"));
 
             //Como estoy teniendo problema con entender *todavia* las condiciones
             //voy a aclarar lo que ENTIENDO que hace cada condicion/lo que quiero que hagan
 
+
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
             //invalida los atuendos que no tengan las características
             regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
             //invalida los atuendos que tengan repetidas las categorias
@@ -92,11 +100,12 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
             AtuendosGestor atg = AtuendosGestor.GetInstance();
 
             atg.GenerarTodosLosAtuendosPosibles(usr);
-            atg.MostrarAtuendos(atuendos);
+            //atg.MostrarAtuendos();
             atg.FiltrarAtuendosRegla(regla);
-            atg.MostrarAtuendos(atuendos);
-            atg.FiltrarAtuendosTemperatura(14);
+            atg.MostrarAtuendos();
+            //atg.FiltrarAtuendosTemperatura();
 
+            Assert.IsTrue(false);
            
             //Assert.AreEqual(1, this.usr.Guardarropas[0].ObtenerAtuendosTemperatura(6).Count);
 
