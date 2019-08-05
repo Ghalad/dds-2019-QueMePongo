@@ -27,12 +27,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
         #endregion CONSTRUCTOR
 
-        public void FiltrarAtuendosTemperatura() //próximamente recibe como parámetro la ciudad
+        public void FiltrarAtuendosTemperatura(decimal temperatura) //próximamente recibe como parámetro la ciudad
         {
-            WeatherServiceAdapter clima = OpenWeatherService.GetInstance();
-            clima.SetCiudad("AR", "Buenos Aires");
-            decimal temperatura = clima.ObtenerTemperatura();
-
             int minimoPrendas;
             int maximoPrendas;
             if (temperatura < 11)
@@ -76,6 +72,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             listaCar.Add(evento.GetEstilo());
             unaRegla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
 
+            WeatherServiceAdapter clima = OpenWeatherService.GetInstance();
+            clima.SetCiudad("AR", "Buenos Aires"); //la idea es que use la ciudad del evento
+            //clima.SetCiudad("AR", evento.GetCiudad());
+            decimal temperatura = clima.ObtenerTemperatura();
+
+            this.FiltrarAtuendosTemperatura(temperatura);
             this.FiltrarAtuendosRegla(unaRegla);
         }
         public void FiltrarAtuendosSuperpuestos()
