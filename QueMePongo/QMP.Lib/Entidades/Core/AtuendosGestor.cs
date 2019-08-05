@@ -27,7 +27,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
         #endregion CONSTRUCTOR
 
-        public void FiltrarAtuendosTemperatura()
+        public void FiltrarAtuendosTemperatura() //próximamente recibe como parámetro la ciudad
         {
             WeatherServiceAdapter clima = OpenWeatherService.GetInstance();
             clima.SetCiudad("AR", "Buenos Aires");
@@ -37,7 +37,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             int maximoPrendas;
             if (temperatura < 11)
             {
-                maximoPrendas = -1;
+                maximoPrendas = 9999;
                 minimoPrendas = 6;
             }
             else if (temperatura < 17)
@@ -61,9 +61,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
         public void FiltrarAtuendosRegla(Regla regla)
         {
-            foreach (Atuendo a in this.atuendos)
+            foreach (Atuendo a in this.atuendos.ToList())
             {
-                if (regla.Validar(a))
+                if (!regla.Validar(a))
                 {
                     this.atuendos.Remove(a);
                 }
@@ -78,12 +78,32 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.FiltrarAtuendosRegla(unaRegla);
         }
+        public void FiltrarAtuendosSuperpuestos()
+        {
+            Regla regla = new Regla();
+            List<Caracteristica> listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "1"));
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
 
-        #region FILTRAR ATUENDOS QUE NO COINCIDEN EL EVENTO
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "2"));
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
 
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "3"));
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
 
-    #endregion
-    public void GenerarTodosLosAtuendosPosibles(Usuario usr)
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "4"));
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+
+            this.FiltrarAtuendosRegla(regla);
+        }
+        public void GenerarTodosLosAtuendosPosibles(Usuario usr)
         {
             Atuendo atuendo;
             List<Prenda> prendas;

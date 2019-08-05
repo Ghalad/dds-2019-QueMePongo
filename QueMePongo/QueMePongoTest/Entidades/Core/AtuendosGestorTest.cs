@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Clima;
 using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
@@ -12,11 +13,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Ar.UTN.QMP.Test.Entidades.Eventos
 {
     [TestClass]
-    public class EventoTest
+    public class AtuendosGestorTest
     {
         List<Atuendo> atuendos;
         Regla regla;
         List<Caracteristica> listaCar;
+        List<Caracteristica> listaCar2;
         Evento evento;
         PrendaBuilder pb;
         Usuario usr;
@@ -26,6 +28,7 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
         {
             this.atuendos = new List<Atuendo>();
             this.listaCar = new List<Caracteristica>();
+            this.listaCar2 = new List<Caracteristica>();
             this.regla = new Regla();
             this.evento = new Evento("trabajo");
             this.pb = new PrendaBuilder();
@@ -33,8 +36,9 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
         }
 
         [TestMethod]
-        public void AtuendosTemperaturaMedia()
+        public void AtuendoNormal()
         {
+            #region ATUENDO
             this.usr.CrearGuardarropa("g1");
             this.pb.CrearPrenda()
                    .ConCategoria("superior")
@@ -46,7 +50,7 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
             this.usr.CrearGuardarropa("g1");
             this.pb.CrearPrenda()
                    .ConCategoria("superior")
-                   .ConTipo("camisa_manga_larga")
+                   .ConTipo("remera_manga_larga")
                    .ConEvento("trabajo");
             this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
 
@@ -81,39 +85,34 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
                    .ConTipo("zapatilla_de_correr")
                    .ConEvento("trabajo");
             this.usr.AgregarPrenda("g1", this.pb.ObtenerPrenda());
+            #endregion
 
+            //tiene que tener 1 calzado, 1 inferior y al menos 1 superior
+            #region REGLA
             listaCar.Add(new Caracteristica("categoria", "calzado"));
-            listaCar.Add(new Caracteristica("categoria", "inferior"));
-
-            //Como estoy teniendo problema con entender *todavia* las condiciones
-            //voy a aclarar lo que ENTIENDO que hace cada condicion/lo que quiero que hagan
-
-
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
-            //invalida los atuendos que no tengan las características
             regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
-            //invalida los atuendos que tengan repetidas las categorias
-            regla.AgregarCondicion(new CondicionMultiple(listaCar));
-            //invalida los atuendos superpuestos
-            regla.AgregarCondicion(new CondicionSuperpuesto());
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "inferior"));
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
+
+            #endregion
 
             AtuendosGestor atg = AtuendosGestor.GetInstance();
 
             atg.GenerarTodosLosAtuendosPosibles(usr);
-            //atg.MostrarAtuendos();
+            atg.FiltrarAtuendosSuperpuestos();
             atg.FiltrarAtuendosRegla(regla);
             atg.MostrarAtuendos();
             //atg.FiltrarAtuendosTemperatura();
 
-            Assert.IsTrue(false);
-           
-            //Assert.AreEqual(1, this.usr.Guardarropas[0].ObtenerAtuendosTemperatura(6).Count);
-
-            //este falla.. espero 4 porque las combinaciones posibles tendrían que ser 4 pero falla.. 
-            //estaria bueno poder VER los atuendos así sabemos cómo está fallando
-            //Assert.AreEqual(4, this.usr.Guardarropas[0].ObtenerAtuendosTemperatura(14).Count);
-
+            Assert.AreEqual(22, atg.ObtenerAtuendos().Count);
         }
-
     }
 }
