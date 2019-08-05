@@ -16,7 +16,7 @@ namespace Ar.UTN.QMP.Test.Entidades.Eventos
         [TestInitialize]
         public void Initialize()
         {
-            this.evento = new Evento("trabajo", "Buenos Aires", "lalalala lelelele");
+            this.evento = new Evento("trabajo");
             this.pb = new PrendaBuilder();
             this.usr = new UsrPremium();
         }

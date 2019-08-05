@@ -14,23 +14,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
     {
         public string Descripcion { get; set; }
         public DateTime Fecha { get; set; }
-        public string Ciudad { get; set; }
         public Caracteristica Estilo { get; set; }
 
-        public Evento (string estilo, string ciudad, string descripcion)
+        public Evento (string estilo)
         {
             string clave = "EVENTO";
-            if (!string.IsNullOrWhiteSpace(estilo) && Tipos.GetInstance().ExisteCaracteristica(clave, estilo.ToUpper()))
+            if (Tipos.GetInstance().ExisteCaracteristica(clave, estilo.ToUpper()))
             {
                 this.Estilo = new Caracteristica(clave, estilo);
-                this.Fecha = DateTime.Now;
-                this.Ciudad = ciudad.ToUpper();
-                this.Descripcion = descripcion;
-            }
-            else
-            {
-                //TODO definir manejo excepciones
-                throw new Exception("No es posble crear el evento solicitado");
             }
 
         }

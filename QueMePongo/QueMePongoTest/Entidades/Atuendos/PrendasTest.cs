@@ -124,7 +124,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
 
             Image tmpOriginalImage = Image.FromFile(rutaImagen);
 
-            double dblScaleImg = (double)140 / (double)tmpOriginalImage.Width;
+            double dblScaleImg = (double)1920 / (double)tmpOriginalImage.Width;
 
             Graphics tmpGraphics = default(Graphics);
             Bitmap tmpResizedImage = new Bitmap(Convert.ToInt32(dblScaleImg * tmpOriginalImage.Width), Convert.ToInt32(dblScaleImg * tmpOriginalImage.Height));

@@ -60,7 +60,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             string clave = "CATEGORIA";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(categoria))
+            if (this.Prenda != null)
             {
                 if (Tipos.GetInstance().ExisteCaracteristica(clave, categoria.ToUpper()))
                 {
@@ -88,7 +88,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             string clave = "TIPO";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(tipo))
+            if (this.Prenda != null)
             {
                 if (Tipos.GetInstance().ExisteCaracteristica(clave, tipo.ToUpper()))
                 {
@@ -118,7 +118,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             string clave = "MATERIAL";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(material))
+            if (this.Prenda != null)
             {
                 if (Tipos.GetInstance().ExisteCaracteristica(clave, material.ToUpper()))
                 {
@@ -135,7 +135,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             string clave = "COLOR";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(color))
+            if (this.Prenda != null)
             {
                 if (Tipos.GetInstance().ExisteCaracteristica(clave, color.ToUpper()))
                 {
@@ -158,7 +158,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             string clave = "EVENTO";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(evento))
+            if (this.Prenda != null)
             {
                 if (Tipos.GetInstance().ExisteCaracteristica(clave, evento.ToUpper()))
                 {
@@ -174,8 +174,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
         public PrendaBuilder ConFoto(Image imagen)
         {
-            if (this.Prenda != null && imagen != null)
+            if (this.Prenda != null)
+            {
+                 if (imagen != null)
+                {
                     this.Prenda.AgregarImagen(imagen);
+                }
+            }
 
             return this;
         }

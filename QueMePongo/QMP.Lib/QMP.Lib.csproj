@@ -60,13 +60,11 @@
     <Compile Include="Entidades\Clima\ApiUxService.cs" />
     <Compile Include="Entidades\Clima\WeatherService.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceAdapter.cs" />
-    <Compile Include="Entidades\Core\Pedido.cs" />
     <Compile Include="Entidades\Eventos\Evento.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherService.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherInfo.cs" />
     <Compile Include="Entidades\Combinaciones\Combinaciones.cs" />
     <Compile Include="Entidades\Combinaciones\Combinatoric.cs" />
-    <Compile Include="Entidades\Excepciones\ColaVacia.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionComparacion.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionMultiple.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionSuperpuesto.cs" />
@@ -80,7 +78,7 @@
     <Compile Include="Entidades\Atuendos\Prenda.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorMenorIgual.cs" />
     <Compile Include="Entidades\Reglas\Regla.cs" />
-    <Compile Include="Entidades\Core\QueMePongo.cs" />
+    <Compile Include="Entidades\Sistema\QueMePongo.cs" />
     <Compile Include="Entidades\Usuarios\UsrGratis.cs" />
     <Compile Include="Entidades\Usuarios\UsrPremium.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
