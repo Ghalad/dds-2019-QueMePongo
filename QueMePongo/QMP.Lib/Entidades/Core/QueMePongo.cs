@@ -11,6 +11,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private static Queue<Pedido> NuevosPedidos { get; set; }
         private Thread ThreadPedidos { get; set; }
         private static int TIEMPO_ESPERA; // Unidad: segundos
+        [Obsolete]
+        public static bool killProcess = false;
 
         #region CONSTRUCTOR
         private QueMePongo()
@@ -50,21 +52,33 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private static void AtenderPedido()
         {
             Pedido pedido;
+            int i = 0;
 
-            while (true)
+            Console.WriteLine("Iniciando hilo");
+            Console.WriteLine("Pedidos pendientes " + NuevosPedidos.Count);
+
+            while (!killProcess)
             {
                 try
                 {
                     pedido = NuevosPedidos.Dequeue();
                     pedido.Resolver();
-                    // guardo pedidos resueltos?
+
+                    Console.WriteLine(string.Format("Pedido {0} atendido", i));
+                    i++;
+
+                    if (i > 5) killProcess = true;
 
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException ex)
                 {
+                    Console.WriteLine("No quedan pedidos por atender " + ex.Message);
                     Thread.Sleep(TIEMPO_ESPERA * 1000);
                 }
             }
+
+
+            Console.WriteLine("Terminando hilo");
         }
         #endregion OPERACIONES_THREADS
     }

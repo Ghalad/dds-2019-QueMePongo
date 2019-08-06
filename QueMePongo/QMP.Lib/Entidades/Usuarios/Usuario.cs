@@ -12,13 +12,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         public List<Regla> Reglas { get; set; }
         private int Maximo { get; set; }
         public string Id { get; set; }
-        private List<Pedido> Pedidos { get; set; }
+        public Pedido Pedido { get; set; }
 
         protected Usuario(int maximo)
         {
             this.Guardarropas = new List<Guardarropa>();
+            this.Reglas = new List<Regla>();
             this.Maximo = maximo;
-            this.Pedidos = new List<Pedido>();
         }
 
         /// <summary>
@@ -64,6 +64,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
         public void NotificarPedidoResuelto(Pedido pedido)
         {
+            this.Pedido = pedido;
             //TODO notificar al usuario que el pedido ya esta resuelto
         }
     }

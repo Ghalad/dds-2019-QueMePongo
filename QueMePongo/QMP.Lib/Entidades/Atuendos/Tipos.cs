@@ -96,6 +96,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(new Caracteristica("EVENTO", "SALIDA_AMIGOS"));
             this.Caracteristicas.Add(new Caracteristica("EVENTO", "CUMPLEAÑOS"));
             this.Caracteristicas.Add(new Caracteristica("EVENTO", "CASAMIENTO"));
+            this.Caracteristicas.Add(new Caracteristica("EVENTO", "CASUAL"));
 
 
             // Estos son los valores de nivel de superposicion que puede tener una prenda de un determinado tipo
