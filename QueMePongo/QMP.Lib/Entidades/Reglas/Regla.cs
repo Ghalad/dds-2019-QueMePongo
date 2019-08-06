@@ -1,30 +1,29 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using System;
 using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Reglas
 {
     public class Regla
     {
-        public string Identificador { get; set; }
+        public string Id { get; set; }
         private List<Condicion> Condiciones { get; set; }
 
         public Regla()
         {
             this.Condiciones = new List<Condicion>();
         }
-        public Regla(string id)
-        {
-            this.Identificador = id;
-            this.Condiciones = new List<Condicion>(); 
-        }
 
-
+        /// <summary>
+        /// Permite agregar una condicion a la regla
+        /// </summary>
+        /// <param name="condicion"></param>
         public void AgregarCondicion(Condicion condicion)
         {
             if (condicion != null)
-            {
                 this.Condiciones.Add(condicion);
-            }
+            else
+                throw new Exception("No se puede agregar una condicion nula");
         }
 
         /// <summary>
@@ -35,14 +34,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas
         public bool Validar(Atuendo atuendo)
         {
             foreach(Condicion condicion in this.Condiciones)
-            {
                 if (condicion.Validar(atuendo))
-                {
-                    return false; // ATUENDO INVALIDO
-                }
-            }
+                    return false; // atuendo INVALIDO
 
-            return true; // ATUENDO VALIDO
+            return true; // atuendo VALIDO
         }
     }
 }

@@ -3,17 +3,21 @@ using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
 {
-    public class CondicionMultiple : Condicion
+    public class CondicionNegativa : Condicion
     {
-        public List<Caracteristica> Caracteristicas { get; set; }
+        private List<Caracteristica> Caracteristicas { get; set; }
 
-        public CondicionMultiple(List<Caracteristica> caracteristicas)
+        /// <summary>
+        /// Verifica que TODAS las prendas del atuendo NO tengan las caracteristicas, para ser VALIDO. De lo contrario el atuendo es INVALIDO
+        /// </summary>
+        /// <param name="caracteristicas"></param>
+        public CondicionNegativa(List<Caracteristica> caracteristicas)
         {
             this.Caracteristicas = caracteristicas;
         }
 
         /// <summary>
-        /// Si se cumplen TODAS las caracteristicas sobre una misma prenda, esta no es valida.
+        /// Valida el atuendo contra las reglas
         /// </summary>
         /// <param name="atuendo"></param>
         /// <returns></returns>
@@ -35,10 +39,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
                 }
 
                 if (match)
-                    return true; // Atuendo INVALIDO
+                    return true; // atuendo INVALIDO
             }
 
-            return false;  // Atuendo VALIDO
+            return false;  // atuendo VALIDO
         }
     }
 }

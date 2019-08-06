@@ -9,7 +9,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private static QueMePongo Instance { get; set; }
 
         private static Queue<Pedido> NuevosPedidos { get; set; }
-        private Thread PedidosHandler { get; set; }
+        private Thread ThreadPedidos { get; set; }
         private static int TIEMPO_ESPERA; // Unidad: segundos
 
         #region CONSTRUCTOR
@@ -17,8 +17,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             NuevosPedidos = new Queue<Pedido>();
             TIEMPO_ESPERA = 2; // Parametro que se podria levantar de la base o por archivo de configuracion.
-            PedidosHandler = new Thread(new ThreadStart(AtenderPedido));
-            PedidosHandler.Start();
+            ThreadPedidos = new Thread(new ThreadStart(AtenderPedido));
+            ThreadPedidos.Start();
         }
 
         public static QueMePongo GetInstance()
@@ -36,6 +36,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             if (pedido != null)
                 NuevosPedidos.Enqueue(pedido);
+            else
+                throw new Exception("No se puede agregar un pedido nulo");
         }
 
 
@@ -55,11 +57,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 {
                     pedido = NuevosPedidos.Dequeue();
                     pedido.Resolver();
-                    Console.WriteLine(string.Format("Pedido {0} atendido", pedido.Id));
+                    // guardo pedidos resueltos?
+
                 }
                 catch (InvalidOperationException)
                 {
-                    Console.WriteLine("No hay pedidos para atender, me voy a dormir");
                     Thread.Sleep(TIEMPO_ESPERA * 1000);
                 }
             }

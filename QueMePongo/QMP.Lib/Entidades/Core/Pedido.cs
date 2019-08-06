@@ -1,5 +1,7 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
+using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System;
 using System.Collections.Generic;
 
@@ -10,19 +12,31 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         public string Id { get; set; }
         private List<Prenda> Prendas { get; set; }
         private List<Regla> Reglas { get; set; }
+        private Evento Evento { get; set; }
+        private Usuario Usuario { get; set; }
         private List<Atuendo> Atuendos { get; set; }
 
-        public Pedido(List<Prenda> prendas, List<Regla> reglas)
+        public Pedido(Usuario usr, List<Prenda> prendas, List<Regla> reglas, Evento evento)
         {
             if (prendas != null)
                 this.Prendas = prendas;
             else
-                throw new Exception("Es necesario una lista de prendas");
+                throw new Exception("Es necesario informar una lista de prendas");
 
             if (reglas != null)
                 this.Reglas = reglas;
             else
-                throw new Exception("Es necesario una lista de reglas");
+                throw new Exception("Es necesario informar una lista de reglas");
+
+            if (evento != null)
+                this.Evento = evento;
+            else
+                throw new Exception("Es necesario informar un evento");
+
+            if (usr != null)
+                this.Usuario = usr;
+            else
+                throw new Exception("Es necesario informar un usuario");
 
             this.Atuendos = new List<Atuendo>();
             this.Id = "12345"; // generar ID
@@ -33,10 +47,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void Resolver()
         {
-            this.CombinarPrendas();
-            this.FiltrarPorReglas();
-            this.FiltrarPorClima();
-            this.FiltrarPorEvento();
+            AtuendosGestor gestor = new AtuendosGestor(this.Prendas, this.Reglas, this.Evento);
+            gestor.GenerarAtuendos();
+            gestor.FiltrarAtuendosPorReglas();
+            gestor.FiltrarAtuendosPorEvento();
+            gestor.FiltrarAtuendosPorClima();
+
+            this.Atuendos = gestor.ObtenerAtuendos();
+            this.NotificarUsuario();
         }
 
         /// <summary>
@@ -45,71 +63,37 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// <returns></returns>
         public List<Atuendo> ObtenerAtuendos()
         {
+            if (this.Atuendos == null)
+                throw new Exception("Atuendos no procesados");
             return this.Atuendos;
         }
 
-        /// <summary>
-        /// Setea una coleccion de Atuendos con todas las combinaciones de prendas posibles.
-        /// Formula de combinaciones:
-        /// n! / (r!(n-r)!)
-        /// </summary>
-        /// <param name="n"></param>
-        private void CombinarPrendas()
-        {
-            Atuendo atuendo;
-            int max = this.Prendas.Count;
 
-            // Se toma como minimo, combinaciones de 4 prendas ya que son las 3 partes del cuerpo que tienen que estar cubiertas siempre.
-            for (int i = 3; i < max; i++)
+        /// <summary>
+        /// Permite aceptar un atuendo y rechazar el resto
+        /// </summary>
+        /// <param name="id"></param>
+        public void AceptarAtuendo(string id)
+        {
+            this.Atuendos.Find(a => a.Id.Equals(id)).Aceptar();
+            this.Atuendos.ForEach(a => { if (!a.Id.Equals(id)) a.Rechazar(); });
+        }
+
+
+        /// <summary>
+        /// Permite deshacer la operacion anterior
+        /// </summary>
+        public void DeshacerUltimaOperacion()
+        {
+            foreach(Atuendo atuendo in this.Atuendos)
             {
-                foreach (var row in new Combinaciones.Combinaciones(this.Prendas.Count, i).GetRows())
-                {
-                    atuendo = new Atuendo();
-                    foreach (var seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
-                        atuendo.AgregarPrenda(seleccion);
-                    this.Atuendos.Add(atuendo);
-                }
+                atuendo.Deshacer();
             }
         }
 
-        /// <summary>
-        /// Aplica todas las reglas a la lista de atuendos, quitando los que no son validos.
-        /// </summary>
-        private void FiltrarPorReglas()
+        public void NotificarUsuario()
         {
-            bool atuendoValido = false;
-
-            if (this.Atuendos != null)
-            {
-                foreach (Atuendo atuendo in this.Atuendos)
-                {
-                    foreach (Regla regla in this.Reglas)
-                    {
-                        if (regla.Validar(atuendo))
-                            atuendoValido = true;
-                        else
-                        {
-                            atuendoValido = false;
-                            break;
-                        }
-                    }
-
-                    if (!atuendoValido)
-                        this.Atuendos.Remove(atuendo); // Atuendo invalido, lo saco de la lista de atuendos
-                }
-            }
-            else
-                throw new Exception("No es posible aplicar reglas a una lista de atuendos nula.");
-        }
-
-        private void FiltrarPorClima()
-        {
-
-        }
-
-        private void FiltrarPorEvento()
-        {
-
+            this.Usuario.NotificarPedidoResuelto(this);
         }
     }
 }

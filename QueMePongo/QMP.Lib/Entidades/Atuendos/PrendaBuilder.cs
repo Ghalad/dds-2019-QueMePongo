@@ -55,143 +55,232 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
 
 
-
+        /// <summary>
+        /// Agregar una caracteristica CATEGORIA
+        /// </summary>
+        /// <param name="categoria"></param>
+        /// <returns></returns>
         public PrendaBuilder ConCategoria(string categoria)
         {
             string clave = "CATEGORIA";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(categoria))
+            if (!string.IsNullOrWhiteSpace(categoria))
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(clave, categoria.ToUpper()))
+                if (this.Prenda != null)
                 {
-                    if(!this.Prenda.TieneCaracteristica(clave))
+                    if (Tipos.GetInstance().ExisteCaracteristica(clave, categoria.ToUpper()))
                     {
-                        if (this.Prenda.TieneCaracteristica("TIPO"))
+                        if (!this.Prenda.TieneCaracteristica(clave))
                         {
-                            if (this.CorrespondeCategoriaTipo(categoria.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
+                            if (this.Prenda.TieneCaracteristica("TIPO"))
                             {
-                                this.Prenda.AgregarCaracteristica(clave, categoria.ToUpper());
+                                if (Tipos.GetInstance().ExisteCaracteristicaXTipo(categoria.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
+                                    this.Prenda.AgregarCaracteristica(clave, categoria.ToUpper());
+                                else
+                                    throw new Exception(string.Format("La categoria [{0}] no se corresponde con el tipo de prenda [{1}] que posee", categoria, this.Prenda.ObtenerCaracteristica("TIPO")));
                             }
+                            else
+                                this.Prenda.AgregarCaracteristica(clave, categoria.ToUpper());
                         }
                         else
-                        {
-                            this.Prenda.AgregarCaracteristica(clave, categoria.ToUpper());
-                        }
+                            throw new Exception("La prenda ya posee categoria");
                     }
+                    else
+                        throw new Exception(string.Format("No existe la caracteristica [{0}]", categoria));
                 }
+                else
+                    throw new Exception("Antes de agregar una caracteristica debe crear la prenda");
             }
+            else
+                throw new Exception("Categoria requerida");
 
             return this;
         }
 
+        /// <summary>
+        /// Agrega una caracteristica TIPO
+        /// </summary>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
         public PrendaBuilder ConTipo(string tipo)
         {
             string clave = "TIPO";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(tipo))
+            if (!string.IsNullOrWhiteSpace(tipo))
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(clave, tipo.ToUpper()))
+                if (this.Prenda != null)
                 {
-                    if (!this.Prenda.TieneCaracteristica(clave))
+                    if (Tipos.GetInstance().ExisteCaracteristica(clave, tipo.ToUpper()))
                     {
-                        if (this.Prenda.TieneCaracteristica("CATEGORIA"))
+                        if (!this.Prenda.TieneCaracteristica(clave))
                         {
-                            if (this.CorrespondeCategoriaTipo(this.Prenda.ObtenerCaracteristica("CATEGORIA"), tipo.ToUpper()))
+                            if (this.Prenda.TieneCaracteristica("CATEGORIA"))
+                            {
+                                if (Tipos.GetInstance().ExisteCaracteristicaXTipo(this.Prenda.ObtenerCaracteristica("CATEGORIA"), tipo.ToUpper()))
+                                {
+                                    this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
+                                    this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
+                                    this.AgregarClimas(tipo);
+                                }
+                                else
+                                    throw new Exception(string.Format("El tipo de prenda [{0}] no se corresponde con la categoria [{1}] que posee", tipo, this.Prenda.ObtenerCaracteristica("CATEGORIA")));
+                            }
+                            else
                             {
                                 this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
                                 this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
+                                this.AgregarClimas(tipo);
                             }
                         }
                         else
-                        {
-                            this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
-                            this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
-                        }
+                            throw new Exception("La prenda ya posee tipo");
                     }
+                    else
+                        throw new Exception(string.Format("No existe la caracteristica [{0}]", tipo));
                 }
+                else
+                    throw new Exception("Antes de agregar una caracteristica debe crear la prenda");
             }
+            else
+                throw new Exception("Tipo requerido");
 
             return this;
         }
 
+
+        /// <summary>
+        /// Agregar una caracteristica MATERIAL
+        /// </summary>
+        /// <param name="material"></param>
+        /// <returns></returns>
         public PrendaBuilder ConMaterial(string material)
         {
             string clave = "MATERIAL";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(material))
+            if (!string.IsNullOrWhiteSpace(material))
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(clave, material.ToUpper()))
+                if (this.Prenda != null)
                 {
-                    if (!this.Prenda.TieneCaracteristica(clave))
+                    if (Tipos.GetInstance().ExisteCaracteristica(clave, material.ToUpper()))
                     {
-                        this.Prenda.AgregarCaracteristica(clave, material.ToUpper());
+                        if (!this.Prenda.TieneCaracteristica(clave))
+                            this.Prenda.AgregarCaracteristica(clave, material.ToUpper());
+                        else
+                            throw new Exception("La prenda ya posee material");
                     }
+                    else
+                        throw new Exception(string.Format("No existe la caracteristica [{0}]", material));
                 }
+                else
+                    throw new Exception("Antes de agregar una caracteristica debe crear la prenda");
             }
+            else
+                throw new Exception("Material requerido");
+
             return this;
         }
 
+
+        /// <summary>
+        /// Agregar una caracteristica COLOR
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public PrendaBuilder ConColor(string color)
         {
             string clave = "COLOR";
 
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(color))
+            if (!string.IsNullOrWhiteSpace(color))
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(clave, color.ToUpper()))
+                if (this.Prenda != null)
                 {
-                    if (!this.Prenda.TieneCaracteristica(clave))
+                    if (Tipos.GetInstance().ExisteCaracteristica(clave, color.ToUpper()))
                     {
-                        // color primario
-                        this.Prenda.AgregarCaracteristica(clave, color.ToUpper());
+                        if (!this.Prenda.TieneCaracteristica(clave))
+                        {
+                            // color primario
+                            this.Prenda.AgregarCaracteristica(clave, color.ToUpper());
+                        }
+                        else if (this.Prenda.CantidadDeCaracteristica(clave) < 2)
+                        {
+                            // color secundario
+                            this.Prenda.AgregarCaracteristica(clave, color.ToUpper());
+                        }
+                        else
+                            throw new Exception("La prenda ya posee color primario y secundario");
                     }
-                    else if (this.Prenda.CantidadDeCaracteristica(clave) < 2)
-                    {
-                        // color secundario
-                        this.Prenda.AgregarCaracteristica(clave, color.ToUpper());
-                    }
+                    else
+                        throw new Exception(string.Format("No existe la caracteristica [{0}]", color));
                 }
+                else
+                    throw new Exception("Antes de agregar una caracteristica debe crear la prenda");
             }
+            else
+                throw new Exception("Color requerido");
+
             return this;
         }
 
-        public PrendaBuilder ConEvento(string evento)
+
+        /// <summary>
+        /// Agregar una caracteristica EVENTO
+        /// </summary>
+        /// <param name="tipoEvento"></param>
+        /// <returns></returns>
+        public PrendaBuilder ConEvento(string tipoEvento)
         {
             string clave = "EVENTO";
-
-            if (this.Prenda != null && !string.IsNullOrWhiteSpace(evento))
+            //TODO LOS EVENTOS SE TIENEN QUE PODER REPETIR
+            if (!string.IsNullOrWhiteSpace(tipoEvento))
             {
-                if (Tipos.GetInstance().ExisteCaracteristica(clave, evento.ToUpper()))
+                if (this.Prenda != null)
                 {
-                    if (!this.Prenda.TieneCaracteristica(clave, evento.ToUpper()))
+                    if (Tipos.GetInstance().ExisteCaracteristica(clave, tipoEvento.ToUpper()))
                     {
-                        this.Prenda.AgregarCaracteristica(clave, evento.ToUpper());
+                        if (!this.Prenda.TieneCaracteristica(clave, tipoEvento.ToUpper()))
+                            this.Prenda.AgregarCaracteristica(clave, tipoEvento.ToUpper());
+                        else
+                            throw new Exception("La prenda ya posee un evento");
                     }
+                    else
+                        throw new Exception(string.Format("No existe la caracteristica [{0}]", tipoEvento));
                 }
+                else
+                    throw new Exception("Antes de agregar una caracteristica debe crear la prenda");
             }
+            else
+                throw new Exception("Tipo de evento requerido");
 
             return this;
         }
 
-        public PrendaBuilder ConFoto(Image imagen)
+
+        /// <summary>
+        /// Agregar una imagen
+        /// </summary>
+        /// <param name="imagen"></param>
+        /// <returns></returns>
+        public PrendaBuilder ConImagen(Image imagen)
         {
-            if (this.Prenda != null && imagen != null)
+            if (imagen != null)
+            {
+                if (this.Prenda != null)
                     this.Prenda.AgregarImagen(imagen);
+                else
+                    throw new Exception("Antes de agregar una imagen debe crear la prenda");
+            }
+            else
+                throw new Exception("Imagen requerida");
 
             return this;
         }
 
 
         #region PRIVADO
-        private bool CorrespondeCategoriaTipo(string car1, string car2)
+        private void AgregarClimas(string tipoPrenda)
         {
-            if (this.Prenda != null)
-            {
-                if (Tipos.GetInstance().ExisteCaracteristicaXTipo(car1, car2))
-                    return true;
-                else
-                    return false;
-            }
-            return false;
+            foreach(string str in Tipos.GetInstance().ObtenerClimas(tipoPrenda))
+                this.Prenda.AgregarCaracteristica(new Caracteristica("CLIMA", str.ToUpper()));
         }
         #endregion PRIVADO
     }

@@ -2,7 +2,7 @@
 {
     public class OperadorMenorIgual : Operador
     {
-        public int ValorReferencia { get; set; }
+        private int ValorReferencia { get; set; }
 
         public OperadorMenorIgual(int valorReferencia)
         {
@@ -12,9 +12,9 @@
         public bool Resolver(int valor)
         {
             if (valor <= this.ValorReferencia)
-                return true; // Atuendo INVALIDO
+                return true; // atuendo INVALIDO
             else
-                return false; // Atuendo VALIDO
+                return false; // atuendo VALIDO
         }
     }
 }

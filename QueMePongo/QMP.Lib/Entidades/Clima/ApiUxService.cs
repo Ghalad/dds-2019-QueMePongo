@@ -31,7 +31,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         #endregion CONSTRUCTOR
 
 
-
         #region PUBLICO
         public void SetCiudad(string pais, string ciudad)
         {

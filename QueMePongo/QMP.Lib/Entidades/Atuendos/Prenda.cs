@@ -7,8 +7,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     public class Prenda
     {
         private List<Caracteristica> Caracteristicas { get; set; }
-        private Image Foto { get; set; }
-        private static int SCALE_IMAGEN = 140;
+        public Image Imagen { get; set; }
+        private static int RESOLUCION = 140; // Esto se podria setear por archivo de configuracion
 
         public Prenda()
         {
@@ -16,7 +16,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
 
-
+        /// <summary>
+        /// Permite agregar una caracteristica, a traves de un objeto Caracteristica
+        /// </summary>
+        /// <param name="caracteristica"></param>
         public void AgregarCaracteristica(Caracteristica caracteristica)
         {
             foreach(Caracteristica c in this.Caracteristicas)
@@ -24,6 +27,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return;
             this.Caracteristicas.Add(caracteristica);
         }
+
+
+        /// <summary>
+        /// Permite agregar una caracteristica, a traves de un par Clave, Valor
+        /// </summary>
+        /// <param name="clave"></param>
+        /// <param name="valor"></param>
         public void AgregarCaracteristica(string clave, string valor)
         {
             foreach (Caracteristica c in this.Caracteristicas)
@@ -31,31 +41,41 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return;
             this.Caracteristicas.Add(new Caracteristica(clave, valor));
         }
+
+
+        /// <summary>
+        /// Permite agregar una imagen a la prenda y normalizarla
+        /// </summary>
+        /// <param name="imagen"></param>
         public void AgregarImagen(Image imagen)
         {
             if (imagen != null)
             {
-                #region NORMALIZACION
                 try
                 {
-                    double escala = (double)SCALE_IMAGEN / (double)imagen.Width;
+                    double escala = (double)RESOLUCION / (double)imagen.Width;
                     Graphics tmpGraphics = default(Graphics);
                     Bitmap tmpResizedImage = new Bitmap(Convert.ToInt32(escala * imagen.Width), Convert.ToInt32(escala * imagen.Height));
                     tmpGraphics = Graphics.FromImage(tmpResizedImage);
                     tmpGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
                     tmpGraphics.DrawImage(imagen, 0, 0, tmpResizedImage.Width + 1, tmpResizedImage.Height + 1);
-                    this.Foto = tmpResizedImage;
+                    this.Imagen = tmpResizedImage;
                 }
                 catch
                 {
-                    //TODO manejo de excepciones
+                    throw new Exception("Error al normalizar la imagen de la prenda");
                 }
-                #endregion NORMALIZACION
             }
+            else
+                throw new Exception("No se puede agregar una imagen nula");
         }
 
 
-
+        /// <summary>
+        /// Valida si la prenda tiene la misma caracteristica, a traves de un objeto Caracteristica
+        /// </summary>
+        /// <param name="caracteristica"></param>
+        /// <returns></returns>
         public bool TieneCaracteristica(Caracteristica caracteristica)
         {
             foreach(Caracteristica c in this.Caracteristicas)
@@ -63,6 +83,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
+
+
+        /// <summary>
+        /// Valida si la prenda tiene la misma caracteristica, a traves de un par Clave, Valor
+        /// </summary>
+        /// <param name="clave"></param>
+        /// <param name="valor"></param>
+        /// <returns></returns>
         public bool TieneCaracteristica(string clave, string valor)
         {
             foreach (Caracteristica c in this.Caracteristicas)
@@ -70,6 +98,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
+
+
+        /// <summary>
+        /// Valida si la prenda tiene el caracteristica, a traves de la Calve
+        /// </summary>
+        /// <param name="clave"></param>
+        /// <returns></returns>
         public bool TieneCaracteristica(string clave)
         {
             foreach (Caracteristica c in this.Caracteristicas)
@@ -79,7 +114,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
 
-
+        /// <summary>
+        /// Valida si la prenda tiene las mismas caracteristicas que otra prenda
+        /// </summary>
+        /// <param name="prenda"></param>
+        /// <returns></returns>
         public bool EsLaMisma(Prenda prenda)
         {
             foreach(Caracteristica c in this.Caracteristicas)
@@ -89,12 +128,21 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
 
-
+        /// <summary>
+        /// Devuelve la cantidad total de caracteristicas que componen la prenda
+        /// </summary>
+        /// <returns></returns>
         public int CantidadDeCaracteristicas()
         {
             return this.Caracteristicas.Count;
         }
         
+
+        /// <summary>
+        /// Devuelve la cantidad de veces que la prenda tiene una unica caracteristica
+        /// </summary>
+        /// <param name="clave"></param>
+        /// <returns></returns>
         public int CantidadDeCaracteristica(string clave)
         {
             int i = 0;
@@ -104,6 +152,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return i;
         }
         
+
+        /// <summary>
+        /// Obtiene una caracteristica a partir de su Clave
+        /// </summary>
+        /// <param name="clave"></param>
+        /// <returns></returns>
         public string ObtenerCaracteristica(string clave)
         {
             foreach (Caracteristica c in this.Caracteristicas)
@@ -112,6 +166,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return null;
         }
 
+
+
+
+        [Obsolete("Esto no va")]
         public int NumeroSuperposicion()
         {
             foreach(Caracteristica c in Caracteristicas)
@@ -120,13 +178,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
             return -1;
         }
+        [Obsolete("Esto no va")]
         public void MostrarPorPantalla()
         {
             foreach (Caracteristica c in Caracteristicas)
             {
-                if (c.GetClave() == "TIPO")
+                if (c.Clave == "TIPO")
                 {
-                    Console.WriteLine(c.GetValor());
+                    Console.WriteLine(c.Valor);
                 }
             }
         }

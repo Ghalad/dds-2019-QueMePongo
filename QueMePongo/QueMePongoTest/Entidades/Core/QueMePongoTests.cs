@@ -11,6 +11,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         [TestMethod()]
         public void SarasaTest()
         {
+            /*
             QueMePongo qmp = QueMePongo.GetInstance();
             Usuario usr = new UsrGratis(100);
 
@@ -22,6 +23,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             }
 
             Console.WriteLine("Main thread finished.");
+            */
         }
     }
 }

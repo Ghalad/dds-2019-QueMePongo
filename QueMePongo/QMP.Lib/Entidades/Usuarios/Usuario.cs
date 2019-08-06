@@ -1,5 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
-using Ar.UTN.QMP.Lib.Entidades.Eventos;
+using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using System;
 using System.Collections.Generic;
@@ -12,15 +12,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         public List<Regla> Reglas { get; set; }
         private int Maximo { get; set; }
         public string Id { get; set; }
+        private List<Pedido> Pedidos { get; set; }
 
         protected Usuario(int maximo)
         {
             this.Guardarropas = new List<Guardarropa>();
             this.Maximo = maximo;
+            this.Pedidos = new List<Pedido>();
         }
 
         /// <summary>
-        /// permite crear nuevos Guardarropas
+        /// Permite crear nuevos Guardarropas
         /// </summary>
         /// <param name="idGuardarropa"></param>
         public void CrearGuardarropa(string idGuardarropa)
@@ -58,10 +60,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
             else
                 throw new Exception("Regla requerida.");
         }
-        public List<Guardarropa> GetGuardarropas()
-        {
-            return Guardarropas;
-        }
 
+
+        public void NotificarPedidoResuelto(Pedido pedido)
+        {
+            //TODO notificar al usuario que el pedido ya esta resuelto
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
 
             pb.CrearPrenda()
               .ConCategoria("calzado")
-              .ConTipo("slip_on")
+              .ConTipo("PANCHAS")
               .ConMaterial("lana")
               .ConColor("azul");
             this.atuendo.AgregarPrenda(pb.ObtenerPrenda());
@@ -143,7 +143,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
 
             pb.CrearPrenda()
               .ConCategoria("calzado")
-              .ConTipo("slip_on")
+              .ConTipo("PANCHAS")
               .ConMaterial("lana")
               .ConColor("azul");
             this.atuendo.AgregarPrenda(pb.ObtenerPrenda());
@@ -227,7 +227,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
 
             pb.CrearPrenda()
               .ConCategoria("calzado")
-              .ConTipo("slip_on")
+              .ConTipo("PANCHAS")
               .ConMaterial("lana")
               .ConColor("azul");
             this.atuendo.AgregarPrenda(pb.ObtenerPrenda());
@@ -296,7 +296,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
             this.listaCar = new List<Caracteristica>();
             this.listaCar.Add(new Caracteristica("tipo", "remera_manga_corta"));
             this.listaCar.Add(new Caracteristica("material", "cuero"));
-            this.regla.AgregarCondicion(new CondicionMultiple(this.listaCar));
+            this.regla.AgregarCondicion(new CondicionNegativa(this.listaCar));
             #endregion REGLA
 
             Assert.IsFalse(this.regla.Validar(this.atuendo));
@@ -345,7 +345,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
             this.atuendo.Prendas.Add(this.pb.ObtenerPrenda());
             this.pb.CrearPrenda()
                    .ConCategoria("calzado")
-                   .ConTipo("slip_on")
+                   .ConTipo("PANCHAS")
                    .ConMaterial("lana");
             this.atuendo.Prendas.Add(this.pb.ObtenerPrenda());
             #endregion ATUENDO

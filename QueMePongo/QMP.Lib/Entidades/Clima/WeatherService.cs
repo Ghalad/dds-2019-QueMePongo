@@ -8,28 +8,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         private string Pais { get; set; }
         private string Ciudad { get; set; }
 
-
         public WeatherService(string pais, string ciudad)
         {
             this.Pais = pais.ToUpper();
             this.Ciudad = ciudad.ToUpper();
         }
 
-        private void OpenWeather()
-        {
-            this.srv = OpenWeatherService.GetInstance();
-        }
-
-        private void ApiUx()
-        {
-            this.srv = ApiUxService.GetInstance();
-        }
-
+        #region PUBLICO
         public void SetCiudad(string pais, string ciudad)
         {
             this.Pais = pais.ToUpper();
             this.Ciudad = ciudad.ToUpper();
-            this.srv.SetCiudad(this.Pais, this.Ciudad);
         }
 
         public decimal ObtenerTemperatura()
@@ -100,5 +89,20 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
             }
             return presion;
         }
+        #endregion PUBLICO
+
+        #region PRIVADO
+        private void OpenWeather()
+        {
+            this.srv = OpenWeatherService.GetInstance();
+            this.srv.SetCiudad(this.Pais, this.Ciudad);
+        }
+
+        private void ApiUx()
+        {
+            this.srv = ApiUxService.GetInstance();
+            this.srv.SetCiudad(this.Pais, this.Ciudad);
+        }
+        #endregion PRIVADO
     }
 }

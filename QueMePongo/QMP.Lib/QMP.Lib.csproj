@@ -67,10 +67,9 @@
     <Compile Include="Entidades\Clima\OpenWeatherInfo.cs" />
     <Compile Include="Entidades\Combinaciones\Combinaciones.cs" />
     <Compile Include="Entidades\Combinaciones\Combinatoric.cs" />
-    <Compile Include="Entidades\Excepciones\ColaVacia.cs" />
+    <Compile Include="Entidades\Reglas\Condiciones\CondicionAfirmativa.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionComparacion.cs" />
-    <Compile Include="Entidades\Reglas\Condiciones\CondicionMultiple.cs" />
-    <Compile Include="Entidades\Reglas\Condiciones\CondicionSuperpuesto.cs" />
+    <Compile Include="Entidades\Reglas\Condiciones\CondicionNegativa.cs" />
     <Compile Include="Entidades\Reglas\Operadores\Operador.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorIgual.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorMayor.cs" />

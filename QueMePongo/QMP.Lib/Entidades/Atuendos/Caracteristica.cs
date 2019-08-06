@@ -4,7 +4,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
     public class Caracteristica
     {
-        private string Clave { get; set; }
+        public string Clave { get; private set; }
         public string Valor { get; private set; }
 
         public Caracteristica(string clave, string valor)
@@ -15,11 +15,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 this.Valor = valor.ToUpper();
             }
             else
-            {
                 throw new Exception("No se puede instanciar una caracteristica con clave o valor nulos.");
-            }
         }
 
+
+        /// <summary>
+        /// Valida si es la misma caracteristica, a traves de un objeto Caracteristica
+        /// </summary>
+        /// <param name="caracteristica"></param>
+        /// <returns></returns>
         public bool EsLaMisma(Caracteristica caracteristica)
         {
             if (this.Clave.Equals(caracteristica.Clave) && this.Valor.Equals(caracteristica.Valor))
@@ -27,6 +31,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return false;
         }
 
+        /// <summary>
+        /// Valida si es la misma caracteristica, a traves de un par Clave, Valor
+        /// </summary>
+        /// <param name="clave"></param>
+        /// <param name="valor"></param>
+        /// <returns></returns>
         public bool EsLaMisma(string clave, string valor)
         {
             if (!string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
@@ -35,6 +45,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return false;
         }
 
+        /// <summary>
+        /// Valida si tiene la misma Clave
+        /// </summary>
+        /// <param name="clave"></param>
+        /// <returns></returns>
         public bool EsLaMismaClave(string clave)
         {
             if (!string.IsNullOrWhiteSpace(clave))
@@ -42,16 +57,5 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
-        public string GetClave()
-        {
-            return Clave.ToUpper();
-        }
-
-        public string GetValor()
-        {
-            return Valor.ToUpper();
-        }
-
-
     }
 }

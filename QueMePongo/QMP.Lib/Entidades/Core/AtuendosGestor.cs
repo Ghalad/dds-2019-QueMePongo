@@ -1,139 +1,138 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Clima;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
-using Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores;
-using Ar.UTN.QMP.Lib.Entidades.Usuarios;
+using System;
+using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
 {
     public class AtuendosGestor
     {
-        public List<Atuendo> atuendos { get; set; }
-        private static AtuendosGestor Instance { get; set; }
+        private List<Atuendo> Atuendos { get; set; }
+        private List<Prenda> Prendas { get; set; }
+        private List<Regla> Reglas { get; set; }
+        private Evento Evento { get; set; }
 
         #region CONSTRUCTOR
-        private AtuendosGestor() { atuendos = new List<Atuendo>(); }
-        public static AtuendosGestor GetInstance()
+        public AtuendosGestor(List<Prenda> prendas, List<Regla> reglas, Evento evento)
         {
-            if (Instance == null) Instance = new AtuendosGestor();
-            return Instance;
+            if (prendas != null)
+                this.Prendas = prendas;
+            else
+                throw new Exception("Es necesario informar una lista de prendas");
+
+            if (reglas != null)
+                this.Reglas = reglas;
+            else
+                throw new Exception("Es necesario informar una lista de reglas");
+
+            if (evento != null)
+                this.Evento = evento;
+            else
+                throw new Exception("Es necesario informar un evento");
+
+            this.Atuendos = new List<Atuendo>();
         }
         #endregion CONSTRUCTOR
 
-        public void FiltrarAtuendosTemperatura(decimal temperatura) //próximamente recibe como parámetro la ciudad
-        {
-            int minimoPrendas;
-            int maximoPrendas;
-            if (temperatura < 11)
-            {
-                maximoPrendas = 9999;
-                minimoPrendas = 6;
-            }
-            else if (temperatura < 17)
-            {
-                maximoPrendas = 5;
-                minimoPrendas = 5;
-            }
-            else
-            {
-                maximoPrendas = 4;
-                minimoPrendas = 1;
-            }
 
-            foreach (Atuendo a in this.atuendos.ToList())
+        #region OPERACIONES
+        /// <summary>
+        /// Devuelve los atuendos generados
+        /// </summary>
+        /// <returns></returns>
+        public List<Atuendo> ObtenerAtuendos()
+        {
+            if (this.Atuendos == null)
+                throw new Exception("Atuendos no procesados");
+            return this.Atuendos;
+        }
+
+        /// <summary>
+        /// Setea una coleccion de Atuendos con todas las combinaciones de prendas posibles.
+        /// </summary>
+        public void GenerarAtuendos()
+        {
+            Atuendo atuendo;
+            int max = this.Prendas.Count;
+
+            // Se toma como minimo combinaciones de 3 prendas ya que son las 3 partes del cuerpo que tienen que estar cubiertas siempre
+            // y estaria descartados todos los atuendos de 1 y 2 prendas
+            for (int i = 3; i < max; i++)
             {
-                if (a.CantidadDePrendas() > maximoPrendas || a.CantidadDePrendas() < minimoPrendas)
+                foreach (var row in new Combinaciones.Combinaciones(this.Prendas.Count, i).GetRows())
                 {
-                    this.atuendos.Remove(a);
+                    atuendo = new Atuendo();
+                    foreach (var seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
+                        atuendo.AgregarPrenda(seleccion);
+                    atuendo.Id = "1"; // TODO generacion de IDs
+                    this.Atuendos.Add(atuendo);
                 }
             }
         }
-        public void FiltrarAtuendosRegla(Regla regla)
+
+        /// <summary>
+        /// Aplica todas las reglas a la lista de atuendos, quitando los que no son validos.
+        /// </summary>
+        public void FiltrarAtuendosPorReglas()
         {
-            foreach (Atuendo a in this.atuendos.ToList())
+            foreach (Atuendo atuendo in this.Atuendos)
             {
-                if (!regla.Validar(a))
+                foreach (Regla regla in this.Reglas)
                 {
-                    this.atuendos.Remove(a);
+                    if (!regla.Validar(atuendo))
+                    {
+                        this.Atuendos.Remove(atuendo); // Atuendo invalido, lo saco de la lista de atuendos
+                        break;
+                    }
                 }
             }
         }
-        public void FiltrarAtuendosEvento(Evento evento)
-        {
-            Regla unaRegla = new Regla();
-            List<Caracteristica> listaCar = new List<Caracteristica>();
-            listaCar.Add(evento.GetEstilo());
-            unaRegla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
 
-            WeatherServiceAdapter clima = OpenWeatherService.GetInstance();
-            clima.SetCiudad("AR", "Buenos Aires"); //la idea es que use la ciudad del evento
-            //clima.SetCiudad("AR", evento.GetCiudad());
-            decimal temperatura = clima.ObtenerTemperatura();
-
-            this.FiltrarAtuendosTemperatura(temperatura);
-            this.FiltrarAtuendosRegla(unaRegla);
-        }
-        public void FiltrarAtuendosSuperpuestos()
+        /// <summary>
+        /// Filtra la lista de atuendos segun el tipo de evento
+        /// </summary>
+        public void FiltrarAtuendosPorEvento()
         {
             Regla regla = new Regla();
             List<Caracteristica> listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("categoria", "superior"));
-            listaCar.Add(new Caracteristica("superposicion", "1"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+            listaCar.Add(this.Evento.TipoEvento);
+            regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
 
-            listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("categoria", "superior"));
-            listaCar.Add(new Caracteristica("superposicion", "2"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
-
-            listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("categoria", "superior"));
-            listaCar.Add(new Caracteristica("superposicion", "3"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
-
-            listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("categoria", "superior"));
-            listaCar.Add(new Caracteristica("superposicion", "4"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
-
-            this.FiltrarAtuendosRegla(regla);
+            foreach (Atuendo atuendo in this.Atuendos)
+                if (!regla.Validar(atuendo))
+                    this.Atuendos.Remove(atuendo);
         }
-        public void GenerarTodosLosAtuendosPosibles(Usuario usr)
+
+        /// <summary>
+        /// Filtra la lista de atuendos segun el clima del lugar donde se desarrollara el evento
+        /// </summary>
+        public void FiltrarAtuendosPorClima()
         {
-            Atuendo atuendo;
-            List<Prenda> prendas;
-            int n;
+            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
 
-            foreach (Guardarropa g in usr.GetGuardarropas())
-            {
-                prendas = g.ObtenerPrendas();
-                n = prendas.Count;
+            Regla regla = new Regla();
+            List<Caracteristica> listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("CLIMA", Tipos.GetInstance().TraducirTemperatura(srvClima.ObtenerTemperatura())));
+            regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
 
-                while (n != 0)
-                {
-                    foreach (var row in new Combinaciones.Combinaciones(prendas.Count, n).GetRows())
-                    {
-                        atuendo = new Atuendo();
-                        foreach (var seleccion in Combinaciones.Combinaciones.Permute(row, prendas))
-                            atuendo.AgregarPrenda(seleccion);
-                        atuendos.Add(atuendo);
-                    }
-
-                    n = n - 1;
-                }
-            }
+            foreach(Atuendo atuendo in this.Atuendos)
+                if (!regla.Validar(atuendo))
+                    this.Atuendos.Remove(atuendo);
         }
+        #endregion OPERACIONES
+
+
+
+
+
+        [Obsolete("Esto no va")]
         public void MostrarAtuendos()
         {
             int i = 1;
-            foreach (Atuendo a in atuendos)
+            foreach (Atuendo a in Atuendos)
             {
                 Console.WriteLine(string.Format("Atuendo {0} \n", i));
                 foreach (Prenda p in a.Prendas)
@@ -143,11 +142,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 Console.WriteLine("\n");
                 i++;
             }
-        }
-
-        public List<Atuendo> ObtenerAtuendos()
-        {
-            return atuendos;
         }
     }
 }

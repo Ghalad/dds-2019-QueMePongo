@@ -18,8 +18,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         
 
         /// <summary>
-        /// Agrega Prendas al guardarropas.
-        /// Si el guardarropas pertenece a un usuario Gratuito, agregara la prenda siempre y cuando tenga cupo.
+        /// Agrega Prendas al guardarropas. Si el guardarropas pertenece a un usuario Gratuito, agregara la prenda siempre y cuando tenga cupo.
         /// </summary>
         /// <param name="prenda"></param>
         public void AgregarPrenda(Prenda prenda)
@@ -32,7 +31,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 throw new Exception("Guardarropas lleno. No se pueden agregar mas prendas");
         }
 
-
+        /// <summary>
+        /// Obtiene la lista de prendas del guardarropas
+        /// </summary>
+        /// <returns></returns>
         public List<Prenda> ObtenerPrendas()
         {
             return this.Prendas;
