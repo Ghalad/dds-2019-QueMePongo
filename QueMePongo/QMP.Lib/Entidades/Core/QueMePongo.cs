@@ -19,8 +19,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             NuevosPedidos = new Queue<Pedido>();
             TIEMPO_ESPERA = 2; // Parametro que se podria levantar de la base o por archivo de configuracion.
-            ThreadPedidos = new Thread(new ThreadStart(AtenderPedido));
-            ThreadPedidos.Start();
+            //ThreadPedidos = new Thread(new ThreadStart(AtenderPedido));
+            //ThreadPedidos.Start();
         }
 
         public static QueMePongo GetInstance()
@@ -40,6 +40,28 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 NuevosPedidos.Enqueue(pedido);
             else
                 throw new Exception("No se puede agregar un pedido nulo");
+        }
+        
+        /// <summary>
+        /// Se encarga de desencolar pedidos o informar cola vacia
+        /// </summary>
+        public void DesencolarPedido()
+        {
+            if (NuevosPedidos.Count == 0)
+                throw new Exception("No hay pedidos para procesar");
+            else
+                AtenderPedido(NuevosPedidos.Dequeue());
+        }
+
+
+
+        /// <summary>
+        /// Resuelve un pedido en concreto
+        /// </summary>
+        /// <param name="pedido"></param>
+        private void AtenderPedido(Pedido pedido)
+        {
+            pedido.Resolver();
         }
 
 

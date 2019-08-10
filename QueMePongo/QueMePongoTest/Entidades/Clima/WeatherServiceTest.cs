@@ -10,7 +10,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima.Tests
         {
             WeatherService srvClima = new WeatherService("AR", "Buenos Aires");
             decimal temperatura = srvClima.ObtenerTemperatura();
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(temperatura.ToString()));
+
+
+            Assert.IsTrue(temperatura > 5 && temperatura < 20);
         }
     }
 }

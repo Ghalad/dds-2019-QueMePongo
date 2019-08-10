@@ -78,17 +78,21 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void FiltrarAtuendosPorReglas()
         {
+            List<Atuendo> removidos = new List<Atuendo>();
+
             foreach (Atuendo atuendo in this.Atuendos)
             {
                 foreach (Regla regla in this.Reglas)
                 {
                     if (!regla.Validar(atuendo))
                     {
-                        this.Atuendos.Remove(atuendo); // Atuendo invalido, lo saco de la lista de atuendos
+                        removidos.Add(atuendo); // Atuendo invalido, lo saco de la lista de atuendos
                         break;
                     }
                 }
             }
+
+            this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
 
         /// <summary>
@@ -96,6 +100,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void FiltrarAtuendosPorEvento()
         {
+            List<Atuendo> removidos = new List<Atuendo>();
+
             Regla regla = new Regla();
             List<Caracteristica> listaCar = new List<Caracteristica>();
             listaCar.Add(this.Evento.TipoEvento);
@@ -103,7 +109,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             foreach (Atuendo atuendo in this.Atuendos)
                 if (!regla.Validar(atuendo))
-                    this.Atuendos.Remove(atuendo);
+                    removidos.Add(atuendo);
+
+            this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
 
         /// <summary>
@@ -111,6 +119,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void FiltrarAtuendosPorClima()
         {
+            List<Atuendo> removidos = new List<Atuendo>();
+
             WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
 
             Regla regla = new Regla();
@@ -120,7 +130,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             foreach(Atuendo atuendo in this.Atuendos)
                 if (!regla.Validar(atuendo))
-                    this.Atuendos.Remove(atuendo);
+                    removidos.Add(atuendo);
+
+            this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
         #endregion OPERACIONES
 

@@ -189,5 +189,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 }
             }
         }
+        [Obsolete("Esto no va")]
+        public void ToString()
+        {
+            int i = 1;
+            foreach (Caracteristica c in Caracteristicas)
+            {
+                Console.WriteLine(string.Format("{0}) clave=[{1}] valor=[{2}]", i++, c.Clave, c.Valor));
+            }
+        }
     }
 }
