@@ -90,7 +90,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "superior"));
             listaCar.Add(new Caracteristica("superposicion", "1"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
             usr.AgregarRegla(regla);
 
             // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 2
@@ -98,7 +98,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "superior"));
             listaCar.Add(new Caracteristica("superposicion", "2"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
             usr.AgregarRegla(regla);
 
             // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 3
@@ -106,7 +106,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "superior"));
             listaCar.Add(new Caracteristica("superposicion", "3"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
             usr.AgregarRegla(regla);
 
             // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 4
@@ -114,59 +114,88 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "superior"));
             listaCar.Add(new Caracteristica("superposicion", "4"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
             usr.AgregarRegla(regla);
 
             // descarta los atuendos que tengan prendas con superposicion de grado mayor, sin tener prendas son superposicion de grado menor
-            /*regla = new Regla();
-            listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("categoria", "superior"));
-            listaCar.Add(new Caracteristica("superposicion", "3"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(0), listaCar));
-            listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("categoria", "superior"));
-            listaCar.Add(new Caracteristica("superposicion", "1"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
-            listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("categoria", "superior"));
-            listaCar.Add(new Caracteristica("superposicion", "2"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
-            usr.AgregarRegla(regla);*/
-
-            /*
             regla = new Regla();
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "1"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
             listaCar.Add(new Caracteristica("superposicion", "4"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(0), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan prendas con superposicion de grado mayor, sin tener prendas son superposicion de grado menor
+            regla = new Regla();
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "superior"));
             listaCar.Add(new Caracteristica("superposicion", "1"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "3"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            #region a
+            /* HAY QUE ARREGLAS ESTO
+            // descarta los atuendos que tengan prendas con superposicion de grado mayor, sin tener prendas son superposicion de grado menor
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "2"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "4"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan prendas con superposicion de grado mayor, sin tener prendas son superposicion de grado menor
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "2"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "3"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(0), listaCar));
             usr.AgregarRegla(regla);
             */
+            #endregion a
             #endregion SUPERPOSICION
 
             // descarta los atuendos que no tengan prendas en la parte superior
             regla = new Regla();
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "superior"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
             usr.AgregarRegla(regla);
 
             // descarta los atuendos que no tengan prendas en la parte inferior
             regla = new Regla();
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "inferior"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
             usr.AgregarRegla(regla);
 
-            // descarta los atuendos que no tengan calzado o que tengan mas de 1
+            // descarta los atuendos que no tengan calzado
             regla = new Regla();
             listaCar = new List<Caracteristica>();
             listaCar.Add(new Caracteristica("categoria", "calzado"));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorIgual(0), listaCar));
-            regla.AgregarCondicion(new CondicionComparacion(new OperadorMayor(1), listaCar));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan mas de 1 calzado
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "calzado"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
             usr.AgregarRegla(regla);
             #endregion REGLAS
             
@@ -314,6 +343,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         [Obsolete]
         public void ThreadTest()
         {
+            /*
             Thread t1 = new Thread(new ThreadStart(job1));
             t1.Start();
 
@@ -324,6 +354,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             }
 
             t1.Join();
+            */
         }
 
         [Obsolete]

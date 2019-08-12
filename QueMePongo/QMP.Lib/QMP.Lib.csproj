@@ -68,7 +68,7 @@
     <Compile Include="Entidades\Combinaciones\Combinaciones.cs" />
     <Compile Include="Entidades\Combinaciones\Combinatoric.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionAfirmativa.cs" />
-    <Compile Include="Entidades\Reglas\Condiciones\CondicionComparacion.cs" />
+    <Compile Include="Entidades\Reglas\Condiciones\CondicionCantidad.cs" />
     <Compile Include="Entidades\Reglas\Condiciones\CondicionNegativa.cs" />
     <Compile Include="Entidades\Reglas\Operadores\Operador.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorIgual.cs" />

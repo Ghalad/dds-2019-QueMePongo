@@ -33,11 +33,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas
         /// <returns></returns>
         public bool Validar(Atuendo atuendo)
         {
-            foreach(Condicion condicion in this.Condiciones)
-                if (condicion.Validar(atuendo))
-                    return false; // atuendo INVALIDO
+            bool valido = false;
 
-            return true; // atuendo VALIDO
+            foreach(Condicion condicion in this.Condiciones)
+            {
+                if (condicion.Validar(atuendo))
+                {
+                    valido = true;
+                }
+                else
+                {
+                    valido = false;
+                    break;
+                }
+            }
+
+            if (valido) return false; // Atuendo INVALIDO
+            return true; // Atuendo VALIDO
         }
     }
 }

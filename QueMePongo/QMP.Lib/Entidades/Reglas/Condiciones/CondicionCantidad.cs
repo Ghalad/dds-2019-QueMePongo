@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
 {
-    public class CondicionComparacion : Condicion
+    public class CondicionCantidad : Condicion
     {
         private Operador Operador { get; set; }
         private List<Caracteristica> Caracteristicas { get; set; }
@@ -13,7 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
         /// </summary>
         /// <param name="operador"></param>
         /// <param name="caracteristicas"></param>
-        public CondicionComparacion(Operador operador, List<Caracteristica> caracteristicas)
+        public CondicionCantidad(Operador operador, List<Caracteristica> caracteristicas)
         {
             this.Operador = operador;
             this.Caracteristicas = caracteristicas;
