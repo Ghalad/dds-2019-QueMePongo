@@ -56,6 +56,7 @@
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
     <Compile Include="Entidades\Atuendos\PrendaBuilder.cs" />
     <Compile Include="Entidades\Atuendos\Tipos.cs" />
+    <Compile Include="Entidades\Calificaciones\Calificacion.cs" />
     <Compile Include="Entidades\Clima\ApiUxInfo.cs" />
     <Compile Include="Entidades\Clima\ApiUxService.cs" />
     <Compile Include="Entidades\Clima\WeatherService.cs" />
