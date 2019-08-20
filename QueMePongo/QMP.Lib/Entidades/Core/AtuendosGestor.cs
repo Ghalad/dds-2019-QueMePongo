@@ -136,6 +136,25 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
         #endregion OPERACIONES
 
+        public void OrdenarPorCalificacionDeAtuendo()
+        {
+            List<Atuendo> listaOrdenada = new List<Atuendo>();
+            Atuendo atuendoAux;
+
+            for (int i = 0; i < this.Atuendos.Count; i++)
+            { //burbujeo
+                for ( int j = 0 ; j < this.Atuendos.Count - i ; j++ )
+                {
+                    if(this.Atuendos[j].ObtenerPuntaje() < this.Atuendos[j + 1].ObtenerPuntaje())
+                    {
+                        atuendoAux = this.Atuendos[j];
+                        this.Atuendos[j] = this.Atuendos[j + 1];
+                        this.Atuendos[j + 1] = atuendoAux;
+                    }
+                }
+            }return;
+
+        }
 
 
 

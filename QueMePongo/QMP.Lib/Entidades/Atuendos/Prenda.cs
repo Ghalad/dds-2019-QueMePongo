@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -9,6 +10,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         private List<Caracteristica> Caracteristicas { get; set; }
         public Image Imagen { get; set; }
         private static int RESOLUCION = 140; // Esto se podria setear por archivo de configuracion
+        public Calificacion Calificacion;
 
         public Prenda()
         {
@@ -68,6 +70,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             }
             else
                 throw new Exception("No se puede agregar una imagen nula");
+        }
+
+        public int ObtenerPuntaje()
+        {
+            return this.Calificacion.ObtenerPuntaje();
         }
 
 

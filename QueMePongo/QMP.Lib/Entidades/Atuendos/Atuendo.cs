@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+using System;
 using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
@@ -7,7 +8,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     {
         public string Id { get; set; }
         public List<Prenda> Prendas { get; set; }
-        private bool? Aceptado { get; set; }        
+        private bool? Aceptado { get; set; }
+        public Calificacion Calificacion { get; set; }
 
         public Atuendo()
         {
@@ -58,6 +60,27 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public void Deshacer()
         {
             this.Aceptado = null;
+        }
+
+        internal int ObtenerPuntaje()
+        {
+            int puntajePorPrendas = 0;
+            int puntajeAtuendo = this.Calificacion.ObtenerPuntaje() * this.CantidadDePrendas();
+            // ^ suponiendo que el puntaje del atuendo es el promedio del de las prendas
+
+            foreach (Prenda p in this.Prendas)
+            {
+                puntajePorPrendas = puntajePorPrendas + p.ObtenerPuntaje();
+            }
+
+            if(puntajePorPrendas > puntajeAtuendo)
+            {
+                return puntajePorPrendas;
+            }
+            else
+            {
+                return puntajeAtuendo;
+            }
         }
     }
 }
