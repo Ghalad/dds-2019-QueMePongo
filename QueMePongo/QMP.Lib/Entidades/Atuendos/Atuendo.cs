@@ -44,6 +44,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public void Aceptar()
         {
             this.Aceptado = true;
+            foreach(Prenda p in Prendas)
+            {
+                p.MarcarComoUsada();
+            }
         }
 
         /// <summary>
@@ -81,6 +85,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             {
                 return puntajeAtuendo;
             }
+        }
+
+        internal bool TienePrendasUsadas()
+        {
+            foreach(Prenda p in Prendas)
+            {
+                if (p.EstaEnUso())
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

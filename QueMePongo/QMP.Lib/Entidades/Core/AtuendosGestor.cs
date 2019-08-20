@@ -71,6 +71,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                     this.Atuendos.Add(atuendo);
                 }
             }
+            this.FiltrarAtuendosPrendasUsadas();
+        }
+
+        private void FiltrarAtuendosPrendasUsadas()
+        {
+            foreach(Atuendo a in Atuendos)
+            {
+                if (a.TienePrendasUsadas())
+                {
+                    this.Atuendos.Remove(a);
+                }
+            }
         }
 
         /// <summary>

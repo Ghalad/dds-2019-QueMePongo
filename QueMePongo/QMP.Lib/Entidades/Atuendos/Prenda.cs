@@ -10,7 +10,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         private List<Caracteristica> Caracteristicas { get; set; }
         public Image Imagen { get; set; }
         private static int RESOLUCION = 140; // Esto se podria setear por archivo de configuracion
-        public Calificacion Calificacion;
+        public Calificacion Calificacion { get; set; }
+        private DateTime fechaDeUso { get; set; }
 
         public Prenda()
         {
@@ -45,6 +46,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
 
+
         /// <summary>
         /// Permite agregar una imagen a la prenda y normalizarla
         /// </summary>
@@ -70,6 +72,24 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             }
             else
                 throw new Exception("No se puede agregar una imagen nula");
+        }
+        public void MarcarComoUsada()
+        {
+            this.fechaDeUso = DateTime.Now;
+            return;
+        }
+
+        public bool EstaEnUso()
+        {
+            int diasQueSeUsaUnaPrenda = 2;
+            if((DateTime.Now - fechaDeUso).TotalDays > diasQueSeUsaUnaPrenda)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public int ObtenerPuntaje()
