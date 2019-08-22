@@ -98,5 +98,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             }
             return false;
         }
+
+        internal int NivelDeAbrigo()
+        {
+            int suma = 0;
+            int valorAux;
+
+            foreach(Prenda p in Prendas)
+            {
+                valorAux = Tipos.GetInstance().ObtenerNivelDeAbrigo(p.ObtenerCaracteristica("TIPO"));
+                suma = suma + valorAux;
+            }
+
+            return suma;
+        }
     }
 }

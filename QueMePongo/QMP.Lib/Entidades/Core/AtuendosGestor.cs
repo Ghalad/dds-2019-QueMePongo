@@ -146,6 +146,72 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
+        
+        public void FiltrarAtuendosPorClima2(string RelacionConClima)
+        {
+            int NivelMinimoDeAbrigo = this.DefinirNivelDeAbrigo(RelacionConClima);
+            int NivelMaximoDeAbrigo = NivelMinimoDeAbrigo + 5;
+
+            foreach(Atuendo a in Atuendos)
+            {
+                if(a.NivelDeAbrigo() < NivelMinimoDeAbrigo || a.NivelDeAbrigo() > NivelMaximoDeAbrigo )
+                {
+                    Atuendos.Remove(a);
+                }
+            }
+
+        }
+
+        private int DefinirNivelDeAbrigo(string RelacionConClima)
+        {
+            int IndiceDeCalefaccion = this.DefinirIndiceCalefaccion(RelacionConClima);
+            int InicioTemperaturaFria = 4 + IndiceDeCalefaccion;
+            int InicioTemperaturaMedia = 10 + IndiceDeCalefaccion;
+            int InicioTemperaturaCalurosa = 18 + IndiceDeCalefaccion;
+            int InicioTemperaturaMuyCalurosa = 23 + IndiceDeCalefaccion;
+            //^ se pueden agregar mas niveles
+
+            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
+            decimal temperatura = srvClima.ObtenerTemperatura();
+
+            switch (temperatura)
+            {
+                case decimal n when n < InicioTemperaturaFria:
+                    return 22;
+                case decimal n when n < InicioTemperaturaMedia:
+                    return 17;
+                case decimal n when n < InicioTemperaturaCalurosa:
+                    return 12;
+                case decimal n when n < InicioTemperaturaMuyCalurosa:
+                    return 7;
+                default:
+                    return 10; // este caso nunca se ejecutaría pero me tira error si no lo pongo
+            }
+        }
+
+        private int DefinirIndiceCalefaccion(string RelacionConClima)
+        {
+            if(RelacionConClima.ToUpper() == "MUY FRIOLENTO")
+            {
+                return 7;
+            }else if(RelacionConClima.ToUpper() == "FRIOLENTO")
+            {
+                return 4;
+            }else if(RelacionConClima.ToUpper() == "NORMAL")
+            {
+                return 0;
+            }else if(RelacionConClima.ToUpper() == "CALUROSO")
+            {
+                return -4;
+            }else if(RelacionConClima.ToUpper() == "MUY CALUROSO")
+            {
+                return -7;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         #endregion OPERACIONES
 
         public void OrdenarPorCalificacionDeAtuendo()

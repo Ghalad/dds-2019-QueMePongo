@@ -51,7 +51,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             gestor.GenerarAtuendos();
             gestor.FiltrarAtuendosPorReglas();
             gestor.FiltrarAtuendosPorEvento();
-            gestor.FiltrarAtuendosPorClima();
+            //gestor.FiltrarAtuendosPorClima();
+            gestor.FiltrarAtuendosPorClima2(this.Usuario.RelacionConClima);
 
             this.Atuendos = gestor.ObtenerAtuendos();
             this.NotificarUsuario();
