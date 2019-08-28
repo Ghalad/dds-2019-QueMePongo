@@ -96,5 +96,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             this.Usuario.NotificarPedidoResuelto(this);
         }
+
+
+        //obsoleta
+        public void AceptarPrimerAtuendo()
+        {
+            this.Atuendos[0].Aceptar();
+        }
     }
 }

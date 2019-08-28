@@ -223,6 +223,282 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Assert.IsTrue(usr.Pedido.ObtenerAtuendos().Count >= 0);
         }
 
+        [TestMethod]
+        public void GuardarropasCompartido()
+        {
+            int maxPrendas = 10;
+            Usuario usr = new UsrGratis(maxPrendas);
+            Usuario usr2 = new UsrGratis(maxPrendas);
+            Guardarropa g1 = new Guardarropa("g1", maxPrendas);
+            Prenda prenda1;
+            Prenda prenda2;
+            Prenda prenda3;
+            Prenda prenda4;
+            Prenda prenda5;
+            Prenda prenda6;
+            Prenda prenda7;
+            Prenda prenda8;
+            Prenda prenda9;
+            usr.SetRelacionConClima("CALUROSO");
+            usr2.SetRelacionConClima("CALUROSO");
+            Regla regla;
+            List<Caracteristica> listaCar;
+
+            PrendaBuilder pb = new PrendaBuilder();
+
+            #region PRENDAS
+            pb.CrearPrenda()
+              .ConCategoria("accesorio")
+              .ConTipo("gorra")
+              .ConMaterial("lana")
+              .ConColor("verde")
+              .ConColor("negro")
+              .ConEvento("casual");
+            prenda1 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("remera_manga_corta")
+              .ConMaterial("algodon")
+              .ConColor("azul")
+              .ConColor("blanco")
+              .ConEvento("casual");
+            prenda2 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("campera_de_lluvia")
+              .ConMaterial("poliester")
+              .ConColor("negro")
+              .ConColor("azul")
+              .ConEvento("casual");
+            prenda3 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pantalon_largo")
+              .ConMaterial("poliester")
+              .ConColor("negro")
+              .ConEvento("casual")
+              .ConEvento("trabajo");
+            prenda4 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("calzado")
+              .ConTipo("panchas")
+              .ConMaterial("lana")
+              .ConColor("azul")
+              .ConEvento("casual")
+              .ConEvento("casamiento");
+            prenda5 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("calzado")
+              .ConTipo("ojotas")
+              .ConMaterial("goma")
+              .ConColor("azul")
+              .ConEvento("casual");
+            prenda6 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("remera_manga_larga")
+              .ConEvento("casual")
+              .ConEvento("trabajo");
+            prenda7 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("calzado")
+              .ConTipo("zapatilla_de_correr")
+              .ConEvento("casual")
+              .ConEvento("casamiento");
+            prenda8 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pantalon_corto")
+              .ConEvento("casual");
+            prenda9 = pb.ObtenerPrenda();
+            #endregion PRENDAS
+            #region GUARDARROPAS
+            g1.AgregarPrenda(prenda1);
+            g1.AgregarPrenda(prenda2);
+            g1.AgregarPrenda(prenda3);
+            g1.AgregarPrenda(prenda4);
+            g1.AgregarPrenda(prenda5);
+            g1.AgregarPrenda(prenda6);
+            g1.AgregarPrenda(prenda7);
+            g1.AgregarPrenda(prenda8);
+            g1.AgregarPrenda(prenda9);
+            #endregion
+
+            usr.AgregarGuardarropa(g1);
+            usr2.AgregarGuardarropa(g1);
+
+            Evento evento = new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo");
+
+            #region REGLAS
+
+            #region SUPERPOSICION
+            // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 1
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "1"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 2
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "2"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 3
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "3"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 4
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "4"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan prendas con superposicion de grado mayor, sin tener prendas son superposicion de grado menor
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "1"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "4"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan prendas con superposicion de grado mayor, sin tener prendas son superposicion de grado menor
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "1"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "3"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            #region a
+            /* HAY QUE ARREGLAS ESTO
+            // descarta los atuendos que tengan prendas con superposicion de grado mayor, sin tener prendas son superposicion de grado menor
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "2"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "4"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan prendas con superposicion de grado mayor, sin tener prendas son superposicion de grado menor
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "2"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            listaCar.Add(new Caracteristica("superposicion", "3"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(0), listaCar));
+            usr.AgregarRegla(regla);
+            */
+            #endregion a
+            #endregion SUPERPOSICION
+
+            // descarta los atuendos que no tengan prendas en la parte superior
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "superior"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que no tengan prendas en la parte inferior
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "inferior"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que no tengan calzado
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "calzado"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
+            usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan mas de 1 calzado
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "calzado"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            usr.AgregarRegla(regla);
+            #endregion REGLAS
+
+
+            Pedido pedido = new Pedido(usr, usr.Guardarropas.Find(g => g.Id.Equals("g1")).ObtenerPrendas(), usr.Reglas, evento);
+
+            QueMePongo qmp = QueMePongo.GetInstance();
+
+            qmp.AgregarPedido(pedido);
+
+            Assert.IsTrue(usr.Pedido == null);
+            qmp.DesencolarPedido();
+
+            Console.WriteLine("USUARIO 1 :");
+            foreach (Atuendo a in usr.Pedido.ObtenerAtuendos())
+            {
+                int i = 1;
+                Console.WriteLine(string.Format("Atuendo id={0}", a.Id));
+                foreach (Prenda p in a.Prendas)
+                {
+                    p.MostrarPorPantalla();
+                }
+                Console.WriteLine("");
+            }
+            Assert.AreEqual(usr.Pedido.ObtenerAtuendos().Count, 41);
+
+            usr.Pedido.AceptarPrimerAtuendo();
+
+            pedido = new Pedido(usr2, usr2.Guardarropas.Find(g => g.Id.Equals("g1")).ObtenerPrendas(), usr.Reglas, evento);
+
+            qmp.AgregarPedido(pedido);
+            qmp.DesencolarPedido();
+
+            Console.WriteLine("USUARIO 2:");
+            foreach (Atuendo a in usr2.Pedido.ObtenerAtuendos())
+            {
+                int i = 1;
+                Console.WriteLine(string.Format("Atuendo id={0}", a.Id));
+                foreach (Prenda p in a.Prendas)
+                {
+                    p.MostrarPorPantalla();
+                }
+                Console.WriteLine("");
+            }
+            Assert.IsTrue(usr2.Pedido.ObtenerAtuendos().Count == 6);
+        }
+
+
         [TestMethod()]
         [Obsolete]
         public void CreacionDePedido()
