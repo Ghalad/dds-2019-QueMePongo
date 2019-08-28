@@ -20,6 +20,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             int maxPrendas = 10;
             Usuario usr = new UsrGratis(maxPrendas);
             usr.CrearGuardarropa("g1");
+            usr.SetRelacionConClima("CALUROSO");
             Regla regla;
             List<Caracteristica> listaCar;
 
@@ -221,10 +222,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             }
             Assert.IsTrue(usr.Pedido.ObtenerAtuendos().Count >= 0);
         }
-
-
-
-
 
         [TestMethod()]
         [Obsolete]

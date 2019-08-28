@@ -13,6 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         private int Maximo { get; set; }
         public string Id { get; set; }
         public Pedido Pedido { get; set; }
+        public String RelacionConClima { get; set; }
 
         protected Usuario(int maximo)
         {
@@ -31,6 +32,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
                 this.Guardarropas.Add(new Guardarropa(idGuardarropa, this.Maximo));
             else
                 throw new Exception("ID de guardarropa requerido.");
+        }
+
+        public void AgregarGuardarropa(Guardarropa guardarropa)
+        {
+            if (guardarropa != null)
+                this.Guardarropas.Add(guardarropa);
+            else
+                throw new Exception("El guardarropas no debe ser nulo.");
         }
 
         /// <summary>
@@ -61,6 +70,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
                 throw new Exception("Regla requerida.");
         }
 
+        public void SetRelacionConClima(string relacion)
+        {
+            this.RelacionConClima = relacion;
+        }
 
         public void NotificarPedidoResuelto(Pedido pedido)
         {

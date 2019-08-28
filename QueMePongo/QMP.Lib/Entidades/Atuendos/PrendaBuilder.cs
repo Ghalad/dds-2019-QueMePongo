@@ -120,6 +120,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                                 {
                                     this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
                                     this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
+                                    this.Prenda.AgregarCaracteristica("ABRIGO", Tipos.GetInstance().ObtenerAbrigo(tipo));
                                     this.AgregarClimas(tipo);
                                 }
                                 else

@@ -75,6 +75,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "3"));
             this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "4"));
 
+            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "1"));
+            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "2"));
+            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "3"));
+            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "4"));
+            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "5"));
+            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "6"));
+
             this.Caracteristicas.Add(new Caracteristica("MATERIAL", "ALGODON"));
             this.Caracteristicas.Add(new Caracteristica("MATERIAL", "CUERO"));
             this.Caracteristicas.Add(new Caracteristica("MATERIAL", "HILO"));
@@ -224,6 +231,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
 
+
         /// <summary>
         /// Valida que la CATEGORIA se corresponda con el TIPO
         /// </summary>
@@ -295,6 +303,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public string ObtenerSuperposicion(string tipo)
         {
             foreach (var c in this.Superposiones)
+                if (c.EsLaMismaClave(tipo))
+                    return c.Valor;
+            return null;
+        }
+        public string ObtenerAbrigo(string tipo)
+        {
+            foreach (var c in this.NivelDeAbrigo)
                 if (c.EsLaMismaClave(tipo))
                     return c.Valor;
             return null;

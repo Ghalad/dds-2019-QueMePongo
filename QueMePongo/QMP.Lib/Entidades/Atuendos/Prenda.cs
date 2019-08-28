@@ -16,6 +16,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public Prenda()
         {
             this.Caracteristicas = new List<Caracteristica>();
+            this.fechaDeUso = new DateTime(1990, 12, 13);
         }
 
 
@@ -84,11 +85,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             int diasQueSeUsaUnaPrenda = 2;
             if((DateTime.Now - fechaDeUso).TotalDays > diasQueSeUsaUnaPrenda)
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 

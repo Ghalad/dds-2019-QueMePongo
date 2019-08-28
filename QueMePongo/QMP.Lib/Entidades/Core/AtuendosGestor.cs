@@ -76,13 +76,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
         private void FiltrarAtuendosPrendasUsadas()
         {
-            foreach(Atuendo a in Atuendos)
+            List<Atuendo> removidos = new List<Atuendo>();
+
+            foreach (Atuendo a in Atuendos)
             {
                 if (a.TienePrendasUsadas())
                 {
-                    this.Atuendos.Remove(a);
+                    removidos.Add(a);
                 }
             }
+
+            this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
 
         /// <summary>
@@ -149,6 +153,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         
         public void FiltrarAtuendosPorClima2(string RelacionConClima)
         {
+            List<Atuendo> removidos = new List<Atuendo>();
+
             int NivelMinimoDeAbrigo = this.DefinirNivelDeAbrigo(RelacionConClima);
             int NivelMaximoDeAbrigo = NivelMinimoDeAbrigo + 5;
 
@@ -156,10 +162,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             {
                 if(a.NivelDeAbrigo() < NivelMinimoDeAbrigo || a.NivelDeAbrigo() > NivelMaximoDeAbrigo )
                 {
-                    Atuendos.Remove(a);
+                    removidos.Add(a);
                 }
             }
 
+            this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
 
         private int DefinirNivelDeAbrigo(string RelacionConClima)
@@ -191,25 +198,33 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
         private int DefinirIndiceCalefaccion(string RelacionConClima)
         {
-            if(RelacionConClima.ToUpper() == "MUY FRIOLENTO")
+            try
             {
-                return 7;
-            }else if(RelacionConClima.ToUpper() == "FRIOLENTO")
-            {
-                return 4;
-            }else if(RelacionConClima.ToUpper() == "NORMAL")
-            {
-                return 0;
-            }else if(RelacionConClima.ToUpper() == "CALUROSO")
-            {
-                return -4;
-            }else if(RelacionConClima.ToUpper() == "MUY CALUROSO")
-            {
-                return -7;
+                if (RelacionConClima.ToUpper() == "MUY FRIOLENTO")
+                {
+                    return 7;
+                } else if (RelacionConClima.ToUpper() == "FRIOLENTO")
+                {
+                    return 4;
+                } else if (RelacionConClima.ToUpper() == "NORMAL")
+                {
+                    return 0;
+                } else if (RelacionConClima.ToUpper() == "CALUROSO")
+                {
+                    return -4;
+                } else if (RelacionConClima.ToUpper() == "MUY CALUROSO")
+                {
+                    return -7;
+                }
+                else
+                {
+                    return 0;
+                }
+
             }
-            else
-            {
-                return 0;
+            catch{
+                throw new Exception("El usuario no tiene relacion con clima.");
+
             }
         }
         #endregion OPERACIONES
