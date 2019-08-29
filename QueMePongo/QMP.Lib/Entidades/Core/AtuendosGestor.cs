@@ -202,19 +202,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             {
                 if (RelacionConClima.ToUpper() == "MUY FRIOLENTO")
                 {
-                    return 7;
+                    return 6;
                 } else if (RelacionConClima.ToUpper() == "FRIOLENTO")
                 {
-                    return 4;
+                    return 3;
                 } else if (RelacionConClima.ToUpper() == "NORMAL")
                 {
                     return 0;
                 } else if (RelacionConClima.ToUpper() == "CALUROSO")
                 {
-                    return -4;
+                    return -3;
                 } else if (RelacionConClima.ToUpper() == "MUY CALUROSO")
                 {
-                    return -7;
+                    return -6;
                 }
                 else
                 {

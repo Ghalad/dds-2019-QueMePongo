@@ -81,7 +81,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             usr.Guardarropas.Find(g => g.Id.Equals("g1")).AgregarPrenda(pb.ObtenerPrenda());
             #endregion PRENDAS
 
-            Evento evento = new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo");
+            Evento evento = new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo", "UNICO");
 
             #region REGLAS
 
@@ -239,14 +239,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Prenda prenda7;
             Prenda prenda8;
             Prenda prenda9;
-            usr.SetRelacionConClima("CALUROSO");
-            usr2.SetRelacionConClima("CALUROSO");
             Regla regla;
             List<Caracteristica> listaCar;
 
-            PrendaBuilder pb = new PrendaBuilder();
 
             #region PRENDAS
+            PrendaBuilder pb = new PrendaBuilder();
             pb.CrearPrenda()
               .ConCategoria("accesorio")
               .ConTipo("gorra")
@@ -331,12 +329,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             g1.AgregarPrenda(prenda8);
             g1.AgregarPrenda(prenda9);
             #endregion
-
-            usr.AgregarGuardarropa(g1);
-            usr2.AgregarGuardarropa(g1);
-
-            Evento evento = new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo");
-
             #region REGLAS
 
             #region SUPERPOSICION
@@ -453,8 +445,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
             usr.AgregarRegla(regla);
             #endregion REGLAS
+            #region USUARIO
+            usr.SetRelacionConClima("CALUROSO");
+            usr2.SetRelacionConClima("CALUROSO");
+            usr.AgregarGuardarropa(g1);
+            usr2.AgregarGuardarropa(g1);
+            #endregion
 
-
+            Evento evento = new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo", "UNICO");
             Pedido pedido = new Pedido(usr, usr.Guardarropas.Find(g => g.Id.Equals("g1")).ObtenerPrendas(), usr.Reglas, evento);
 
             QueMePongo qmp = QueMePongo.GetInstance();

@@ -39,6 +39,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.TipoCaracteristicas.Add("MATERIAL");
             this.TipoCaracteristicas.Add("COLOR");
             this.TipoCaracteristicas.Add("SUPERPOSICION");
+            this.TipoCaracteristicas.Add("ABRIGO");
             this.TipoCaracteristicas.Add("CLIMA");
             this.TipoCaracteristicas.Add("EVENTO");
             

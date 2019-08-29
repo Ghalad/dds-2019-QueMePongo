@@ -62,6 +62,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private void AtenderPedido(Pedido pedido)
         {
             pedido.Resolver();
+            if (pedido.SeRepite())
+            {
+                this.AgregarPedido(pedido.ObtenerSiguiente());
+            }
         }
 
 

@@ -58,6 +58,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             this.NotificarUsuario();
         }
 
+        public bool SeRepite()
+        {
+            return (Evento.Repeticion != "UNICO");
+        }
+
         /// <summary>
         /// Obtiene un atuendo que no haya sido marcado antes
         /// </summary>
