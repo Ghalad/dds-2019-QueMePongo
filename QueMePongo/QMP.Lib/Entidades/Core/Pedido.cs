@@ -58,9 +58,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             this.NotificarUsuario();
         }
 
+        public Pedido ObtenerSiguiente()
+        {
+            return new Pedido(this.Usuario, this.Prendas, this.Reglas, Evento.ObtenerSiguiente());
+        }
+
         public bool SeRepite()
         {
-            return (Evento.Repeticion != "UNICO");
+            return (Evento.SeRepite());
         }
 
         /// <summary>
