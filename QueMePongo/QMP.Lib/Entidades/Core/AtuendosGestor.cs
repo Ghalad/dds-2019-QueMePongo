@@ -49,7 +49,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 throw new Exception("Atuendos no procesados");
             return this.Atuendos;
         }
-
         /// <summary>
         /// Setea una coleccion de Atuendos con todas las combinaciones de prendas posibles.
         /// </summary>
@@ -73,7 +72,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             }
             this.FiltrarAtuendosPrendasUsadas();
         }
-
         private void FiltrarAtuendosPrendasUsadas()
         {
             List<Atuendo> removidos = new List<Atuendo>();
@@ -88,7 +86,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
-
         /// <summary>
         /// Aplica todas las reglas a la lista de atuendos, quitando los que no son validos.
         /// </summary>
@@ -110,7 +107,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
-
         /// <summary>
         /// Filtra la lista de atuendos segun el tipo de evento
         /// </summary>
@@ -129,106 +125,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
-
-        /// <summary>
-        /// Filtra la lista de atuendos segun el clima del lugar donde se desarrollara el evento
-        /// </summary>
-        public void FiltrarAtuendosPorClima()
+        public void FiltrarAtuendosPorClima(string RelacionConClima)
         {
             List<Atuendo> removidos = new List<Atuendo>();
-
-            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
-
-            Regla regla = new Regla();
-            List<Caracteristica> listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("CLIMA", Tipos.GetInstance().TraducirTemperatura(srvClima.ObtenerTemperatura())));
-            regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
-
-            foreach(Atuendo atuendo in this.Atuendos)
-                if (!regla.Validar(atuendo))
-                    removidos.Add(atuendo);
-
-            this.Atuendos.RemoveAll(a => removidos.Contains(a));
-        }
-        
-        public void FiltrarAtuendosPorClima2(string RelacionConClima)
-        {
-            List<Atuendo> removidos = new List<Atuendo>();
-
-            int NivelMinimoDeAbrigo = this.DefinirNivelDeAbrigo(RelacionConClima);
-            int NivelMaximoDeAbrigo = NivelMinimoDeAbrigo + 5;
 
             foreach(Atuendo a in Atuendos)
             {
-                if(a.NivelDeAbrigo() < NivelMinimoDeAbrigo || a.NivelDeAbrigo() > NivelMaximoDeAbrigo )
-                {
+                if (!this.CumpleNivelDeAbrigo(RelacionConClima, a))
                     removidos.Add(a);
-                }
             }
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
-
-        private int DefinirNivelDeAbrigo(string RelacionConClima)
-        {
-            int IndiceDeCalefaccion = this.DefinirIndiceCalefaccion(RelacionConClima);
-            int InicioTemperaturaFria = 4 + IndiceDeCalefaccion;
-            int InicioTemperaturaMedia = 10 + IndiceDeCalefaccion;
-            int InicioTemperaturaCalurosa = 18 + IndiceDeCalefaccion;
-            int InicioTemperaturaMuyCalurosa = 23 + IndiceDeCalefaccion;
-            //^ se pueden agregar mas niveles
-
-            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
-            decimal temperatura = srvClima.ObtenerTemperatura();
-
-            switch (temperatura)
-            {
-                case decimal n when n < InicioTemperaturaFria:
-                    return 22;
-                case decimal n when n < InicioTemperaturaMedia:
-                    return 17;
-                case decimal n when n < InicioTemperaturaCalurosa:
-                    return 12;
-                case decimal n when n < InicioTemperaturaMuyCalurosa:
-                    return 7;
-                default:
-                    return 10; // este caso nunca se ejecutaría pero me tira error si no lo pongo
-            }
-        }
-
-        private int DefinirIndiceCalefaccion(string RelacionConClima)
-        {
-            try
-            {
-                if (RelacionConClima.ToUpper() == "MUY FRIOLENTO")
-                {
-                    return 6;
-                } else if (RelacionConClima.ToUpper() == "FRIOLENTO")
-                {
-                    return 3;
-                } else if (RelacionConClima.ToUpper() == "NORMAL")
-                {
-                    return 0;
-                } else if (RelacionConClima.ToUpper() == "CALUROSO")
-                {
-                    return -3;
-                } else if (RelacionConClima.ToUpper() == "MUY CALUROSO")
-                {
-                    return -6;
-                }
-                else
-                {
-                    return 0;
-                }
-
-            }
-            catch{
-                throw new Exception("El usuario no tiene relacion con clima.");
-
-            }
-        }
-        #endregion OPERACIONES
-
         public void OrdenarPorCalificacionDeAtuendo()
         {
             List<Atuendo> listaOrdenada = new List<Atuendo>();
@@ -249,6 +157,158 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
         }
 
+        #endregion OPERACIONES
+
+        #region FUNCIONES AUXILIARES
+        private bool CumpleNivelDeAbrigo(string relacionConClima, Atuendo a)
+        {
+            int abrigoSuperior = a.AbrigoCategoria("SUPERIOR");
+            int abrigoInferior = a.AbrigoCategoria("INFERIOR");
+            int abrigoCalzado = a.AbrigoCategoria("CALZADO");
+            int abrigoExtra = a.AbrigoCategoria("ACCESORIO");
+
+            int minimoSuperior = 0, maximoSuperior = 0, minimoInferior = 0, maximoInferior = 0, minimoCalzado = 0, maximoCalzado = 0, minimoExtra = 0, maximoExtra = 0;
+            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
+
+            /// Se define cuál es la sensibilidad relativa del usuario con respecto al clima 
+            /// y se setean los máximos y mínimos de abrigos por seccion
+            switch (this.DefinirSensibilidadClima(relacionConClima, srvClima.ObtenerTemperatura()))
+            {
+                case "MUCHO FRIO": //Hace "MUCHO FRIO"
+                    minimoSuperior = 12;
+                    maximoSuperior = 19;
+                    minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
+                    maximoInferior = 4;
+                    minimoCalzado = 3; //si o si con medias
+                    maximoCalzado = 3;
+                    minimoExtra = 1; //si o si con un accesorio para el frío
+                    maximoExtra = 2;
+                    break;
+                case "FRIO": //Hace "FRIO"
+                    minimoSuperior = 7;
+                    maximoSuperior = 15;
+                    minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
+                    maximoInferior = 4;
+                    minimoCalzado = 2; //con medias o no
+                    maximoCalzado = 3;
+                    minimoExtra = 0;
+                    maximoExtra = 2;
+                    break;
+                case "AMBIENTE": //Hay temperatura "AMBIENTE"
+                    minimoSuperior = 4;
+                    maximoSuperior = 7;
+                    minimoInferior = 3; //pantalon corto y pantalon largo
+                    maximoInferior = 4; 
+                    minimoCalzado = 2; //zapatillas con o sin medias
+                    maximoCalzado = 3;
+                    minimoExtra = 0;
+                    maximoExtra = 2;
+                    break;
+                case "CALOR": //Hace "CALOR"
+                    minimoSuperior = 3;
+                    maximoSuperior = 4;
+                    minimoInferior = 3; //sólo pantalón largo
+                    maximoInferior = 3;
+                    minimoCalzado = 2; //sin medias
+                    maximoCalzado = 2;
+                    minimoExtra = 0; //sin accesorio
+                    maximoExtra = 0;
+                    break;
+                case "MUCHO CALOR": //Hace "MUCHO CALOR"
+                    minimoSuperior = 2;
+                    maximoSuperior = 3;
+                    minimoInferior = 4; //sólo pantalón largo
+                    maximoInferior = 4;
+                    minimoCalzado = 2; //si o si con medias
+                    maximoCalzado = 3;
+                    minimoExtra = 0; //si o si con un accesorio para el frío
+                    maximoExtra = 0;
+                    break;
+            }
+
+            return (this.EstaEntre(minimoSuperior, abrigoSuperior, maximoSuperior)
+                    && this.EstaEntre(minimoInferior, abrigoInferior, maximoInferior)
+                    && this.EstaEntre(minimoCalzado, abrigoCalzado, maximoCalzado)
+                    && this.EstaEntre(minimoExtra, abrigoExtra, maximoExtra));
+
+        }
+        /// <summary>
+        ///  Se define cuál es la sensibilidad relativa del usuario con la temperatura
+        /// </summary>
+        /// <param name="relacionConClima"></param>
+        /// <param name="temperatura"></param>
+        /// <returns></returns>
+        private string DefinirSensibilidadClima(string relacionConClima, decimal temperatura)
+        {
+            int sensibilidadRelativa = 0;
+            int sensibilidad = 0;
+
+            /// Relaciona el clima con la sensibilidad del usuario (info abajo)
+            /// por ejemplo: si el clima es de temperatura media pero el usuario es friolento, el usuario la sentirá un nivel más frío
+            ///                osea sentirá que hace frío. Si el clima es de temperatura fria y, de nuevo, el usuario es friolento, la
+            ///                sentirá como muy fría.
+            ///                Si hace calor y el usuario es muy friolento baja dos niveles: sentirá frío.
+            ///                Si hace calor y el usuario es caluroso sube un nivel: sentirá mucho calor.
+            ///                El nivel máximo y mínimo de sensibilidad es mucho calor y mucho frío relativamente. El usuario no puede 
+            ///                ser más o menos sensible que eso
+            switch (relacionConClima)
+            {
+                case "MUY FRIOLENTO":
+                    sensibilidadRelativa = -2;
+                    break;
+                case "FRIOLENTO":
+                    sensibilidadRelativa = -1;
+                    break;
+                case "NORMAL":
+                    sensibilidadRelativa = 0;
+                    break;
+                case "CALUROSO":
+                    sensibilidadRelativa = 1;
+                    break;
+                case "MUY CALUROSO":
+                    sensibilidadRelativa = 2;
+                    break;
+            }
+            switch (temperatura)
+            {
+                case decimal n when n < 4: //Temperatura MUY FRIA
+                    sensibilidad = -2;
+                    break;
+                case decimal n when n < 10: //Temperatura FRIA
+                    sensibilidad = -1;
+                    break;
+                case decimal n when n < 15: //Temperatura AMBIENTE
+                    sensibilidad = 0;
+                    break;
+                case decimal n when n < 20: //Temperatura CALOR
+                    sensibilidad = 1;
+                    break;
+                default: //Temperatura MUCHO CALOR
+                    sensibilidad = 2;
+                    break;
+            }
+
+            switch (sensibilidad + sensibilidadRelativa)
+            {
+                case int n when n <= -2 :
+                    return "MUCHO FRIO";
+                case int n when n == -1 :
+                    return "FRIO";
+                case int n when n == 0 :
+                    return "AMBIENTE";
+                case int n when n == 1 :
+                    return "CALOR";
+                default:
+                    return "MUCHO CALOR";
+            }
+        }
+        private bool EstaEntre(int minimo, int valor, int maximo)
+        {
+            return (minimo <= valor && valor <= maximo);
+        }
+        #endregion
+
+
 
 
 
@@ -266,6 +326,27 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 Console.WriteLine("\n");
                 i++;
             }
+        }
+        /// <summary>
+        /// Filtra la lista de atuendos segun el clima del lugar donde se desarrollara el evento
+        /// </summary>
+        [Obsolete]
+        public void FiltrarAtuendosPorClima2()
+        {
+            List<Atuendo> removidos = new List<Atuendo>();
+
+            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
+
+            Regla regla = new Regla();
+            List<Caracteristica> listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("CLIMA", Tipos.GetInstance().TraducirTemperatura(srvClima.ObtenerTemperatura())));
+            regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
+
+            foreach(Atuendo atuendo in this.Atuendos)
+                if (!regla.Validar(atuendo))
+                    removidos.Add(atuendo);
+
+            this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
     }
 }

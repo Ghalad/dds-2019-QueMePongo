@@ -209,8 +209,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.TipoPrendaxClima.Add(new Caracteristica("OJOTAS",               "CALIDO"));
 
             //El nivel de abrigo que le corresponde a cada prenda
+            //CADA VEZ QUE SE ACTUALICE, ACTUALIZAR AtuendosGestor.CumpleNivelDeAbrigo()
             this.NivelDeAbrigo.Add(new Caracteristica("GORRA",                "2"));
             this.NivelDeAbrigo.Add(new Caracteristica("SOMBRERO",             "1"));
+
             this.NivelDeAbrigo.Add(new Caracteristica("MUSCULOSA",            "2"));
             this.NivelDeAbrigo.Add(new Caracteristica("REMERA_MANGA_CORTA",   "3"));
             this.NivelDeAbrigo.Add(new Caracteristica("REMERA_MANGA_LARGA",   "4"));
@@ -219,15 +221,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.NivelDeAbrigo.Add(new Caracteristica("SWEATER",              "5"));
             this.NivelDeAbrigo.Add(new Caracteristica("CAMPERA_DE_ABRIGO",    "6"));
             this.NivelDeAbrigo.Add(new Caracteristica("CAMPERA_DE_LLUVIA",    "4"));
+
             this.NivelDeAbrigo.Add(new Caracteristica("PANTALON_CORTO",       "3"));
             this.NivelDeAbrigo.Add(new Caracteristica("PANTALON_LARGO",       "4"));
             this.NivelDeAbrigo.Add(new Caracteristica("POLLERA",              "3"));
+
             this.NivelDeAbrigo.Add(new Caracteristica("MEDIAS",               "1"));
-            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATO_TACO_ALTO",     "1"));
-            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "1"));
-            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "1"));
-            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "1"));
-            this.NivelDeAbrigo.Add(new Caracteristica("PANCHAS",              "1"));
+            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATO_TACO_ALTO",     "2"));
+            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "2"));
+            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "2"));
+            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "2"));
+            this.NivelDeAbrigo.Add(new Caracteristica("PANCHAS",              "2"));
             this.NivelDeAbrigo.Add(new Caracteristica("OJOTAS",               "0"));
         }
 

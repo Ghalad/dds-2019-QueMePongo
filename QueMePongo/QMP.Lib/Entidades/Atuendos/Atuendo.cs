@@ -112,5 +112,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
             return suma;
         }
+
+        public int AbrigoCategoria(string tipo)
+        {
+            foreach (Prenda p in Prendas)
+            {
+                if(p.TieneCaracteristica(new Caracteristica("TIPO", tipo)))
+                {
+                    return Int32.Parse(p.ObtenerCaracteristica("ABRIGO"));
+                }
+            }
+            throw new Exception("No se pudo encontrar el nivel de abrigo de la prenda.");
+        }
     }
 }
