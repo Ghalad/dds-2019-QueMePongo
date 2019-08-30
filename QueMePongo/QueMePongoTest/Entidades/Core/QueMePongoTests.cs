@@ -235,10 +235,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Prenda prenda3;
             Prenda prenda4;
             Prenda prenda5;
-            Prenda prenda6;
             Prenda prenda7;
             Prenda prenda8;
             Prenda prenda9;
+            Prenda prenda10;
             Regla regla;
             List<Caracteristica> listaCar;
 
@@ -291,14 +291,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             prenda5 = pb.ObtenerPrenda();
 
             pb.CrearPrenda()
-              .ConCategoria("calzado")
-              .ConTipo("ojotas")
-              .ConMaterial("goma")
-              .ConColor("azul")
-              .ConEvento("casual");
-            prenda6 = pb.ObtenerPrenda();
-
-            pb.CrearPrenda()
               .ConCategoria("superior")
               .ConTipo("remera_manga_larga")
               .ConEvento("casual")
@@ -317,6 +309,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
               .ConTipo("pantalon_corto")
               .ConEvento("casual");
             prenda9 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("campera_de_abrigo")
+              .ConEvento("casual");
+            prenda10 = pb.ObtenerPrenda();
+
             #endregion PRENDAS
             #region GUARDARROPAS
             g1.AgregarPrenda(prenda1);
@@ -324,10 +323,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             g1.AgregarPrenda(prenda3);
             g1.AgregarPrenda(prenda4);
             g1.AgregarPrenda(prenda5);
-            g1.AgregarPrenda(prenda6);
             g1.AgregarPrenda(prenda7);
             g1.AgregarPrenda(prenda8);
             g1.AgregarPrenda(prenda9);
+            g1.AgregarPrenda(prenda10);
             #endregion
             #region REGLAS
 
@@ -444,6 +443,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             listaCar.Add(new Caracteristica("categoria", "calzado"));
             regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
             usr.AgregarRegla(regla);
+
+            // descarta los atuendos que tengan mas de 1 inferior
+            regla = new Regla();
+            listaCar = new List<Caracteristica>();
+            listaCar.Add(new Caracteristica("categoria", "inferior"));
+            regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            usr.AgregarRegla(regla);
             #endregion REGLAS
             #region USUARIO
             usr.SetRelacionConClima("CALUROSO");
@@ -473,7 +479,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
                 }
                 Console.WriteLine("");
             }
-            Assert.AreEqual(usr.Pedido.ObtenerAtuendos().Count, 41);
+            Assert.AreEqual(usr.Pedido.ObtenerAtuendos().Count, 30);
 
             usr.Pedido.AceptarPrimerAtuendo();
 
@@ -493,7 +499,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
                 }
                 Console.WriteLine("");
             }
-            Assert.IsTrue(usr2.Pedido.ObtenerAtuendos().Count == 6);
+            Assert.AreEqual(usr2.Pedido.ObtenerAtuendos().Count, 2);
         }
 
 

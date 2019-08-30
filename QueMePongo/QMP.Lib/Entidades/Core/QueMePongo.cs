@@ -8,15 +8,22 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     {
         private static QueMePongo Instance { get; set; }
 
-        private static Queue<Pedido> NuevosPedidos { get; set; }
-        private Thread ThreadPedidos { get; set; }
+        /// <summary>
+        /// Esto reemplazaría la Cola de pedidos. Es una lista enlazada ordenada por fecha de mas próximo a menos próximo
+        /// </summary>
+        private static NodoPedido PrimerPedido { get; set; }
         private static int TIEMPO_ESPERA; // Unidad: segundos
+        [Obsolete]
+        private Thread ThreadPedidos { get; set; }
+        [Obsolete]
+        private static Queue<Pedido> NuevosPedidos { get; set; }
         [Obsolete]
         public static bool killProcess = false;
 
         #region CONSTRUCTOR
         private QueMePongo()
         {
+            PrimerPedido = null;
             NuevosPedidos = new Queue<Pedido>();
             TIEMPO_ESPERA = 2; // Parametro que se podria levantar de la base o por archivo de configuracion.
             //ThreadPedidos = new Thread(new ThreadStart(AtenderPedido));
@@ -37,24 +44,28 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         public void AgregarPedido(Pedido pedido)
         {
             if (pedido != null)
-                NuevosPedidos.Enqueue(pedido);
+            {
+                if (PrimerPedido != null)
+                    PrimerPedido = PrimerPedido.Agregar(pedido);
+                else
+                    PrimerPedido = new NodoPedido(pedido, null);
+            }
             else
                 throw new Exception("No se puede agregar un pedido nulo");
         }
-        
         /// <summary>
         /// Se encarga de desencolar pedidos o informar cola vacia
         /// </summary>
         public void DesencolarPedido()
         {
-            if (NuevosPedidos.Count == 0)
+            if (PrimerPedido == null)
                 throw new Exception("No hay pedidos para procesar");
             else
-                AtenderPedido(NuevosPedidos.Dequeue());
+            {
+                AtenderPedido(PrimerPedido.Pedido);
+                PrimerPedido = PrimerPedido.QuitarPrimero();
+            }
         }
-
-
-
         /// <summary>
         /// Resuelve un pedido en concreto
         /// </summary>
@@ -67,8 +78,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 this.AgregarPedido(pedido.ObtenerSiguiente());
             }
         }
+        public void IniciarScheduler()
+        {
+            //Daría negativo si ya pasó (cosa que no tiene que pasar)
+            int dentroDeXDias = PrimerPedido.DentroDeCuanto();
+            int diasDeAnticipacion = 3;
 
-
+            //Avisa con una anticipacion de 3 días
+            if(dentroDeXDias <= diasDeAnticipacion)
+            {
+                this.DesencolarPedido();
+                this.IniciarScheduler();
+            }
+        }
+        public int CantidadPedidos()
+        {
+            return PrimerPedido.CantidadPedidos();
+        }
 
         #region OPERACIONES_THREADS
         /// <summary>
@@ -107,5 +133,21 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             Console.WriteLine("Terminando hilo");
         }
         #endregion OPERACIONES_THREADS
+        [Obsolete]
+        public void DesencolarPedido2()
+        {
+            if (NuevosPedidos.Count == 0)
+                throw new Exception("No hay pedidos para procesar");
+            else
+                AtenderPedido(NuevosPedidos.Dequeue());
+        }
+        [Obsolete]
+        public void AgregarPedido2(Pedido pedido)
+        {
+            if (pedido != null)
+                NuevosPedidos.Enqueue(pedido);
+            else
+                throw new Exception("No se puede agregar un pedido nulo");
+        }
     }
 }

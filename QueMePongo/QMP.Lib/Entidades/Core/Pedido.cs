@@ -12,6 +12,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         public string Id { get; set; }
         private List<Prenda> Prendas { get; set; }
         private List<Regla> Reglas { get; set; }
+
+        public DateTime Fecha()
+        {
+            return Evento.FechaEvento;
+        }
+
         private Evento Evento { get; set; }
         private Usuario Usuario { get; set; }
         private List<Atuendo> Atuendos { get; set; }
@@ -108,7 +114,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
 
 
-        //obsoleta
+        [Obsolete] //solo la uso para un test
         public void AceptarPrimerAtuendo()
         {
             this.Atuendos[0].Aceptar();
