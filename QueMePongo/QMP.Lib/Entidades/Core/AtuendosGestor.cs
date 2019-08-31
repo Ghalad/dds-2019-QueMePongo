@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
 using Ar.UTN.QMP.Lib.Entidades.Clima;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
@@ -124,13 +125,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
-        public void FiltrarAtuendosPorClima(string RelacionConClima)
+        public void FiltrarAtuendosPorClima(int sensibilidad)
         {
             List<Atuendo> removidos = new List<Atuendo>();
 
             foreach(Atuendo a in Atuendos)
             {
-                if (!this.CumpleNivelDeAbrigo(RelacionConClima, a))
+                if (!this.CumpleNivelDeAbrigo(sensibilidad, a))
                     removidos.Add(a);
             }
 
@@ -159,7 +160,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         #endregion OPERACIONES
 
         #region FUNCIONES AUXILIARES
-        private bool CumpleNivelDeAbrigo(string relacionConClima, Atuendo a)
+        private bool CumpleNivelDeAbrigo(int sensibilidadUsuario, Atuendo a)
         {
             int abrigoSuperior = a.AbrigoCategoria("SUPERIOR");
             int abrigoInferior = a.AbrigoCategoria("INFERIOR");
@@ -167,13 +168,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             int abrigoExtra = a.AbrigoCategoria("ACCESORIO");
 
             int minimoSuperior = 0, maximoSuperior = 0, minimoInferior = 0, maximoInferior = 0, minimoCalzado = 0, maximoCalzado = 0, minimoExtra = 0, maximoExtra = 0;
-            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
 
-            /// Se define cuál es la sensibilidad relativa del usuario con respecto al clima 
-            /// y se setean los máximos y mínimos de abrigos por seccion
-            switch (this.DefinirSensibilidadClima(relacionConClima, srvClima.ObtenerTemperatura()))
+            /// Relaciona el clima con la sensibilidad del usuario (info abajo)
+            /// por ejemplo: si el clima es de temperatura media pero el usuario es friolento, el usuario la sentirá un nivel más frío
+            ///                osea sentirá que hace frío. Si el clima es de temperatura fria y, de nuevo, el usuario es friolento, la
+            ///                sentirá como muy fría.
+            ///                Si hace calor y el usuario es muy friolento baja dos niveles: sentirá frío.
+            ///                Si hace calor y el usuario es caluroso sube un nivel: sentirá mucho calor.
+            ///                El nivel máximo y mínimo de sensibilidad es mucho calor y mucho frío relativamente. El usuario no puede 
+            ///                ser más o menos sensible que eso
+            switch (sensibilidadUsuario + this.SensibilidadClima())
             {
-                case "MUCHO FRIO": //Hace "MUCHO FRIO"
+                case int n when n <= -2: //Hace "MUCHO FRIO"
                     minimoSuperior = 12;
                     maximoSuperior = 19;
                     minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
@@ -183,7 +189,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                     minimoExtra = 1; //si o si con un accesorio para el frío
                     maximoExtra = 2;
                     break;
-                case "FRIO": //Hace "FRIO"
+                case int n when n == -1: //Hace "FRIO"
                     minimoSuperior = 7;
                     maximoSuperior = 15;
                     minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
@@ -193,7 +199,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                     minimoExtra = 0;
                     maximoExtra = 2;
                     break;
-                case "AMBIENTE": //Hay temperatura "AMBIENTE"
+                case int n when n == 0 : //Hay temperatura "AMBIENTE"
                     minimoSuperior = 4;
                     maximoSuperior = 7;
                     minimoInferior = 3; //pantalon corto y pantalon largo
@@ -203,7 +209,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                     minimoExtra = 0;
                     maximoExtra = 2;
                     break;
-                case "CALOR": //Hace "CALOR"
+                case int n when n == 1 : //Hace "CALOR"
                     minimoSuperior = 3;
                     maximoSuperior = 4;
                     minimoInferior = 3; //sólo pantalón largo
@@ -213,7 +219,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                     minimoExtra = 0; //sin accesorio
                     maximoExtra = 0;
                     break;
-                case "MUCHO CALOR": //Hace "MUCHO CALOR"
+                case int n when n == 2 : //Hace "MUCHO CALOR"
                     minimoSuperior = 2;
                     maximoSuperior = 3;
                     minimoInferior = 4; //sólo pantalón largo
@@ -237,68 +243,22 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// <param name="relacionConClima"></param>
         /// <param name="temperatura"></param>
         /// <returns></returns>
-        private string DefinirSensibilidadClima(string relacionConClima, decimal temperatura)
+        private int SensibilidadClima()
         {
-            int sensibilidadRelativa = 0;
-            int sensibilidad = 0;
+            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
 
-            /// Relaciona el clima con la sensibilidad del usuario (info abajo)
-            /// por ejemplo: si el clima es de temperatura media pero el usuario es friolento, el usuario la sentirá un nivel más frío
-            ///                osea sentirá que hace frío. Si el clima es de temperatura fria y, de nuevo, el usuario es friolento, la
-            ///                sentirá como muy fría.
-            ///                Si hace calor y el usuario es muy friolento baja dos niveles: sentirá frío.
-            ///                Si hace calor y el usuario es caluroso sube un nivel: sentirá mucho calor.
-            ///                El nivel máximo y mínimo de sensibilidad es mucho calor y mucho frío relativamente. El usuario no puede 
-            ///                ser más o menos sensible que eso
-            switch (relacionConClima)
-            {
-                case "MUY FRIOLENTO":
-                    sensibilidadRelativa = -2;
-                    break;
-                case "FRIOLENTO":
-                    sensibilidadRelativa = -1;
-                    break;
-                case "NORMAL":
-                    sensibilidadRelativa = 0;
-                    break;
-                case "CALUROSO":
-                    sensibilidadRelativa = 1;
-                    break;
-                case "MUY CALUROSO":
-                    sensibilidadRelativa = 2;
-                    break;
-            }
-            switch (temperatura)
+            switch (srvClima.ObtenerTemperatura())
             {
                 case decimal n when n < 4: //Temperatura MUY FRIA
-                    sensibilidad = -2;
-                    break;
+                    return -2;
                 case decimal n when n < 10: //Temperatura FRIA
-                    sensibilidad = -1;
-                    break;
+                    return -1;
                 case decimal n when n < 15: //Temperatura AMBIENTE
-                    sensibilidad = 0;
-                    break;
+                    return 0;
                 case decimal n when n < 20: //Temperatura CALOR
-                    sensibilidad = 1;
-                    break;
+                    return 1;
                 default: //Temperatura MUCHO CALOR
-                    sensibilidad = 2;
-                    break;
-            }
-
-            switch (sensibilidad + sensibilidadRelativa)
-            {
-                case int n when n <= -2 :
-                    return "MUCHO FRIO";
-                case int n when n == -1 :
-                    return "FRIO";
-                case int n when n == 0 :
-                    return "AMBIENTE";
-                case int n when n == 1 :
-                    return "CALOR";
-                default:
-                    return "MUCHO CALOR";
+                    return 2;
             }
         }
         private bool EstaEntre(int minimo, int valor, int maximo)

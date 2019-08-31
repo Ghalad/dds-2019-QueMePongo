@@ -14,7 +14,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         private int Maximo { get; set; }
         public string Id { get; set; }
         public Pedido Pedido { get; set; }
-        public String RelacionConClima { get; set; }
+        public int Sensibilidad { get; set; }
 
         protected Usuario(int maximo)
         {
@@ -71,9 +71,28 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
                 throw new Exception("Regla requerida.");
         }
 
-        public void SetRelacionConClima(string relacion)
+        public void SetSensibilidad(string sensibilidadClima)
         {
-            this.RelacionConClima = relacion;
+            switch (sensibilidadClima)
+            {
+                case "MUY FRIOLENTO":
+                    Sensibilidad = -2;
+                    break;
+                case "FRIOLENTO":
+                    Sensibilidad = -1;
+                    break;
+                case "NORMAL":
+                    Sensibilidad = 0;
+                    break;
+                case "CALUROSO":
+                    Sensibilidad = 1;
+                    break;
+                case "MUY CALUROSO":
+                    Sensibilidad = 2;
+                    break;
+                default:
+                    throw new Exception("Sensibilidad al clima no válida.");
+            }
         }
 
         public void NotificarPedidoResuelto(Pedido pedido)
