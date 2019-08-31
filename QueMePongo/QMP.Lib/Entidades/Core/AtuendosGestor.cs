@@ -37,7 +37,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
         #endregion CONSTRUCTOR
 
-
         #region OPERACIONES
         /// <summary>
         /// Devuelve los atuendos generados
@@ -308,10 +307,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
         #endregion
 
-
-
-
-
+        #region OBSOLETAS
         [Obsolete("Esto no va")]
         public void MostrarAtuendos()
         {
@@ -348,5 +344,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
+        #endregion
     }
 }

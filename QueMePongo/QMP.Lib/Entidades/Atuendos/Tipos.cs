@@ -236,7 +236,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
 
-
         /// <summary>
         /// Valida que la CATEGORIA se corresponda con el TIPO
         /// </summary>
@@ -251,8 +250,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
-
-
+        
         /// <summary>
         /// Valida que el TIPO se corresponda con la CATEGORIA
         /// </summary>
@@ -267,8 +265,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
-
-
+        
         /// <summary>
         /// Permite validar si el par Clave, Valor es valido
         /// </summary>
@@ -283,8 +280,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                         return true;
             return false;
         }
-
-
+        
         /// <summary>
         /// Permite verificar si se corresponde la CATEGORIA (calve) con el TIPO (valor)
         /// </summary>
@@ -298,8 +294,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
-
-
+        
         /// <summary>
         /// En base a el tipo de prenda, se obtiene el valor de superposicion que le corresponde
         /// </summary>
@@ -312,6 +307,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return c.Valor;
             return null;
         }
+
         public string ObtenerAbrigo(string tipo)
         {
             foreach (var c in this.NivelDeAbrigo)
@@ -320,20 +316,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return null;
         }
 
-        public int ObtenerNivelDeAbrigo(string tipo)
-        {
-            foreach (var c in this.NivelDeAbrigo)
-                if (c.EsLaMismaClave(tipo))
-                    return Convert.ToInt32(c.Valor);
-            return 0;
-        }
-
-
+        #region OBSOLETAS
         /// <summary>
         /// Devuelve los climas de un tipo de prenda
         /// </summary>
         /// <param name="tipoPrenda"></param>
         /// <returns></returns>
+        [Obsolete]
         public List<string> ObtenerClimas(string tipoPrenda)
         {
             List<string> climas = new List<string>();
@@ -346,12 +335,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return climas;
         }
 
-
         /// <summary>
         /// Convierte un valor de temperatura en el string que lo representa
         /// </summary>
         /// <param name="valorTemperatura"></param>
         /// <returns></returns>
+        [Obsolete]
         public string TraducirTemperatura(decimal valorTemperatura)
         {
             if (valorTemperatura <= 10)
@@ -369,5 +358,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             else
                 throw new Exception("Valor de temperatura invalido");
         }
+        #endregion
     }
 }

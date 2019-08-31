@@ -32,7 +32,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(caracteristica);
         }
 
-
         /// <summary>
         /// Permite agregar una caracteristica, a traves de un par Clave, Valor
         /// </summary>
@@ -45,8 +44,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return;
             this.Caracteristicas.Add(new Caracteristica(clave, valor));
         }
-
-
 
         /// <summary>
         /// Permite agregar una imagen a la prenda y normalizarla
@@ -74,6 +71,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             else
                 throw new Exception("No se puede agregar una imagen nula");
         }
+
         public void MarcarComoUsada()
         {
             this.fechaDeUso = DateTime.Now;
@@ -98,7 +96,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return this.Calificacion.ObtenerPuntaje();
         }
 
-
         /// <summary>
         /// Valida si la prenda tiene la misma caracteristica, a traves de un objeto Caracteristica
         /// </summary>
@@ -111,7 +108,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
-
 
         /// <summary>
         /// Valida si la prenda tiene la misma caracteristica, a traves de un par Clave, Valor
@@ -127,7 +123,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return false;
         }
 
-
         /// <summary>
         /// Valida si la prenda tiene el caracteristica, a traves de la Calve
         /// </summary>
@@ -140,7 +135,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return true;
             return false;
         }
-
 
         /// <summary>
         /// Valida si la prenda tiene las mismas caracteristicas que otra prenda
@@ -155,7 +149,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return true;
         }
 
-
         /// <summary>
         /// Devuelve la cantidad total de caracteristicas que componen la prenda
         /// </summary>
@@ -165,7 +158,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return this.Caracteristicas.Count;
         }
         
-
         /// <summary>
         /// Devuelve la cantidad de veces que la prenda tiene una unica caracteristica
         /// </summary>
@@ -180,7 +172,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return i;
         }
         
-
         /// <summary>
         /// Obtiene una caracteristica a partir de su Clave
         /// </summary>

@@ -7,12 +7,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     public class QueMePongo
     {
         private static QueMePongo Instance { get; set; }
-
         /// <summary>
         /// Esto reemplazaría la Cola de pedidos. Es una lista enlazada ordenada por fecha de mas próximo a menos próximo
         /// </summary>
         private static NodoPedido PrimerPedido { get; set; }
         private static int TIEMPO_ESPERA; // Unidad: segundos
+
         [Obsolete]
         private Thread ThreadPedidos { get; set; }
         [Obsolete]
@@ -91,16 +91,24 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 this.IniciarScheduler();
             }
         }
+        /// <summary>
+        /// Para usar en los tests.. Encolar pedidos, iniciar scheduler y fijarte cuantos pedidos quedan
+        /// </summary>
+        /// <returns></returns>
         public int CantidadPedidos()
         {
             return PrimerPedido.CantidadPedidos();
         }
+
+        #region OBSOLETAS
 
         #region OPERACIONES_THREADS
         /// <summary>
         /// Desencola un Pedido y lo procesa, entregando finalmente un atuendo al usuario.
         /// Si no quedan Pedidos por procesar, el hilo encargado del procesamiento, se duerme una determinada cantidad de tiempo.
         /// </summary>
+
+        [Obsolete]
         private static void AtenderPedido()
         {
             Pedido pedido;
@@ -149,5 +157,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             else
                 throw new Exception("No se puede agregar un pedido nulo");
         }
+        #endregion OBSOLETAS
     }
 }

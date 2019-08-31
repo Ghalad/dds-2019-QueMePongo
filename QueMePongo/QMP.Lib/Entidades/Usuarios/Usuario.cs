@@ -8,6 +8,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 {
     public abstract class Usuario
     {
+        //public ExperienciaPersonalizada ExpPers { get; set; }
         public List<Guardarropa> Guardarropas { get; set; }
         public List<Regla> Reglas { get; set; }
         private int Maximo { get; set; }

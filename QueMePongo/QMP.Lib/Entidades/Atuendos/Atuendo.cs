@@ -66,6 +66,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Aceptado = null;
         }
 
+        /// <summary>
+        /// Se considera como mayor puntaje el de las prendas o el del atuendo
+        /// </summary>
+        /// <returns></returns>
         internal int ObtenerPuntaje()
         {
             int puntajePorPrendas = 0;
@@ -99,20 +103,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return false;
         }
 
-        internal int NivelDeAbrigo()
-        {
-            int suma = 0;
-            int valorAux;
-
-            foreach(Prenda p in Prendas)
-            {
-                valorAux = Tipos.GetInstance().ObtenerNivelDeAbrigo(p.ObtenerCaracteristica("TIPO"));
-                suma = suma + valorAux;
-            }
-
-            return suma;
-        }
-
         public int AbrigoCategoria(string tipo)
         {
             foreach (Prenda p in Prendas)
@@ -123,6 +113,21 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 }
             }
             throw new Exception("No se pudo encontrar el nivel de abrigo de la prenda.");
+        }
+
+        [Obsolete]
+        internal int NivelDeAbrigo()
+        {
+            int suma = 0;
+            int valorAux;
+
+            foreach(Prenda p in Prendas)
+            {
+                valorAux = Convert.ToInt32(Tipos.GetInstance().ObtenerAbrigo(p.ObtenerCaracteristica("TIPO")));
+                suma = suma + valorAux;
+            }
+
+            return suma;
         }
     }
 }
