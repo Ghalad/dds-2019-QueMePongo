@@ -26,6 +26,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         /// Permite crear nuevos Guardarropas
         /// </summary>
         /// <param name="idGuardarropa"></param>
+        [Obsolete] // No tiene que depender del usuario la creacion de guardarropas ya que pueden ser compartidos
         public void CrearGuardarropa(string idGuardarropa)
         {
             if (idGuardarropa != null)
