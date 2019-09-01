@@ -507,23 +507,28 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Usuario usr = new UsrPremium();
             usr.AgregarGuardarropa(new Guardarropa("g1", 10));
 
-            Pedido Pedido1 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 2), "Buenos Aires", "Pasear por la reserva", "UNICO"));
-            Pedido Pedido2 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("TRABAJO", new DateTime(2019, 9, 2), "Buenos Aires", "Reunion trabajo", "SEMANAL"));
+            Pedido Pedido1 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 3), "Buenos Aires", "Pasear por la reserva", "UNICO"));
+            Pedido Pedido2 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("TRABAJO", new DateTime(2019, 9, 3), "Buenos Aires", "Reunion trabajo", "SEMANAL"));
             Pedido Pedido3 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 10), "Buenos Aires", "Ir a tomar un helado", "UNICO"));
+            Pedido Pedido4 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CUMPLEAÑOS", new DateTime(2019, 9, 3), "Buenos Aires", "Cumpleaños Winnifred", "ANUAL"));
+            Pedido Pedido5 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 2), "Buenos Aires", "Comprar escalera", "UNICO"));
 
             QueMePongo qmp = QueMePongo.GetInstance();
             qmp.AgregarPedido(Pedido1);
             qmp.AgregarPedido(Pedido2);
             qmp.AgregarPedido(Pedido3);
+            qmp.AgregarPedido(Pedido4);
+            qmp.AgregarPedido(Pedido5);
 
-            Assert.AreEqual(3, qmp.CantidadPedidos());
+            Assert.AreEqual(5, qmp.CantidadPedidos());
 
             qmp.IniciarScheduler();
 
-            Assert.AreEqual(2, qmp.CantidadPedidos()); //El del 10 de septiembre y el de trabajo de la semana que viene
+            Assert.AreEqual(3, qmp.CantidadPedidos()); //El del 10 de septiembre, el cumpleaños del año que viene y el de trabajo de la semana que viene
 
         }
 
+        /*
         [TestMethod()]
         [Obsolete]
         public void CreacionDePedido()
@@ -634,7 +639,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
 
             //Assert.IsTrue(usr.Pedido.ObtenerAtuendos().Count > 0);
 
-            */
+            *
         }
 
         [TestMethod]
@@ -652,7 +657,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             }
 
             t1.Join();
-            */
+            *
         }
 
         [Obsolete]
@@ -664,5 +669,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
                 Thread.Sleep(10);
             }
         }
+        */
     }
 }
