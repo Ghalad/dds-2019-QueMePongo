@@ -64,7 +64,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
 
         public Evento ObtenerSiguiente()
         {
-            return new Evento(this.TipoEvento.Clave, this.ObtenerSiguienteFecha(), this.CiudadEvento, this.Descripcion, this.Repeticion);
+            return new Evento(this.TipoEvento.Valor, this.ObtenerSiguienteFecha(), this.CiudadEvento, this.Descripcion, this.Repeticion);
         }
 
         private DateTime ObtenerSiguienteFecha()

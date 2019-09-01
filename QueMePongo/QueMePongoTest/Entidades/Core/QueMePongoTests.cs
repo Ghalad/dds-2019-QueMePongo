@@ -501,6 +501,28 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             //Assert.AreEqual(usr2.Pedido.ObtenerAtuendos().Count, 2);
         }
 
+        [TestMethod]
+        public void Scheduler()
+        {
+            Usuario usr = new UsrPremium();
+            usr.AgregarGuardarropa(new Guardarropa("g1", 10));
+
+            Pedido Pedido1 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 2), "Buenos Aires", "Pasear por la reserva", "UNICO"));
+            Pedido Pedido2 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("TRABAJO", new DateTime(2019, 9, 2), "Buenos Aires", "Reunion trabajo", "SEMANAL"));
+            Pedido Pedido3 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 10), "Buenos Aires", "Ir a tomar un helado", "UNICO"));
+
+            QueMePongo qmp = QueMePongo.GetInstance();
+            qmp.AgregarPedido(Pedido1);
+            qmp.AgregarPedido(Pedido2);
+            qmp.AgregarPedido(Pedido3);
+
+            Assert.AreEqual(3, qmp.CantidadPedidos());
+
+            qmp.IniciarScheduler();
+
+            Assert.AreEqual(2, qmp.CantidadPedidos()); //El del 10 de septiembre y el de trabajo de la semana que viene
+
+        }
 
         [TestMethod()]
         [Obsolete]
