@@ -17,6 +17,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             this.Caracteristicas = new List<Caracteristica>();
             this.fechaDeUso = new DateTime(1990, 12, 13);
+            this.Calificacion = null;
         }
 
 
@@ -44,6 +45,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     return;
             this.Caracteristicas.Add(new Caracteristica(clave, valor));
         }
+
 
         /// <summary>
         /// Permite agregar una imagen a la prenda y normalizarla
@@ -93,7 +95,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
         public int ObtenerPuntaje()
         {
+            if (Calificacion == null)
+                return 0;
             return this.Calificacion.ObtenerPuntaje();
+        }
+
+        internal void Puntuar(int puntaje)
+        {
+            if (Calificacion == null)
+                Calificacion = new Calificacion(puntaje);
+            else
+                Calificacion.Calificar(puntaje);
         }
 
         /// <summary>

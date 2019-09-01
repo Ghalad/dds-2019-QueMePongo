@@ -15,6 +15,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             this.Prendas = new List<Prenda>();
             this.Aceptado = null;
+            this.Calificacion = null;
         }
 
         /// <summary>
@@ -41,12 +42,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         /// <summary>
         /// Marca al atuendo como aceptado
         /// </summary>
-        public void Aceptar()
+        public void Aceptar(int puntaje)
         {
             this.Aceptado = true;
-            foreach(Prenda p in Prendas)
+            if (Calificacion == null)
+                Calificacion = new Calificacion(puntaje);
+            else
+                this.Calificacion.Calificar(puntaje);
+            foreach(Prenda p in Prendas) 
             {
                 p.MarcarComoUsada();
+                p.Puntuar(puntaje); //se marca a cada prenda con el puntaje del atuendo.. no está bueno
             }
         }
 
@@ -72,8 +78,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         /// <returns></returns>
         internal int ObtenerPuntaje()
         {
+            int puntajeAtuendo = 0;
             int puntajePorPrendas = 0;
-            int puntajeAtuendo = this.Calificacion.ObtenerPuntaje() * this.CantidadDePrendas();
+            if (this.Calificacion != null)
+                puntajeAtuendo = this.Calificacion.ObtenerPuntaje() * this.CantidadDePrendas();
+                
             // ^ suponiendo que el puntaje del atuendo es el promedio del de las prendas
 
             foreach (Prenda p in this.Prendas)
@@ -107,12 +116,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             foreach (Prenda p in Prendas)
             {
-                if(p.TieneCaracteristica(new Caracteristica("TIPO", tipo)))
+                if(p.TieneCaracteristica(new Caracteristica("CATEGORIA", tipo)))
                 {
                     return Int32.Parse(p.ObtenerCaracteristica("ABRIGO"));
                 }
             }
-            throw new Exception("No se pudo encontrar el nivel de abrigo de la prenda.");
+            return 0;
         }
 
         [Obsolete]

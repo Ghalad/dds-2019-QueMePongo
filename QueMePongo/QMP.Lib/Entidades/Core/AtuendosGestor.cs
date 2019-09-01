@@ -125,7 +125,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
-        public void FiltrarAtuendosPorClima(int sensibilidad)
+        public void FiltrarAtuendosPorSensibilidadYClima(int sensibilidad)
         {
             List<Atuendo> removidos = new List<Atuendo>();
 
@@ -139,12 +139,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
         public void OrdenarPorCalificacionDeAtuendo()
         {
-            List<Atuendo> listaOrdenada = new List<Atuendo>();
             Atuendo atuendoAux;
 
-            for (int i = 0; i < this.Atuendos.Count; i++)
-            { //burbujeo
-                for ( int j = 0 ; j < this.Atuendos.Count - i ; j++ )
+            for (int i = 0; i < this.Atuendos.Count - 1; i++)
+            { //burbujeo de menor a mayor
+                for ( int j = 0 ; j < this.Atuendos.Count - 1; j++ )
                 {
                     if(this.Atuendos[j].ObtenerPuntaje() < this.Atuendos[j + 1].ObtenerPuntaje())
                     {

@@ -20,7 +20,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             int maxPrendas = 10;
             Usuario usr = new UsrGratis(maxPrendas);
             usr.CrearGuardarropa("g1");
-            usr.SetRelacionConClima("CALUROSO");
+            usr.SetSensibilidad("CALUROSO");
             Regla regla;
             List<Caracteristica> listaCar;
 
@@ -452,8 +452,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             usr.AgregarRegla(regla);
             #endregion REGLAS
             #region USUARIO
-            usr.SetRelacionConClima("CALUROSO");
-            usr2.SetRelacionConClima("CALUROSO");
+            usr.SetSensibilidad("CALUROSO");
+            usr2.SetSensibilidad("CALUROSO");
             usr.AgregarGuardarropa(g1);
             usr2.AgregarGuardarropa(g1);
             #endregion
@@ -471,7 +471,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Console.WriteLine("USUARIO 1 :");
             foreach (Atuendo a in usr.Pedido.ObtenerAtuendos())
             {
-                int i = 1;
                 Console.WriteLine(string.Format("Atuendo id={0}", a.Id));
                 foreach (Prenda p in a.Prendas)
                 {
@@ -491,7 +490,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Console.WriteLine("USUARIO 2:");
             foreach (Atuendo a in usr2.Pedido.ObtenerAtuendos())
             {
-                int i = 1;
                 Console.WriteLine(string.Format("Atuendo id={0}", a.Id));
                 foreach (Prenda p in a.Prendas)
                 {

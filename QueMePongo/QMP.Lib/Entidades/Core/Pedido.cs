@@ -58,7 +58,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             gestor.FiltrarAtuendosPorReglas();
             gestor.FiltrarAtuendosPorEvento();
             //gestor.FiltrarAtuendosPorClima();
-            gestor.FiltrarAtuendosPorClima(this.Usuario.Sensibilidad);
+            gestor.FiltrarAtuendosPorSensibilidadYClima(this.Usuario.Sensibilidad);
             gestor.OrdenarPorCalificacionDeAtuendo();
 
             this.Atuendos = gestor.ObtenerAtuendos();
@@ -91,9 +91,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// Permite aceptar un atuendo y rechazar el resto
         /// </summary>
         /// <param name="id"></param>
-        public void AceptarAtuendo(string id)
+        public void AceptarAtuendo(string id, int puntaje)
         {
-            this.Atuendos.Find(a => a.Id.Equals(id)).Aceptar();
+            this.Atuendos.Find(a => a.Id.Equals(id)).Aceptar(puntaje);
             this.Atuendos.ForEach(a => { if (!a.Id.Equals(id)) a.Rechazar(); });
         }
 
@@ -118,7 +118,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         [Obsolete] //solo la uso para un test
         public void AceptarPrimerAtuendo()
         {
-            this.Atuendos[0].Aceptar();
+            this.Atuendos[0].Aceptar(10);
         }
     }
 }
