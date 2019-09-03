@@ -223,27 +223,38 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Assert.IsTrue(usr.Pedido.ObtenerAtuendos().Count >= 0);
         }
 
-        [TestMethod]
+
+        /// <summary>
+        /// Agregados Entrega 3 : 
+        /// + Guardarropas compartido
+        /// + Scheduler
+        /// + Eventos repetitivos
+        /// + Ordenamiento de atuendos según gustos
+        /// + Filtro de clima según sensibilidad
+        /// </summary>
+        [TestMethod] 
         public void GuardarropasCompartido()
         {
+            #region VARIABLES
             int maxPrendas = 10;
             Usuario usr = new UsrGratis(maxPrendas);
             Usuario usr2 = new UsrGratis(maxPrendas);
-            Guardarropa g1 = new Guardarropa("g1", maxPrendas);
+            Guardarropa g1;
             Prenda prenda1;
             Prenda prenda2;
             Prenda prenda3;
             Prenda prenda4;
             Prenda prenda5;
+            Prenda prenda6;
             Prenda prenda7;
             Prenda prenda8;
             Prenda prenda9;
             Prenda prenda10;
             Regla regla;
             List<Caracteristica> listaCar;
+            #endregion
 
-
-            #region PRENDAS
+            #region CREACION PRENDAS
             PrendaBuilder pb = new PrendaBuilder();
             pb.CrearPrenda()
               .ConCategoria("accesorio")
@@ -291,6 +302,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             prenda5 = pb.ObtenerPrenda();
 
             pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pollera")
+              .ConEvento("casual");
+            prenda6 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
               .ConCategoria("superior")
               .ConTipo("remera_manga_larga")
               .ConEvento("casual")
@@ -317,12 +334,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             prenda10 = pb.ObtenerPrenda();
 
             #endregion PRENDAS
-            #region GUARDARROPAS
+            #region CREACION GUARDARROPA
+            g1 = new Guardarropa("g1", maxPrendas);
             g1.AgregarPrenda(prenda1);
             g1.AgregarPrenda(prenda2);
             g1.AgregarPrenda(prenda3);
             g1.AgregarPrenda(prenda4);
             g1.AgregarPrenda(prenda5);
+            g1.AgregarPrenda(prenda6);
             g1.AgregarPrenda(prenda7);
             g1.AgregarPrenda(prenda8);
             g1.AgregarPrenda(prenda9);
@@ -451,23 +470,27 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
             usr.AgregarRegla(regla);
             #endregion REGLAS
-            #region USUARIO
+            #region USUARIOS
             usr.SetSensibilidad("CALUROSO");
             usr2.SetSensibilidad("CALUROSO");
             usr.AgregarGuardarropa(g1);
             usr2.AgregarGuardarropa(g1);
             #endregion
-
+            #region PEDIDOS
             Evento evento = new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo", "UNICO");
             Pedido pedido = new Pedido(usr, usr.Guardarropas.Find(g => g.Id.Equals("g1")).ObtenerPrendas(), usr.Reglas, evento);
-
             QueMePongo qmp = QueMePongo.GetInstance();
-
+            qmp.AgregarPedido(pedido);
+            pedido = new Pedido(usr2, usr2.Guardarropas.Find(g => g.Id.Equals("g1")).ObtenerPrendas(), usr.Reglas, evento);
             qmp.AgregarPedido(pedido);
 
-            Assert.IsTrue(usr.Pedido == null);
-            qmp.DesencolarPedido();
+            qmp.DesencolarPedido(); //Desencola primero el pedido del usuario 2 por ordenamiento
+            usr2.Pedido.AceptarPrimerAtuendo();
 
+            qmp.DesencolarPedido();
+            #endregion
+
+            #region MOSTRAR POR PANTALLA
             Console.WriteLine("USUARIO 1 :");
             foreach (Atuendo a in usr.Pedido.ObtenerAtuendos())
             {
@@ -478,15 +501,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
                 }
                 Console.WriteLine("");
             }
-            //Assert.AreEqual(usr.Pedido.ObtenerAtuendos().Count, 30);
-
-            usr.Pedido.AceptarPrimerAtuendo();
-
-            pedido = new Pedido(usr2, usr2.Guardarropas.Find(g => g.Id.Equals("g1")).ObtenerPrendas(), usr.Reglas, evento);
-
-            qmp.AgregarPedido(pedido);
-            qmp.DesencolarPedido();
-
             Console.WriteLine("USUARIO 2:");
             foreach (Atuendo a in usr2.Pedido.ObtenerAtuendos())
             {
@@ -497,11 +511,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
                 }
                 Console.WriteLine("");
             }
+            #endregion
+
+            Console.WriteLine(string.Format("# Atuendos usuario 1 : {0}", usr.Pedido.ObtenerAtuendos().Count));
+            Console.WriteLine(string.Format("# Atuendos usuario 2 : {0}", usr2.Pedido.ObtenerAtuendos().Count));
+
             Assert.IsTrue(usr.Pedido.ObtenerAtuendos().Count != usr2.Pedido.ObtenerAtuendos().Count);
+            //Assert.AreEqual(usr.Pedido.ObtenerAtuendos().Count, 30);
             //Assert.AreEqual(usr2.Pedido.ObtenerAtuendos().Count, 2);
         }
 
-        [TestMethod]
+        [TestMethod] // Test de Scheduler y eventos repetitivos
         public void Scheduler()
         {
             Usuario usr = new UsrPremium();
@@ -511,7 +531,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Pedido Pedido2 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("TRABAJO", new DateTime(2019, 9, 3), "Buenos Aires", "Reunion trabajo", "SEMANAL"));
             Pedido Pedido3 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 10), "Buenos Aires", "Ir a tomar un helado", "UNICO"));
             Pedido Pedido4 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CUMPLEAÑOS", new DateTime(2019, 9, 3), "Buenos Aires", "Cumpleaños Winnifred", "ANUAL"));
-            Pedido Pedido5 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 2), "Buenos Aires", "Comprar escalera", "UNICO"));
+            Pedido Pedido5 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 3), "Buenos Aires", "Comprar escalera", "UNICO"));
 
             QueMePongo qmp = QueMePongo.GetInstance();
             qmp.AgregarPedido(Pedido1);

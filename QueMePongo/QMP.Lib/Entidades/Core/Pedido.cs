@@ -118,6 +118,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         [Obsolete] //solo la uso para un test
         public void AceptarPrimerAtuendo()
         {
+            if(this.Atuendos.Count == 0)
+            {
+                throw new Exception("El usuario no tiene atuendos para aceptar.");
+            }
             this.Atuendos[0].Aceptar(10);
         }
     }
