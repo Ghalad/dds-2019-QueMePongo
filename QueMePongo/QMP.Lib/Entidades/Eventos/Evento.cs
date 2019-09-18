@@ -1,10 +1,16 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Eventos
 {
+    [Table("Eventos")]
     public class Evento
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(Order = 1)]
+        public int EventoID { get; set; }
         public string Descripcion { get; set; }
         public string CiudadEvento { get; set; }
         public DateTime FechaEvento { get; set; }

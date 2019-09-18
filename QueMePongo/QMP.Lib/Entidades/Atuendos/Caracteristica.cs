@@ -1,9 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
+    [Table("Caracteristicas")]
     public class Caracteristica
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(Order = 1)]
+        public string CaracteristicaId { get; set; }
         public string Clave { get; private set; }
         public string Valor { get; private set; }
 

@@ -19,7 +19,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         {
             int maxPrendas = 10;
             Usuario usr = new UsrGratis(maxPrendas);
-            usr.CrearGuardarropa("g1");
+            usr.CrearGuardarropa(1);
             usr.SetSensibilidad("CALUROSO");
             Regla regla;
             List<Caracteristica> listaCar;
@@ -336,7 +336,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
 
             #endregion PRENDAS
             #region CREACION GUARDARROPA
-            g1 = new Guardarropa("g1", maxPrendas);
+            g1 = new Guardarropa(1, maxPrendas);
             g1.AgregarPrenda(prenda1);
             g1.AgregarPrenda(prenda2);
             g1.AgregarPrenda(prenda3);
@@ -526,7 +526,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         public void Scheduler()
         {
             Usuario usr = new UsrPremium();
-            usr.AgregarGuardarropa(new Guardarropa("g1", 10));
+            usr.AgregarGuardarropa(new Guardarropa(1, 10));
 
             Pedido Pedido1 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 3), "Buenos Aires", "Pasear por la reserva", "UNICO"));
             Pedido Pedido2 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("TRABAJO", new DateTime(2019, 9, 3), "Buenos Aires", "Reunion trabajo", "SEMANAL"));

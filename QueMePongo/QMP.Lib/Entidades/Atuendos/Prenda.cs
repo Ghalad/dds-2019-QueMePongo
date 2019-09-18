@@ -1,14 +1,23 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
+using System.IO;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
+    [Table("Prendas")]
     public class Prenda
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(Order = 1)]
+        public int PrendaId { get; set; }
         private List<Caracteristica> Caracteristicas { get; set; }
+        [NotMapped]
         public Image Imagen { get; set; }
+        private byte[] ImagenEnBytes { get; set; }
         private static int RESOLUCION = 140; // Esto se podria setear por archivo de configuracion
         public Calificacion Calificacion { get; set; }
         private DateTime fechaDeUso { get; set; }
@@ -64,6 +73,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     tmpGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
                     tmpGraphics.DrawImage(imagen, 0, 0, tmpResizedImage.Width + 1, tmpResizedImage.Height + 1);
                     this.Imagen = tmpResizedImage;
+                    this.ImagenEnBytes = imageToByteArray(this.Imagen);
                 }
                 catch
                 {
@@ -73,6 +83,20 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             else
                 throw new Exception("No se puede agregar una imagen nula");
         }
+        public byte[] imageToByteArray(System.Drawing.Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            return ms.ToArray();
+        }
+
+        public Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
+
 
         public void MarcarComoUsada()
         {
@@ -221,7 +245,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             }
         }
         [Obsolete("Esto no va")]
+#pragma warning disable CS0114 // 'Prenda.ToString()' hides inherited member 'object.ToString()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.
         public void ToString()
+#pragma warning restore CS0114 // 'Prenda.ToString()' hides inherited member 'object.ToString()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.
         {
             int i = 1;
             foreach (Caracteristica c in Caracteristicas)

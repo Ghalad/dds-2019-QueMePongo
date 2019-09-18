@@ -280,7 +280,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         #region PRIVADO
         private void AgregarClimas(string tipoPrenda)
         {
+#pragma warning disable CS0612 // 'Tipos.ObtenerClimas(string)' is obsolete
             foreach(string str in Tipos.GetInstance().ObtenerClimas(tipoPrenda))
+#pragma warning restore CS0612 // 'Tipos.ObtenerClimas(string)' is obsolete
                 this.Prenda.AgregarCaracteristica(new Caracteristica("CLIMA", str.ToUpper()));
         }
         #endregion PRIVADO

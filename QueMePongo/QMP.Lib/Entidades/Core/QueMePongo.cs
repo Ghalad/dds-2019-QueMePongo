@@ -24,7 +24,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private QueMePongo()
         {
             PrimerPedido = null;
+#pragma warning disable CS0612 // 'QueMePongo.NuevosPedidos' is obsolete
             NuevosPedidos = new Queue<Pedido>();
+#pragma warning restore CS0612 // 'QueMePongo.NuevosPedidos' is obsolete
             TIEMPO_ESPERA = 2; // Parametro que se podria levantar de la base o por archivo de configuracion.
             //ThreadPedidos = new Thread(new ThreadStart(AtenderPedido));
             //ThreadPedidos.Start();

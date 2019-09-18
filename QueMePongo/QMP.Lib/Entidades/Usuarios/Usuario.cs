@@ -3,15 +3,19 @@ using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 {
+    [Table("Usuarios")]
     public abstract class Usuario
     {
         public List<Guardarropa> Guardarropas { get; set; }
         public List<Regla> Reglas { get; set; }
         private int Maximo { get; set; }
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         public Pedido Pedido { get; set; }
         public int Sensibilidad { get; set; }
 
@@ -27,7 +31,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         /// </summary>
         /// <param name="idGuardarropa"></param>
         [Obsolete] // No tiene que depender del usuario la creacion de guardarropas ya que pueden ser compartidos
-        public void CrearGuardarropa(string idGuardarropa)
+        public void CrearGuardarropa(int idGuardarropa)
         {
             if (idGuardarropa != null)
                 this.Guardarropas.Add(new Guardarropa(idGuardarropa, this.Maximo));

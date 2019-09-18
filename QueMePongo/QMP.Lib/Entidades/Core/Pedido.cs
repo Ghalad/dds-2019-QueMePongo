@@ -4,12 +4,16 @@ using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
 {
+    [Table("Pedidos")]
     public class Pedido
     {
-        public string Id { get; set; }
+        [Key, ForeignKey("Usuario")]
+        public int Id { get; set; }
         private List<Prenda> Prendas { get; set; }
         private List<Regla> Reglas { get; set; }
 
@@ -19,7 +23,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
 
         private Evento Evento { get; set; }
-        private Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; }
         private List<Atuendo> Atuendos { get; set; }
 
         public Pedido(Usuario usr, List<Prenda> prendas, List<Regla> reglas, Evento evento)
@@ -45,7 +49,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 throw new Exception("Es necesario informar un usuario");
 
             this.Atuendos = new List<Atuendo>();
-            this.Id = "12345"; // generar ID
+            this.Id = 12345; // generar ID
         }
 
         /// <summary>

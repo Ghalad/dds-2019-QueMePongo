@@ -1,12 +1,16 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
+    [Table("Atuendos")]
     public class Atuendo
     {
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         public List<Prenda> Prendas { get; set; }
         private bool? Aceptado { get; set; }
         public Calificacion Calificacion { get; set; }

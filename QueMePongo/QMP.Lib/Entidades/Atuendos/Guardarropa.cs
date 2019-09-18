@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
+    [Table("Guardarropas")]
     public class Guardarropa
     {
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         private List<Prenda> Prendas { get; set; }
         private int MaximoPrendas { get; set; }
 
-        public Guardarropa(string id, int maximoPrendas)
+        public Guardarropa(int id, int maximoPrendas)
         {
             this.Id = id;
             this.MaximoPrendas = maximoPrendas;

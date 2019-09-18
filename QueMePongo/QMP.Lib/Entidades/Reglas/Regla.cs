@@ -1,9 +1,11 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Reglas
 {
+    [Table("Reglas")]
     public class Regla
     {
         public string Id { get; set; }

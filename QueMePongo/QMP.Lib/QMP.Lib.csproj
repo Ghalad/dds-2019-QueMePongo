@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeCoverage.16.2.0\lib\net45\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
       <Private>True</Private>
@@ -42,8 +48,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +73,9 @@
     <Compile Include="Entidades\Core\AtuendosGestor.cs" />
     <Compile Include="Entidades\Core\NodoPedido.cs" />
     <Compile Include="Entidades\Core\Pedido.cs" />
+    <Compile Include="Entidades\DBTables\PrendaAtuendo.cs" />
+    <Compile Include="Entidades\DBTables\PrendaGuardarropa.cs" />
+    <Compile Include="Entidades\DBTables\PrendaPedido.cs" />
     <Compile Include="Entidades\Eventos\Evento.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherService.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherInfo.cs" />
@@ -86,10 +98,29 @@
     <Compile Include="Entidades\Usuarios\UsrGratis.cs" />
     <Compile Include="Entidades\Usuarios\UsrPremium.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
+    <Compile Include="Migrations\201909181841555_PrimeraMigracion.cs" />
+    <Compile Include="Migrations\201909181841555_PrimeraMigracion.Designer.cs">
+      <DependentUpon>201909181841555_PrimeraMigracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909182114034_SegundaMigracion.cs" />
+    <Compile Include="Migrations\201909182114034_SegundaMigracion.Designer.cs">
+      <DependentUpon>201909182114034_SegundaMigracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueMePongoDB.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201909181841555_PrimeraMigracion.resx">
+      <DependentUpon>201909181841555_PrimeraMigracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909182114034_SegundaMigracion.resx">
+      <DependentUpon>201909182114034_SegundaMigracion.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
