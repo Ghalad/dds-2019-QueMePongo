@@ -528,11 +528,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Usuario usr = new UsrPremium();
             usr.AgregarGuardarropa(new Guardarropa(1, 10));
 
-            Pedido Pedido1 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 3), "Buenos Aires", "Pasear por la reserva", "UNICO"));
-            Pedido Pedido2 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("TRABAJO", new DateTime(2019, 9, 3), "Buenos Aires", "Reunion trabajo", "SEMANAL"));
-            Pedido Pedido4 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CUMPLEAÑOS", new DateTime(2019, 9, 3), "Buenos Aires", "Cumpleaños Winnifred", "ANUAL"));
-            Pedido Pedido3 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 10), "Buenos Aires", "Ir a tomar un helado", "UNICO"));
-            Pedido Pedido5 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 3), "Buenos Aires", "Comprar escalera", "UNICO"));
+            Pedido Pedido1 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 18), "Buenos Aires", "Pasear por la reserva", "UNICO"));
+            Pedido Pedido2 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("TRABAJO", new DateTime(2019, 9, 18), "Buenos Aires", "Reunion trabajo", "SEMANAL"));
+            Pedido Pedido4 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CUMPLEAÑOS", new DateTime(2019, 9, 18), "Buenos Aires", "Cumpleaños Winnifred", "ANUAL"));
+            Pedido Pedido3 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 30), "Buenos Aires", "Ir a tomar un helado", "UNICO"));
+            Pedido Pedido5 = new Pedido(usr, usr.Guardarropas[0].ObtenerPrendas(), usr.Reglas, new Evento("CASUAL", new DateTime(2019, 9, 18), "Buenos Aires", "Comprar escalera", "UNICO"));
 
             QueMePongo qmp = QueMePongo.GetInstance();
             qmp.AgregarPedido(Pedido1);

@@ -1,4 +1,5 @@
-﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+﻿using Ar.UTN.QMP.Lib.Entidades._0._Para_DB;
+using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +15,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order = 1)]
         public int PrendaId { get; set; }
-        private List<Caracteristica> Caracteristicas { get; set; }
+        public ICollection<CaracteristicaPrenda> Caracteristicas { get; set; }
         [NotMapped]
         public Image Imagen { get; set; }
         private byte[] ImagenEnBytes { get; set; }
@@ -24,7 +25,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
         public Prenda()
         {
-            this.Caracteristicas = new List<Caracteristica>();
+            this.Caracteristicas = new List<CaracteristicaPrenda>();
             this.fechaDeUso = new DateTime(1990, 12, 13);
             this.Calificacion = null;
         }
@@ -39,7 +40,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             foreach(Caracteristica c in this.Caracteristicas)
                 if (c.EsLaMisma(caracteristica))
                     return;
-            this.Caracteristicas.Add(caracteristica);
+            this.Caracteristicas.Add(new CaracteristicaPrenda(caracteristica.Clave, caracteristica.Valor, this));
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             foreach (Caracteristica c in this.Caracteristicas)
                 if (c.EsLaMisma(clave, valor))
                     return;
-            this.Caracteristicas.Add(new Caracteristica(clave, valor));
+            this.Caracteristicas.Add(new CaracteristicaPrenda(clave, valor, this));
         }
 
 

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Ar.UTN.QMP.Lib.Entidades._0_ParaDB;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -9,15 +11,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     public class Guardarropa
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        private List<Prenda> Prendas { get; set; }
-        private int MaximoPrendas { get; set; }
+        public ICollection<PrendaGuardarropa> Prendas { get; set; }
+        public int MaximoPrendas { get; set; }
 
         public Guardarropa(int id, int maximoPrendas)
         {
             this.Id = id;
             this.MaximoPrendas = maximoPrendas;
-            this.Prendas = new List<Prenda>();
+            this.Prendas = new List<PrendaGuardarropa>();
         }
         
 
@@ -25,7 +28,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         /// Agrega Prendas al guardarropas. Si el guardarropas pertenece a un usuario Gratuito, agregara la prenda siempre y cuando tenga cupo.
         /// </summary>
         /// <param name="prenda"></param>
-        public void AgregarPrenda(Prenda prenda)
+        public void AgregarPrenda(PrendaGuardarropa prenda)
         {
             if (this.MaximoPrendas == 0)
                 this.Prendas.Add(prenda);
@@ -39,9 +42,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         /// Obtiene la lista de prendas del guardarropas
         /// </summary>
         /// <returns></returns>
-        public List<Prenda> ObtenerPrendas()
+        public List<PrendaGuardarropa> ObtenerPrendas()
         {
-            return this.Prendas;
+            return this.Prendas.ToList();
         }
     }
 }

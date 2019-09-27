@@ -3,7 +3,6 @@ namespace Ar.UTN.QMP.Lib
     using Ar.UTN.QMP.Lib.Entidades.Atuendos;
     using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
     using Ar.UTN.QMP.Lib.Entidades.Core;
-    using Ar.UTN.QMP.Lib.Entidades.DBTables;
     using Ar.UTN.QMP.Lib.Entidades.Eventos;
     using Ar.UTN.QMP.Lib.Entidades.Reglas;
     using Ar.UTN.QMP.Lib.Entidades.Usuarios;
@@ -13,18 +12,15 @@ namespace Ar.UTN.QMP.Lib
 
     public class QueMePongoDB : DbContext
     {
-        DbSet<PrendaAtuendo> PrendasAtuendos { get; set; }
-        DbSet<PrendaGuardarropa> PrendasGuardarropas { get; set; }
-        DbSet<PrendaPedido> PrendasPedidos { get; set; }
-        DbSet<Usuario> Usuarios { get; set; }
-        DbSet<Guardarropa> Guardarropas { get; set; }
-        DbSet<Prenda> Prendas { get; set; }
-        DbSet<Calificacion> Calificaciones { get; set; }
-        DbSet<Caracteristica> Caracteristicas { get; set; }
-        DbSet<Regla> Reglas { get; set; }
-        DbSet<Pedido> Pedidos { get; set; }
-        DbSet<Atuendo> Atuendos { get; set; }
-        DbSet<Evento> Eventos { get; set; }
+        //public DbSet<Usuario> Usuarios { get; set; }
+        //public DbSet<Guardarropa> Guardarropas { get; set; }
+        public DbSet<Prenda> Prendas { get; set; }
+        //public DbSet<Calificacion> Calificaciones { get; set; }
+        public DbSet<Caracteristica> Caracteristicas { get; set; }
+        //public DbSet<Regla> Reglas { get; set; }
+        //public DbSet<Pedido> Pedidos { get; set; }
+        //public DbSet<Atuendo> Atuendos { get; set; }
+        //public DbSet<Evento> Eventos { get; set; }
 
 
         // Your context has been configured to use a 'QueMePongoDB' connection string from your application's 
@@ -36,6 +32,7 @@ namespace Ar.UTN.QMP.Lib
         public QueMePongoDB()
             : base("name=QueMePongoDB")
         {
+            Database.SetInitializer<QueMePongoDB>(new CreateDatabaseIfNotExists<QueMePongoDB>());
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 

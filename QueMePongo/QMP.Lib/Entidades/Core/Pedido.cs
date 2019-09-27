@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
 {
@@ -14,8 +15,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     {
         [Key, ForeignKey("Usuario")]
         public int Id { get; set; }
-        private List<Prenda> Prendas { get; set; }
-        private List<Regla> Reglas { get; set; }
+        private ICollection<Prenda> Prendas { get; set; }
+        private ICollection<Regla> Reglas { get; set; }
 
         public DateTime Fecha()
         {
@@ -24,7 +25,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
         private Evento Evento { get; set; }
         public Usuario Usuario { get; set; }
-        private List<Atuendo> Atuendos { get; set; }
+        private ICollection<Atuendo> Atuendos { get; set; }
 
         public Pedido(Usuario usr, List<Prenda> prendas, List<Regla> reglas, Evento evento)
         {
@@ -57,7 +58,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void Resolver()
         {
-            AtuendosGestor gestor = new AtuendosGestor(this.Prendas, this.Reglas, this.Evento);
+            AtuendosGestor gestor = new AtuendosGestor(this.Prendas.ToList(), this.Reglas.ToList(), this.Evento);
             gestor.GenerarAtuendos();
             gestor.FiltrarAtuendosPorReglas();
             gestor.FiltrarAtuendosPorEvento();
@@ -71,7 +72,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
         public Pedido ObtenerSiguiente()
         {
-            return new Pedido(this.Usuario, this.Prendas, this.Reglas, Evento.ObtenerSiguiente());
+            return new Pedido(this.Usuario, this.Prendas.ToList(), this.Reglas.ToList(), Evento.ObtenerSiguiente());
         }
 
         public bool SeRepite()
@@ -87,7 +88,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             if (this.Atuendos == null)
                 throw new Exception("Atuendos no procesados");
-            return this.Atuendos;
+            return this.Atuendos.ToList();
         }
 
 
@@ -97,8 +98,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// <param name="id"></param>
         public void AceptarAtuendo(string id, int puntaje)
         {
-            this.Atuendos.Find(a => a.Id.Equals(id)).Aceptar(puntaje);
-            this.Atuendos.ForEach(a => { if (!a.Id.Equals(id)) a.Rechazar(); });
+            this.Atuendos.ToList().Find(a => a.Id.Equals(id)).Aceptar(puntaje);
+            this.Atuendos.ToList().ForEach(a => { if (!a.Id.Equals(id)) a.Rechazar(); });
         }
 
 
@@ -126,7 +127,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             {
                 throw new Exception("El usuario no tiene atuendos para aceptar.");
             }
-            this.Atuendos[0].Aceptar(10);
+            this.Atuendos.ToList()[0].Aceptar(10);
         }
     }
 }

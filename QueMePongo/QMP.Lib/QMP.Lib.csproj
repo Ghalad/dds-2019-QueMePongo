@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\0_ParaDB\CaracteristicaPrenda.cs" />
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
     <Compile Include="Entidades\Atuendos\PrendaBuilder.cs" />
@@ -73,9 +74,6 @@
     <Compile Include="Entidades\Core\AtuendosGestor.cs" />
     <Compile Include="Entidades\Core\NodoPedido.cs" />
     <Compile Include="Entidades\Core\Pedido.cs" />
-    <Compile Include="Entidades\DBTables\PrendaAtuendo.cs" />
-    <Compile Include="Entidades\DBTables\PrendaGuardarropa.cs" />
-    <Compile Include="Entidades\DBTables\PrendaPedido.cs" />
     <Compile Include="Entidades\Eventos\Evento.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherService.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherInfo.cs" />
@@ -98,13 +96,9 @@
     <Compile Include="Entidades\Usuarios\UsrGratis.cs" />
     <Compile Include="Entidades\Usuarios\UsrPremium.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
-    <Compile Include="Migrations\201909181841555_PrimeraMigracion.cs" />
-    <Compile Include="Migrations\201909181841555_PrimeraMigracion.Designer.cs">
-      <DependentUpon>201909181841555_PrimeraMigracion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909182114034_SegundaMigracion.cs" />
-    <Compile Include="Migrations\201909182114034_SegundaMigracion.Designer.cs">
-      <DependentUpon>201909182114034_SegundaMigracion.cs</DependentUpon>
+    <Compile Include="Migrations\201909272056113_Initial.cs" />
+    <Compile Include="Migrations\201909272056113_Initial.Designer.cs">
+      <DependentUpon>201909272056113_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,11 +109,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909181841555_PrimeraMigracion.resx">
-      <DependentUpon>201909181841555_PrimeraMigracion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909182114034_SegundaMigracion.resx">
-      <DependentUpon>201909182114034_SegundaMigracion.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909272056113_Initial.resx">
+      <DependentUpon>201909272056113_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
