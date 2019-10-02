@@ -433,5 +433,308 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
 
             Assert.AreEqual(1, 1);
         }
+
+        [TestMethod]
+        public void PersistirGuardarropas()
+        {
+            Prenda prenda1;
+            Prenda prenda2  ;
+            Prenda prenda3  ;
+            Prenda prenda4  ;
+            Prenda prenda5  ;
+            Prenda prenda6  ;
+            Prenda prenda7  ;
+            Prenda prenda8  ;
+            Prenda prenda9  ;
+            Prenda prenda10 ;
+
+            Guardarropa unGuardarropa;
+            Guardarropa otroGuardarropa;
+
+            #region CREACION PRENDAS
+            PrendaBuilder pb = new PrendaBuilder();
+            pb.CrearPrenda()
+              .ConCategoria("accesorio")
+              .ConTipo("gorra")
+              .ConMaterial("lana")
+              .ConColor("verde")
+              .ConColor("negro")
+              .ConEvento("casual");
+            prenda1 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("remera_manga_corta")
+              .ConMaterial("algodon")
+              .ConColor("azul")
+              .ConColor("blanco")
+              .ConEvento("casual");
+            prenda2 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("campera_de_lluvia")
+              .ConMaterial("poliester")
+              .ConColor("negro")
+              .ConColor("azul")
+              .ConEvento("casual");
+            prenda3 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pantalon_largo")
+              .ConMaterial("poliester")
+              .ConColor("negro")
+              .ConEvento("casual")
+              .ConEvento("trabajo");
+            prenda4 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("calzado")
+              .ConTipo("panchas")
+              .ConMaterial("lana")
+              .ConColor("azul")
+              .ConEvento("casual")
+              .ConEvento("casamiento");
+            prenda5 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pollera")
+              .ConEvento("casual");
+            prenda6 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("remera_manga_larga")
+              .ConEvento("casual")
+              .ConEvento("trabajo");
+            prenda7 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("calzado")
+              .ConTipo("zapatilla_de_correr")
+              .ConEvento("casual")
+              .ConEvento("casamiento");
+            prenda8 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pantalon_corto")
+              .ConEvento("casual");
+            prenda9 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("campera_de_abrigo")
+              .ConEvento("casual");
+            prenda10 = pb.ObtenerPrenda();
+
+            #endregion PRENDAS
+
+            #region ASIGNACION PRENDAS
+            unGuardarropa = new Guardarropa(10);
+            otroGuardarropa = new Guardarropa(10);
+
+            unGuardarropa.AgregarPrenda(prenda1);
+            unGuardarropa.AgregarPrenda(prenda2);
+            unGuardarropa.AgregarPrenda(prenda3);
+            unGuardarropa.AgregarPrenda(prenda4);
+            unGuardarropa.AgregarPrenda(prenda5);
+            unGuardarropa.AgregarPrenda(prenda6);
+            unGuardarropa.AgregarPrenda(prenda7);
+            otroGuardarropa.AgregarPrenda(prenda5);
+            otroGuardarropa.AgregarPrenda(prenda6);
+            otroGuardarropa.AgregarPrenda(prenda7);
+            otroGuardarropa.AgregarPrenda(prenda8);
+            otroGuardarropa.AgregarPrenda(prenda9);
+            otroGuardarropa.AgregarPrenda(prenda10);
+            #endregion
+
+
+            try
+            {
+                QueMePongoDB db = new QueMePongoDB();
+
+                db.Guardarropas.Add(unGuardarropa);
+                db.Guardarropas.Add(otroGuardarropa);
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
+                            ve.PropertyName,
+                            eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
+                            ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
+            Assert.AreEqual(1, 1);
+        }
+
+        [TestMethod]
+        public void PersistirUsuario()
+        {
+            Prenda prenda1;
+            Prenda prenda2;
+            Prenda prenda3;
+            Prenda prenda4;
+            Prenda prenda5;
+            Prenda prenda6;
+            Prenda prenda7;
+            Prenda prenda8;
+            Prenda prenda9;
+            Prenda prenda10;
+            Usuario usr1;
+            Usuario usr2;
+
+            Guardarropa unGuardarropa;
+            Guardarropa otroGuardarropa;
+
+            #region CREACION PRENDAS
+            PrendaBuilder pb = new PrendaBuilder();
+            pb.CrearPrenda()
+              .ConCategoria("accesorio")
+              .ConTipo("gorra")
+              .ConMaterial("lana")
+              .ConColor("verde")
+              .ConColor("negro")
+              .ConEvento("casual");
+            prenda1 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("remera_manga_corta")
+              .ConMaterial("algodon")
+              .ConColor("azul")
+              .ConColor("blanco")
+              .ConEvento("casual");
+            prenda2 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("campera_de_lluvia")
+              .ConMaterial("poliester")
+              .ConColor("negro")
+              .ConColor("azul")
+              .ConEvento("casual");
+            prenda3 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pantalon_largo")
+              .ConMaterial("poliester")
+              .ConColor("negro")
+              .ConEvento("casual")
+              .ConEvento("trabajo");
+            prenda4 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("calzado")
+              .ConTipo("panchas")
+              .ConMaterial("lana")
+              .ConColor("azul")
+              .ConEvento("casual")
+              .ConEvento("casamiento");
+            prenda5 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pollera")
+              .ConEvento("casual");
+            prenda6 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("remera_manga_larga")
+              .ConEvento("casual")
+              .ConEvento("trabajo");
+            prenda7 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("calzado")
+              .ConTipo("zapatilla_de_correr")
+              .ConEvento("casual")
+              .ConEvento("casamiento");
+            prenda8 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("pantalon_corto")
+              .ConEvento("casual");
+            prenda9 = pb.ObtenerPrenda();
+
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("campera_de_abrigo")
+              .ConEvento("casual");
+            prenda10 = pb.ObtenerPrenda();
+
+            #endregion PRENDAS
+
+            #region ASIGNACION PRENDAS
+            unGuardarropa = new Guardarropa(10);
+            otroGuardarropa = new Guardarropa(10);
+
+            unGuardarropa.AgregarPrenda(prenda1);
+            unGuardarropa.AgregarPrenda(prenda2);
+            unGuardarropa.AgregarPrenda(prenda3);
+            unGuardarropa.AgregarPrenda(prenda4);
+            unGuardarropa.AgregarPrenda(prenda5);
+            unGuardarropa.AgregarPrenda(prenda6);
+            unGuardarropa.AgregarPrenda(prenda7);
+            otroGuardarropa.AgregarPrenda(prenda5);
+            otroGuardarropa.AgregarPrenda(prenda6);
+            otroGuardarropa.AgregarPrenda(prenda7);
+            otroGuardarropa.AgregarPrenda(prenda8);
+            otroGuardarropa.AgregarPrenda(prenda9);
+            otroGuardarropa.AgregarPrenda(prenda10);
+            #endregion
+
+            #region CREACION USUARIOS
+
+            usr1 = new UsrGratis(10);
+            usr2 = new UsrPremium();
+
+            usr1.AgregarGuardarropa(unGuardarropa);
+            usr2.AgregarGuardarropa(otroGuardarropa);
+
+            #endregion
+
+            try
+            {
+                QueMePongoDB db = new QueMePongoDB();
+
+                db.Usuarios.Add(usr1);
+                db.Usuarios.Add(usr2);
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
+                            ve.PropertyName,
+                            eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
+                            ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
+            Assert.AreEqual(1, 1);
+        }
     }
 }

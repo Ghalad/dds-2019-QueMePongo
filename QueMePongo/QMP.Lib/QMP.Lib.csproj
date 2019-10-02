@@ -96,9 +96,9 @@
     <Compile Include="Entidades\Usuarios\UsrGratis.cs" />
     <Compile Include="Entidades\Usuarios\UsrPremium.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
-    <Compile Include="Migrations\201909272056113_Initial.cs" />
-    <Compile Include="Migrations\201909272056113_Initial.Designer.cs">
-      <DependentUpon>201909272056113_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201910021813598_Initial.cs" />
+    <Compile Include="Migrations\201910021813598_Initial.Designer.cs">
+      <DependentUpon>201910021813598_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,8 +109,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909272056113_Initial.resx">
-      <DependentUpon>201909272056113_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910021813598_Initial.resx">
+      <DependentUpon>201910021813598_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

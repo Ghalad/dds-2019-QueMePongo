@@ -13,7 +13,7 @@ namespace Ar.UTN.QMP.Lib.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201909272056113_Initial"; }
+            get { return "201910021813598_Initial"; }
         }
         
         string IMigrationMetadata.Source

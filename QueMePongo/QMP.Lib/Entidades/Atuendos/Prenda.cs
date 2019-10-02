@@ -15,19 +15,37 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order = 1)]
         public int PrendaId { get; set; }
-        public ICollection<CaracteristicaPrenda> Caracteristicas { get; set; }
         [NotMapped]
         public Image Imagen { get; set; }
-        private byte[] ImagenEnBytes { get; set; }
-        private static int RESOLUCION = 140; // Esto se podria setear por archivo de configuracion
+        public byte[] ImagenEnBytes { get; set; }
+        public static int RESOLUCION = 140; // Esto se podria setear por archivo de configuracion
         public Calificacion Calificacion { get; set; }
-        private DateTime fechaDeUso { get; set; }
+        public DateTime fechaDeUso { get; set; }
+        public ICollection<CaracteristicaPrenda> Caracteristicas { get; set; }
+        public ICollection<Guardarropa> Guardarropas { get; set; }
 
         public Prenda()
         {
             this.Caracteristicas = new List<CaracteristicaPrenda>();
             this.fechaDeUso = new DateTime(1990, 12, 13);
             this.Calificacion = null;
+            this.Guardarropas = new HashSet<Guardarropa>();
+        }
+
+        public void AgregarGuardarropa(Guardarropa guardarropa)
+        {
+            this.Guardarropas.Add(guardarropa);
+        }
+
+        public Prenda(Prenda aCopiar)
+        {
+            this.Caracteristicas = new List<CaracteristicaPrenda>();
+            this.PrendaId = aCopiar.PrendaId;
+            this.Calificacion = aCopiar.Calificacion;
+            this.Caracteristicas = aCopiar.Caracteristicas;
+            this.fechaDeUso = aCopiar.fechaDeUso;
+            this.Imagen = aCopiar.Imagen;
+            this.ImagenEnBytes = aCopiar.ImagenEnBytes;
         }
 
 

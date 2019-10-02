@@ -12,10 +12,10 @@ namespace Ar.UTN.QMP.Lib
 
     public class QueMePongoDB : DbContext
     {
-        //public DbSet<Usuario> Usuarios { get; set; }
-        //public DbSet<Guardarropa> Guardarropas { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Guardarropa> Guardarropas { get; set; }
         public DbSet<Prenda> Prendas { get; set; }
-        //public DbSet<Calificacion> Calificaciones { get; set; }
+        public DbSet<Calificacion> Calificaciones { get; set; }
         public DbSet<Caracteristica> Caracteristicas { get; set; }
         //public DbSet<Regla> Reglas { get; set; }
         //public DbSet<Pedido> Pedidos { get; set; }
