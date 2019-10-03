@@ -10,9 +10,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     public class Atuendo
     {
         [Key]
-        public int Id { get; set; }
-        public List<Prenda> Prendas { get; set; }
-        private bool? Aceptado { get; set; }
+        public int AtuendoId { get; set; }
+        public ICollection<Prenda> Prendas { get; set; }
+        public bool? Aceptado { get; set; }
         public Calificacion Calificacion { get; set; }
 
         public Atuendo()

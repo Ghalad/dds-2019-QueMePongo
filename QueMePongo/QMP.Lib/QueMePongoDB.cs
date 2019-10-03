@@ -17,7 +17,9 @@ namespace Ar.UTN.QMP.Lib
         public DbSet<Prenda> Prendas { get; set; }
         public DbSet<Calificacion> Calificaciones { get; set; }
         public DbSet<Caracteristica> Caracteristicas { get; set; }
-        //public DbSet<Regla> Reglas { get; set; }
+        public DbSet<Regla> Reglas { get; set; }
+        public DbSet<Condicion> Condiciones { get; set; }
+        public DbSet<Operador> Operadores { get; set; }
         //public DbSet<Pedido> Pedidos { get; set; }
         //public DbSet<Atuendo> Atuendos { get; set; }
         //public DbSet<Evento> Eventos { get; set; }

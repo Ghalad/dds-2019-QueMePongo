@@ -1,7 +1,12 @@
-﻿namespace Ar.UTN.QMP.Lib.Entidades.Reglas
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Ar.UTN.QMP.Lib.Entidades.Reglas
 {
-    public interface Operador
+    [Table("Operadores")]
+    public class Operador
     {
-        bool Resolver(int valor);
+        public int OperadorId { get; set;}
+        public int ValorReferencia { get; set; }
+        public virtual bool Resolver(int valor) { return true; } 
     }
 }

@@ -37,17 +37,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Guardarropas.Add(guardarropa);
         }
 
-        public Prenda(Prenda aCopiar)
-        {
-            this.Caracteristicas = new List<CaracteristicaPrenda>();
-            this.PrendaId = aCopiar.PrendaId;
-            this.Calificacion = aCopiar.Calificacion;
-            this.Caracteristicas = aCopiar.Caracteristicas;
-            this.fechaDeUso = aCopiar.fechaDeUso;
-            this.Imagen = aCopiar.Imagen;
-            this.ImagenEnBytes = aCopiar.ImagenEnBytes;
-        }
-
 
         /// <summary>
         /// Permite agregar una caracteristica, a traves de un objeto Caracteristica

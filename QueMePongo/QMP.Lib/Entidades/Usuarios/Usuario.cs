@@ -12,21 +12,37 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
     [Table("Usuarios")]
     public abstract class Usuario
     {
-        public ICollection<Guardarropa> Guardarropas { get; set; }
-        [NotMapped]
-        public List<Regla> Reglas { get; set; }
-        public int Maximo { get; set; }
         [Key]
-        public int Id { get; set; }
-        [NotMapped]
-        public Pedido Pedido { get; set; }
+        public int UsuarioId { get; set; }
+        public string Username { get; set; }
+        public int Maximo { get; set; }
         public int Sensibilidad { get; set; }
+        public ICollection<Atuendo> AtuendosAceptados { get; set; }
+        public ICollection<Guardarropa> Guardarropas { get; set; }
+        public ICollection<Regla> Reglas { get; set; }
+        public Pedido Pedido { get; set; }
 
-        protected Usuario(int maximo)
+        protected Usuario(int maximo, string username)
         {
+            this.Username = username;
             this.Guardarropas = new HashSet<Guardarropa>();
             this.Reglas = new List<Regla>();
             this.Maximo = maximo;
+        }
+
+        public List<Prenda> ObtenerPrendas()
+        {
+            List<Prenda> PrendasAux = new List<Prenda>();
+
+            foreach (Guardarropa g in Guardarropas)
+            {
+                foreach (Prenda p in g.Prendas)
+                {
+                    PrendasAux.Add(p);
+                }
+            }
+
+            return PrendasAux;
         }
 
         public void AgregarGuardarropa(Guardarropa guardarropa)
@@ -94,6 +110,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
                 default:
                     throw new Exception("Sensibilidad al clima no válida.");
             }
+        }
+
+        public void AgregarAtuendoAceptado(Atuendo atuendo)
+        {
+            if (AtuendosAceptados == null)
+                AtuendosAceptados = new List<Atuendo>();
+            AtuendosAceptados.Add(atuendo);
         }
 
         public void NotificarPedidoResuelto(Pedido pedido)

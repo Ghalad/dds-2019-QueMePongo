@@ -64,7 +64,6 @@
     <Compile Include="Entidades\Atuendos\PrendaBuilderTests.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceTest.cs" />
     <Compile Include="Entidades\Core\QueMePongoTests.cs" />
-    <Compile Include="Entidades\DB\Guardarropas.cs" />
     <Compile Include="Entidades\DB\Persistencia.cs" />
     <Compile Include="Entidades\Reglas\ReglaTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,7 +2,7 @@
 {
     public class OperadorMayorIgual : Operador
     {
-        private int ValorReferencia { get; set; }
+        public int ValorReferencia { get; set; }
 
         public OperadorMayorIgual(int valorReferencia)
         {

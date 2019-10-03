@@ -8,8 +8,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas
     [Table("Reglas")]
     public class Regla
     {
-        public string Id { get; set; }
-        private List<Condicion> Condiciones { get; set; }
+        public int ReglaId { get; set; }
+        public ICollection<Condicion> Condiciones { get; set; }
 
         public Regla()
         {

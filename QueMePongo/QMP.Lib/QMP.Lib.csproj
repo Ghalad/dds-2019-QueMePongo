@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\0_ParaDB\CaracteristicaCondicion.cs" />
     <Compile Include="Entidades\0_ParaDB\CaracteristicaPrenda.cs" />
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
@@ -96,9 +97,9 @@
     <Compile Include="Entidades\Usuarios\UsrGratis.cs" />
     <Compile Include="Entidades\Usuarios\UsrPremium.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
-    <Compile Include="Migrations\201910021813598_Initial.cs" />
-    <Compile Include="Migrations\201910021813598_Initial.Designer.cs">
-      <DependentUpon>201910021813598_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201910031637086_Second.cs" />
+    <Compile Include="Migrations\201910031637086_Second.Designer.cs">
+      <DependentUpon>201910031637086_Second.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,8 +110,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910021813598_Initial.resx">
-      <DependentUpon>201910021813598_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910031637086_Second.resx">
+      <DependentUpon>201910031637086_Second.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

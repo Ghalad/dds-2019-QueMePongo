@@ -66,7 +66,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                     atuendo = new Atuendo();
                     foreach (var seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
                         atuendo.AgregarPrenda(seleccion);
-                    atuendo.Id = 1; // TODO generacion de IDs
                     this.Atuendos.Add(atuendo);
                 }
             }

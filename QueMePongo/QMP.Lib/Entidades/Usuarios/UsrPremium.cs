@@ -2,7 +2,7 @@
 {
     public class UsrPremium : Usuario
     {
-        public UsrPremium() : base(0)
+        public UsrPremium(string username) : base(0, username)
         {
         }
     }

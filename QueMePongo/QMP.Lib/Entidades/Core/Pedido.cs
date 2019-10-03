@@ -27,16 +27,20 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         public Usuario Usuario { get; set; }
         private ICollection<Atuendo> Atuendos { get; set; }
 
-        public Pedido(Usuario usr, List<Prenda> prendas, List<Regla> reglas, Evento evento)
+        public Pedido(Usuario usr, Evento evento)
         {
-            if (prendas != null)
-                this.Prendas = prendas;
+            if (usr != null)
+                this.Usuario = usr;
             else
-                throw new Exception("Es necesario informar una lista de prendas");
+                throw new Exception("Es necesario informar un usuario");
 
-            if (reglas != null)
-                this.Reglas = reglas;
-            else
+            Prendas = usr.ObtenerPrendas();
+            Reglas = usr.Reglas;
+
+            if (Prendas.Count == 0)
+                throw new Exception("El usuario no tiene prendas para generar atuendos");
+
+            if (Reglas.Count == 0)
                 throw new Exception("Es necesario informar una lista de reglas");
 
             if (evento != null)
@@ -44,13 +48,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             else
                 throw new Exception("Es necesario informar un evento");
 
-            if (usr != null)
-                this.Usuario = usr;
-            else
-                throw new Exception("Es necesario informar un usuario");
-
             this.Atuendos = new List<Atuendo>();
-            this.Id = 12345; // generar ID
         }
 
         /// <summary>
@@ -72,7 +70,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
         public Pedido ObtenerSiguiente()
         {
-            return new Pedido(this.Usuario, this.Prendas.ToList(), this.Reglas.ToList(), Evento.ObtenerSiguiente());
+            return new Pedido(this.Usuario, Evento.ObtenerSiguiente());
         }
 
         public bool SeRepite()
@@ -96,10 +94,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// Permite aceptar un atuendo y rechazar el resto
         /// </summary>
         /// <param name="id"></param>
-        public void AceptarAtuendo(string id, int puntaje)
+        public void AceptarAtuendo(Usuario usr, string id, int puntaje)
         {
-            this.Atuendos.ToList().Find(a => a.Id.Equals(id)).Aceptar(puntaje);
-            this.Atuendos.ToList().ForEach(a => { if (!a.Id.Equals(id)) a.Rechazar(); });
+            usr.AgregarAtuendoAceptado(this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id)));
+            this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id)).Aceptar(puntaje);
+            this.Atuendos.ToList().ForEach(a => { if (!a.AtuendoId.Equals(id)) a.Rechazar(); });
         }
 
 

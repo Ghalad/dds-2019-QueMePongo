@@ -2,7 +2,7 @@
 {
     public class UsrGratis : Usuario
     {
-        public UsrGratis(int maximo) : base(maximo)
+        public UsrGratis(int maximo, string username) : base(maximo, username)
         {
         }
     }
