@@ -121,7 +121,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                                     this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
                                     this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
                                     this.Prenda.AgregarCaracteristica("ABRIGO", Tipos.GetInstance().ObtenerAbrigo(tipo));
-                                    this.AgregarClimas(tipo);
                                 }
                                 else
                                     throw new Exception(string.Format("El tipo de prenda [{0}] no se corresponde con la categoria [{1}] que posee", tipo, this.Prenda.ObtenerCaracteristica("CATEGORIA")));
@@ -130,7 +129,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                             {
                                 this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
                                 this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
-                                this.AgregarClimas(tipo);
                             }
                         }
                         else
@@ -275,16 +273,5 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
             return this;
         }
-
-
-        #region PRIVADO
-        private void AgregarClimas(string tipoPrenda)
-        {
-#pragma warning disable CS0612 // 'Tipos.ObtenerClimas(string)' is obsolete
-            foreach(string str in Tipos.GetInstance().ObtenerClimas(tipoPrenda))
-#pragma warning restore CS0612 // 'Tipos.ObtenerClimas(string)' is obsolete
-                this.Prenda.AgregarCaracteristica(new Caracteristica("CLIMA", str.ToUpper()));
-        }
-        #endregion PRIVADO
     }
 }

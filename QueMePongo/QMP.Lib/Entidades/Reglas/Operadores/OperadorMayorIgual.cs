@@ -2,14 +2,12 @@
 {
     public class OperadorMayorIgual : Operador
     {
-        public int ValorReferencia { get; set; }
-
         public OperadorMayorIgual(int valorReferencia)
         {
             this.ValorReferencia = valorReferencia;
         }
 
-        public bool Resolver(int valor)
+        public override bool Resolver(int valor)
         {
             if (valor >= this.ValorReferencia)
                 return true; // atuendo INVALIDO

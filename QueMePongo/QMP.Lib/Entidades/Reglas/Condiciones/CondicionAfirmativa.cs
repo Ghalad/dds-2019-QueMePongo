@@ -28,7 +28,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
         /// </summary>
         /// <param name="atuendo"></param>
         /// <returns></returns>
-        public bool Validar(Atuendo atuendo)
+        public override bool Validar(Atuendo atuendo)
         {
             bool match = false;
 

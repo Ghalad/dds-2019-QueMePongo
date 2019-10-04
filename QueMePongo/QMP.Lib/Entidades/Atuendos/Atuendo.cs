@@ -11,13 +11,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     {
         [Key]
         public int AtuendoId { get; set; }
-        public ICollection<Prenda> Prendas { get; set; }
         public bool? Aceptado { get; set; }
         public Calificacion Calificacion { get; set; }
+        public ICollection<Prenda> Prendas { get; set; }
 
         public Atuendo()
         {
-            this.Prendas = new List<Prenda>();
+            this.Prendas = new HashSet<Prenda>();
             this.Aceptado = null;
             this.Calificacion = null;
         }
@@ -29,7 +29,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public void AgregarPrenda(Prenda prenda)
         {
             if (prenda != null)
+            {
+                prenda.AgregarAtuendo(this);
                 this.Prendas.Add(prenda);
+            }
             else
                 throw new Exception("No pueden agregarse prendas nulas al atuendo.");
         }

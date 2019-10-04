@@ -1,6 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
-using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -14,18 +13,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     public class Pedido
     {
         [Key, ForeignKey("Usuario")]
-        public int Id { get; set; }
-        private ICollection<Prenda> Prendas { get; set; }
-        private ICollection<Regla> Reglas { get; set; }
-
+        public int PedidoId { get; set; }
         public DateTime Fecha()
         {
             return Evento.FechaEvento;
         }
-
-        private Evento Evento { get; set; }
+        public Evento Evento { get; set; }
         public Usuario Usuario { get; set; }
-        private ICollection<Atuendo> Atuendos { get; set; }
+        public ICollection<Atuendo> Atuendos { get; set; }
 
         public Pedido(Usuario usr, Evento evento)
         {
@@ -33,15 +28,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 this.Usuario = usr;
             else
                 throw new Exception("Es necesario informar un usuario");
-
-            Prendas = usr.ObtenerPrendas();
-            Reglas = usr.Reglas;
-
-            if (Prendas.Count == 0)
-                throw new Exception("El usuario no tiene prendas para generar atuendos");
-
-            if (Reglas.Count == 0)
-                throw new Exception("Es necesario informar una lista de reglas");
 
             if (evento != null)
                 this.Evento = evento;
@@ -56,12 +42,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void Resolver()
         {
-            AtuendosGestor gestor = new AtuendosGestor(this.Prendas.ToList(), this.Reglas.ToList(), this.Evento);
+            AtuendosGestor gestor = new AtuendosGestor(Usuario.ObtenerPrendas(), Usuario.Reglas.ToList(), this.Evento);
             gestor.GenerarAtuendos();
             gestor.FiltrarAtuendosPorReglas();
             gestor.FiltrarAtuendosPorEvento();
-            //gestor.FiltrarAtuendosPorClima();
-            gestor.FiltrarAtuendosPorSensibilidadYClima(this.Usuario.Sensibilidad);
+            //gestor.FiltrarAtuendosPorSensibilidadYClima(this.Usuario.Sensibilidad);
             gestor.OrdenarPorCalificacionDeAtuendo();
 
             this.Atuendos = gestor.ObtenerAtuendos();
@@ -127,6 +112,22 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 throw new Exception("El usuario no tiene atuendos para aceptar.");
             }
             this.Atuendos.ToList()[0].Aceptar(10);
+        }
+
+        [Obsolete]
+        public void MostrarAtuendos()
+        {
+            Console.WriteLine("About to print Atuendos..");
+            int i = 1;
+            foreach(Atuendo a in Atuendos)
+            {
+                Console.WriteLine("Atuendo {0}", i);
+                foreach(Prenda p in a.Prendas)
+                {
+;                   p.MostrarPorPantalla();
+                }
+                i++;
+            }
         }
     }
 }

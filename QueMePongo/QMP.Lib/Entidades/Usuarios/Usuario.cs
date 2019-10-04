@@ -17,10 +17,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         public string Username { get; set; }
         public int Maximo { get; set; }
         public int Sensibilidad { get; set; }
+        public Pedido Pedido { get; set; }
         public ICollection<Atuendo> AtuendosAceptados { get; set; }
         public ICollection<Guardarropa> Guardarropas { get; set; }
         public ICollection<Regla> Reglas { get; set; }
-        public Pedido Pedido { get; set; }
 
         protected Usuario(int maximo, string username)
         {

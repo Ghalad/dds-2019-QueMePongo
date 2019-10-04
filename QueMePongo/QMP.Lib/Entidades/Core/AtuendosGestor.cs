@@ -281,27 +281,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 i++;
             }
         }
-        /// <summary>
-        /// Filtra la lista de atuendos segun el clima del lugar donde se desarrollara el evento
-        /// </summary>
-        [Obsolete]
-        public void FiltrarAtuendosPorClima2()
-        {
-            List<Atuendo> removidos = new List<Atuendo>();
-
-            WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
-
-            Regla regla = new Regla();
-            List<Caracteristica> listaCar = new List<Caracteristica>();
-            listaCar.Add(new Caracteristica("CLIMA", Tipos.GetInstance().TraducirTemperatura(srvClima.ObtenerTemperatura())));
-            regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
-
-            foreach(Atuendo atuendo in this.Atuendos)
-                if (!regla.Validar(atuendo))
-                    removidos.Add(atuendo);
-
-            this.Atuendos.RemoveAll(a => removidos.Contains(a));
-        }
+        
         #endregion
     }
 }

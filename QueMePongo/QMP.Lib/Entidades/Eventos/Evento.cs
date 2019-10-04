@@ -10,7 +10,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order = 1)]
-        public int EventoID { get; set; }
+        public int EventoId { get; set; }
         public string Descripcion { get; set; }
         public string CiudadEvento { get; set; }
         public DateTime FechaEvento { get; set; }

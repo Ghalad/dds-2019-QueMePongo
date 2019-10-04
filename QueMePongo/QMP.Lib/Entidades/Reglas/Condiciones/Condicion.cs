@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Ar.UTN.QMP.Lib.Entidades.Reglas
 {
     [Table("Condiciones")]
-    public class Condicion
+    public abstract class Condicion
     {
         public int CondicionId { get; set; }
-        public bool Validar(Atuendo atuendo) { return true; }
+        public abstract bool Validar(Atuendo atuendo);
     }
 }

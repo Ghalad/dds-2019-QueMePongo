@@ -20,9 +20,9 @@ namespace Ar.UTN.QMP.Lib
         public DbSet<Regla> Reglas { get; set; }
         public DbSet<Condicion> Condiciones { get; set; }
         public DbSet<Operador> Operadores { get; set; }
-        //public DbSet<Pedido> Pedidos { get; set; }
-        //public DbSet<Atuendo> Atuendos { get; set; }
-        //public DbSet<Evento> Eventos { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Atuendo> Atuendos { get; set; }
+        public DbSet<Evento> Eventos { get; set; }
 
 
         // Your context has been configured to use a 'QueMePongoDB' connection string from your application's 
@@ -35,6 +35,23 @@ namespace Ar.UTN.QMP.Lib
             : base("name=QueMePongoDB")
         {
             Database.SetInitializer<QueMePongoDB>(new CreateDatabaseIfNotExists<QueMePongoDB>());
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Atuendo>()
+               .HasMany(p => p.Prendas)
+               .WithMany(r => r.Atuendos)
+               .Map(mc =>
+               {
+                   mc.MapLeftKey("AtuendoId");
+                   mc.MapRightKey("PrendaId");
+                   mc.ToTable("PrendasAtuendos");
+               });
+
+            modelBuilder.Entity<Usuario>()
+                        .HasOptional(s => s.Pedido) // Mark Address property optional in Student entity
+                        .WithRequired(ad => ad.Usuario);
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 

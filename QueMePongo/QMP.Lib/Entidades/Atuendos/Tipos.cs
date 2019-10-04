@@ -12,7 +12,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public List<Caracteristica> MaterialxTipo { get; set; }
         public List<Caracteristica> Caracteristicas { get; set; }
         public List<Caracteristica> Superposiones { get; set; }
-        public List<Caracteristica> TipoPrendaxClima { get; set; }
         public List<Caracteristica> NivelDeAbrigo { get; set; }
 
 
@@ -30,7 +29,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.MaterialxTipo       = new List<Caracteristica>();
             this.Caracteristicas     = new List<Caracteristica>();
             this.Superposiones       = new List<Caracteristica>();
-            this.TipoPrendaxClima    = new List<Caracteristica>();
             this.NivelDeAbrigo       = new List<Caracteristica>();
 
             // Aca van todos las caracteristicas posibles que puede tener una prenda.
@@ -154,60 +152,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "PANCHAS"));
             this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "OJOTAS"));
 
-            // Estos son los climas que le corresponden a cada tipo de prenda
-            this.TipoPrendaxClima.Add(new Caracteristica("GORRA",                "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("SOMBRERO",             "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("REMERA_MANGA_LARGA",   "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMISA_MANGA_LARGA",   "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("SWEATER",              "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMPERA_DE_ABRIGO",    "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMPERA_DE_LLUVIA",    "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANTALON_CORTO",       "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANTALON_LARGO",       "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("MEDIAS",               "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATO_TACO_ALTO",     "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "FRIO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANCHAS",              "FRIO"));
-
-            this.TipoPrendaxClima.Add(new Caracteristica("GORRA",                 "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("SOMBRERO",              "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("REMERA_MANGA_CORTA",    "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("REMERA_MANGA_LARGA",    "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMISA_MANGA_CORTA",    "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMISA_MANGA_LARGA",    "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("SWEATER",               "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMPERA_DE_ABRIGO",     "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMPERA_DE_LLUVIA",     "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANTALON_CORTO",        "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANTALON_LARGO",        "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("MEDIAS",                "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATO_TACO_ALTO",      "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATO_TACO_BAJO",      "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATILLA_DE_CORRER",   "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATILLA_DE_TREKING",  "TEMPLADO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANCHAS",               "TEMPLADO"));
-
-            this.TipoPrendaxClima.Add(new Caracteristica("GORRA",                "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("SOMBRERO",             "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("MUSCULOSA",            "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("REMERA_MANGA_CORTA",   "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("REMERA_MANGA_LARGA",   "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMISA_MANGA_CORTA",   "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMISA_MANGA_LARGA",   "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("CAMPERA_DE_LLUVIA",    "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANTALON_CORTO",       "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANTALON_LARGO",       "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("POLLERA",              "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("MEDIAS",               "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATO_TACO_ALTO",     "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("PANCHAS",              "CALIDO"));
-            this.TipoPrendaxClima.Add(new Caracteristica("OJOTAS",               "CALIDO"));
-
             //El nivel de abrigo que le corresponde a cada prenda
             //CADA VEZ QUE SE ACTUALICE, ACTUALIZAR AtuendosGestor.CumpleNivelDeAbrigo()
             this.NivelDeAbrigo.Add(new Caracteristica("GORRA",                "2"));
@@ -316,48 +260,5 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return null;
         }
 
-        #region OBSOLETAS
-        /// <summary>
-        /// Devuelve los climas de un tipo de prenda
-        /// </summary>
-        /// <param name="tipoPrenda"></param>
-        /// <returns></returns>
-        [Obsolete]
-        public List<string> ObtenerClimas(string tipoPrenda)
-        {
-            List<string> climas = new List<string>();
-            
-            foreach(Caracteristica car in this.TipoPrendaxClima.FindAll(c => c.Clave.Equals(tipoPrenda.ToUpper())))
-            {
-                climas.Add(car.Valor);
-            }
-
-            return climas;
-        }
-
-        /// <summary>
-        /// Convierte un valor de temperatura en el string que lo representa
-        /// </summary>
-        /// <param name="valorTemperatura"></param>
-        /// <returns></returns>
-        [Obsolete]
-        public string TraducirTemperatura(decimal valorTemperatura)
-        {
-            if (valorTemperatura <= 10)
-            {
-                return "FRIO";
-            }
-            else if (valorTemperatura > 10 && valorTemperatura < 20)
-            {
-                return "TEMPLADO";
-            }
-            else if (valorTemperatura >= 20)
-            {
-                return "CALIDO";
-            }
-            else
-                throw new Exception("Valor de temperatura invalido");
-        }
-        #endregion
     }
 }

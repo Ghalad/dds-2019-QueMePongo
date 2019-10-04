@@ -22,6 +22,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public Calificacion Calificacion { get; set; }
         public DateTime fechaDeUso { get; set; }
         public ICollection<CaracteristicaPrenda> Caracteristicas { get; set; }
+        public ICollection<Atuendo> Atuendos { get; set; }
+
+
         public ICollection<Guardarropa> Guardarropas { get; set; }
 
         public Prenda()
@@ -29,7 +32,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas = new List<CaracteristicaPrenda>();
             this.fechaDeUso = new DateTime(1990, 12, 13);
             this.Calificacion = null;
+            this.Atuendos = new HashSet<Atuendo>();
             this.Guardarropas = new HashSet<Guardarropa>();
+        }
+        public void AgregarAtuendo(Atuendo atuendo)
+        {
+            this.Atuendos.Add(atuendo);
         }
 
         public void AgregarGuardarropa(Guardarropa guardarropa)

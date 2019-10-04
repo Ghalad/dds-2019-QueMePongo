@@ -2,7 +2,6 @@
 {
     public class OperadorIgual : Operador
     {
-        private int ValorReferencia { get; set; }
 
         public OperadorIgual(int valorReferencia)
         {
