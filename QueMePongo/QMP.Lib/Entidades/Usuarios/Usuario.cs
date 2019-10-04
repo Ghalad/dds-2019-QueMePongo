@@ -30,6 +30,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
             this.Maximo = maximo;
         }
 
+        public Usuario() { }
+
         public List<Prenda> ObtenerPrendas()
         {
             List<Prenda> PrendasAux = new List<Prenda>();

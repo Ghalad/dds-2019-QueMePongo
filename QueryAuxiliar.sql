@@ -10,6 +10,13 @@ FROM Usuarios u JOIN Pedidos p ON (u.UsuarioId = p.PedidoId)
 				JOIN Caracteristicas c ON (c.CaracteristicaId = cp.CaracteristicaId)
 WHERE c.Clave = 'TIPO'
 
+--Ver usuarios y reglas
+SELECT u.Username, r.ReglaId, c.CondicionId, c.Discriminator, ca.Clave, ca.Valor
+FROM Reglas r JOIN Usuarios u ON (u.UsuarioId = r.Usuario_UsuarioId)
+			JOIN Condiciones c ON (c.Regla_ReglaId = r.ReglaId)
+			JOIN CaracteristicasCondiciones cc ON (cc.condicion_CondicionId = c.CondicionId)
+			JOIN Caracteristicas ca ON (ca.CaracteristicaId = cc.CaracteristicaId)
+
 -- Ver usuarios y guardarropas
 SELECT u.Username, ug.Guardarropa_Id 
 FROM UsuarioGuardarropas ug JOIN Usuarios u ON (ug.Usuario_UsuarioId = u.UsuarioId)
@@ -32,15 +39,3 @@ ORDER BY gp.Guardarropa_Id
 --Ver prendas y caracteristicas
 SELECT cp.prenda_PrendaId, c.CaracteristicaId, c.Clave, c.Valor
 FROM CaracteristicasPrendas cp JOIN Caracteristicas c ON (cp.CaracteristicaId = c.CaracteristicaId)
-
-
-
-
-delete from GuardarropaPrendas
-delete from CaracteristicasPrendas
-delete from Prendas 
-delete from Guardarropas
-delete from Calificaciones
-delete from Caracteristicas
-delete from UsuarioGuardarropas
-delete from Usuarios

@@ -23,6 +23,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.MaximoPrendas = maximoPrendas;
             this.Prendas = new List<Prenda>();
         }
+
+        private Guardarropa() { }
         
 
         /// <summary>

@@ -13,6 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades._0._Para_DB
     {
         public Prenda prenda { get; set; }
 
+        private CaracteristicaPrenda() : base() { }
         public CaracteristicaPrenda(string clave,string valor, Prenda unaPrenda) : base(clave, valor)
         {
             prenda = unaPrenda;

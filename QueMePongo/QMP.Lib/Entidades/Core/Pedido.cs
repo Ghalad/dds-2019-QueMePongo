@@ -22,6 +22,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         public Usuario Usuario { get; set; }
         public ICollection<Atuendo> Atuendos { get; set; }
 
+        private Pedido() { }
         public Pedido(Usuario usr, Evento evento)
         {
             if (usr != null)

@@ -13,6 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public string Clave { get; private set; }
         public string Valor { get; private set; }
 
+        public Caracteristica() { }
         public Caracteristica(string clave, string valor)
         {
             if(!string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
