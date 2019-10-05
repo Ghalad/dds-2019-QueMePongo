@@ -78,6 +78,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
                 throw new Exception("ID de guardarropa requerido.");
         }
 
+        public bool YaAcepto(Atuendo atuendo)
+        {
+            foreach(Atuendo a in AtuendosAceptados)
+            {
+                if (a.AtuendoId == atuendo.AtuendoId)
+                    return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Permite agregar reglas
         /// </summary>

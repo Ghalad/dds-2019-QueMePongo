@@ -66,6 +66,7 @@
     <Compile Include="Entidades\Core\QueMePongoTests.cs" />
     <Compile Include="Entidades\DB\Persistencia.cs" />
     <Compile Include="Entidades\DB\Retrieving.cs" />
+    <Compile Include="Entidades\DB\Updating.cs" />
     <Compile Include="Entidades\Reglas\ReglaTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entidades\Atuendos\PrendasTest.cs" />

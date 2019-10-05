@@ -80,11 +80,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// Permite aceptar un atuendo y rechazar el resto
         /// </summary>
         /// <param name="id"></param>
-        public void AceptarAtuendo(Usuario usr, string id, int puntaje)
+        public void AceptarAtuendo(int id, int puntaje)
         {
-            usr.AgregarAtuendoAceptado(this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id)));
+            if (Usuario.YaAcepto(this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id))))
+                return;
             this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id)).Aceptar(puntaje);
             this.Atuendos.ToList().ForEach(a => { if (!a.AtuendoId.Equals(id)) a.Rechazar(); });
+            this.Usuario.AgregarAtuendoAceptado(this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id)));
         }
 
 
@@ -112,7 +114,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             {
                 throw new Exception("El usuario no tiene atuendos para aceptar.");
             }
-            this.Atuendos.ToList()[0].Aceptar(10);
+
+            this.AceptarAtuendo(this.Atuendos.ToList()[0].AtuendoId, 10);
         }
 
         [Obsolete]

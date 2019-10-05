@@ -7,6 +7,7 @@ namespace Ar.UTN.QMP.Lib
     using Ar.UTN.QMP.Lib.Entidades.Reglas;
     using Ar.UTN.QMP.Lib.Entidades.Usuarios;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
 

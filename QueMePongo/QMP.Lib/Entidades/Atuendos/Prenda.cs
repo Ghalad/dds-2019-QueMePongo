@@ -58,6 +58,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas.Add(new CaracteristicaPrenda(caracteristica.Clave, caracteristica.Valor, this));
         }
 
+        
         /// <summary>
         /// Permite agregar una caracteristica, a traves de un par Clave, Valor
         /// </summary>
