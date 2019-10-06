@@ -175,64 +175,72 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             ///                Si hace calor y el usuario es caluroso sube un nivel: sentirá mucho calor.
             ///                El nivel máximo y mínimo de sensibilidad es mucho calor y mucho frío relativamente. El usuario no puede 
             ///                ser más o menos sensible que eso
-            switch (sensibilidadUsuario + this.SensibilidadClima())
+            int n = sensibilidadUsuario + this.SensibilidadClima();
+
+            if (n <= -2) //Hace "MUCHO FRIO"
             {
-                case int n when n <= -2: //Hace "MUCHO FRIO"
-                    minimoSuperior = 12;
-                    maximoSuperior = 19;
-                    minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
-                    maximoInferior = 4;
-                    minimoCalzado = 3; //si o si con medias
-                    maximoCalzado = 3;
-                    minimoExtra = 1; //si o si con un accesorio para el frío
-                    maximoExtra = 2;
-                    break;
-                case int n when n == -1: //Hace "FRIO"
-                    minimoSuperior = 7;
-                    maximoSuperior = 15;
-                    minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
-                    maximoInferior = 4;
-                    minimoCalzado = 2; //con medias o no
-                    maximoCalzado = 3;
-                    minimoExtra = 0;
-                    maximoExtra = 2;
-                    break;
-                case int n when n == 0 : //Hay temperatura "AMBIENTE"
-                    minimoSuperior = 4;
-                    maximoSuperior = 7;
-                    minimoInferior = 3; //pantalon corto y pantalon largo
-                    maximoInferior = 4; 
-                    minimoCalzado = 2; //zapatillas con o sin medias
-                    maximoCalzado = 3;
-                    minimoExtra = 0;
-                    maximoExtra = 2;
-                    break;
-                case int n when n == 1 : //Hace "CALOR"
-                    minimoSuperior = 3;
-                    maximoSuperior = 4;
-                    minimoInferior = 3; //sólo pantalón largo
-                    maximoInferior = 3;
-                    minimoCalzado = 2; //sin medias
-                    maximoCalzado = 2;
-                    minimoExtra = 0; //sin accesorio
-                    maximoExtra = 0;
-                    break;
-                case int n when n == 2 : //Hace "MUCHO CALOR"
-                    minimoSuperior = 2;
-                    maximoSuperior = 3;
-                    minimoInferior = 4; //sólo pantalón largo
-                    maximoInferior = 4;
-                    minimoCalzado = 2; //si o si con medias
-                    maximoCalzado = 3;
-                    minimoExtra = 0; //si o si con un accesorio para el frío
-                    maximoExtra = 0;
-                    break;
+                minimoSuperior = 12;
+                maximoSuperior = 19;
+                minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
+                maximoInferior = 4;
+                minimoCalzado = 3; //si o si con medias
+                maximoCalzado = 3;
+                minimoExtra = 1; //si o si con un accesorio para el frío
+                maximoExtra = 2;
+            }
+            else if (n == -1) //Hace "FRIO"
+            {
+                minimoSuperior = 7;
+                maximoSuperior = 15;
+                minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
+                maximoInferior = 4;
+                minimoCalzado = 2; //con medias o no
+                maximoCalzado = 3;
+                minimoExtra = 0;
+                maximoExtra = 2;
+            }
+            else if (n == 0) //Hay temperatura "AMBIENTE"
+            {
+                minimoSuperior = 4;
+                maximoSuperior = 7;
+                minimoInferior = 3; //pantalon corto y pantalon largo
+                maximoInferior = 4;
+                minimoCalzado = 2; //zapatillas con o sin medias
+                maximoCalzado = 3;
+                minimoExtra = 0;
+                maximoExtra = 2;
+            }
+            else if (n == 1) //Hace "CALOR"
+            {
+                minimoSuperior = 3;
+                maximoSuperior = 4;
+                minimoInferior = 3; //sólo pantalón largo
+                maximoInferior = 3;
+                minimoCalzado = 2; //sin medias
+                maximoCalzado = 2;
+                minimoExtra = 0; //sin accesorio
+                maximoExtra = 0;
+            }
+            else if (n == 2) //Hace "MUCHO CALOR"
+            {
+                minimoSuperior = 2;
+                maximoSuperior = 3;
+                minimoInferior = 4; //sólo pantalón largo
+                maximoInferior = 4;
+                minimoCalzado = 2; //si o si con medias
+                maximoCalzado = 3;
+                minimoExtra = 0; //si o si con un accesorio para el frío
+                maximoExtra = 0;
+            }
+            else // Error
+            {
+
             }
 
             return (this.EstaEntre(minimoSuperior, abrigoSuperior, maximoSuperior)
-                    && this.EstaEntre(minimoInferior, abrigoInferior, maximoInferior)
-                    && this.EstaEntre(minimoCalzado, abrigoCalzado, maximoCalzado)
-                    && this.EstaEntre(minimoExtra, abrigoExtra, maximoExtra));
+                && this.EstaEntre(minimoInferior, abrigoInferior, maximoInferior)
+                && this.EstaEntre(minimoCalzado, abrigoCalzado, maximoCalzado)
+                && this.EstaEntre(minimoExtra, abrigoExtra, maximoExtra));
 
         }
         /// <summary>
@@ -244,19 +252,27 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private int SensibilidadClima()
         {
             WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
+            decimal n = srvClima.ObtenerTemperatura();
 
-            switch (srvClima.ObtenerTemperatura())
+            if (n < 4) //Temperatura MUY FRIA
             {
-                case decimal n when n < 4: //Temperatura MUY FRIA
-                    return -2;
-                case decimal n when n < 10: //Temperatura FRIA
-                    return -1;
-                case decimal n when n < 15: //Temperatura AMBIENTE
-                    return 0;
-                case decimal n when n < 20: //Temperatura CALOR
-                    return 1;
-                default: //Temperatura MUCHO CALOR
-                    return 2;
+                return -2;
+            }
+            else if (n < 10) //Temperatura FRIA
+            {
+                return -1;
+            }
+            else if (n < 15) //Temperatura AMBIENTE
+            {
+                return 0;
+            }
+            else if (n < 20) //Temperatura CALOR
+            {
+                return 1;
+            }
+            else //Temperatura MUCHO CALOR
+            {
+                return 2;
             }
         }
         private bool EstaEntre(int minimo, int valor, int maximo)
