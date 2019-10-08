@@ -93,9 +93,9 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
             string username = "manurocck";
 
             this.CargarUsuario(username, ctx);
-            Assert.AreEqual(20, user.Maximo);
+            Assert.AreEqual(10, user.Maximo);
 
-            user.Maximo = 10;
+            user.Maximo = 20;
             ctx.SaveChanges();
 
             this.CargarUsuario(username, ctx);

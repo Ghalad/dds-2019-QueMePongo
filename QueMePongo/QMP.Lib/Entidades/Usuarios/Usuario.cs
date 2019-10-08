@@ -17,7 +17,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         public string Username { get; set; }
         public int Maximo { get; set; }
         public int Sensibilidad { get; set; }
-        public Pedido Pedido { get; set; }
+        public virtual Pedido Pedido { get; set; }
         public ICollection<Atuendo> AtuendosAceptados { get; set; }
         public ICollection<Guardarropa> Guardarropas { get; set; }
         public ICollection<Regla> Reglas { get; set; }
@@ -128,6 +128,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             if (AtuendosAceptados == null)
                 AtuendosAceptados = new List<Atuendo>();
+            
             AtuendosAceptados.Add(atuendo);
         }
 

@@ -1,4 +1,3 @@
-
 --Ver los atuendos generados para el evento
 SELECT u.Username, u.Discriminator, p.PedidoId, e.CiudadEvento, e.Descripcion, a.AtuendoId, pr.PrendaId, c.Valor
 FROM Usuarios u JOIN Pedidos p ON (u.UsuarioId = p.PedidoId)
@@ -39,3 +38,13 @@ ORDER BY gp.Guardarropa_Id
 --Ver prendas y caracteristicas
 SELECT cp.prenda_PrendaId, c.CaracteristicaId, c.Clave, c.Valor
 FROM CaracteristicasPrendas cp JOIN Caracteristicas c ON (cp.CaracteristicaId = c.CaracteristicaId)
+
+--Ver con prendas y caracteristicas
+SELECT a.Pedido_PedidoId, pa.AtuendoId, pa.PrendaId, c.Valor 
+FROM PrendasAtuendos pa JOIN CaracteristicasPrendas cp ON (cp.prenda_PrendaId = PrendaId)
+				JOIN Caracteristicas c ON (c.CaracteristicaId = cp.CaracteristicaId)
+				JOIN Atuendos a ON (a.AtuendoId = pa.AtuendoId)
+WHERE c.Clave = 'TIPO'
+ORDER BY AtuendoId
+
+

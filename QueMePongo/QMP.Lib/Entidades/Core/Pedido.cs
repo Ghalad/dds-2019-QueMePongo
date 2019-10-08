@@ -19,7 +19,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             return Evento.FechaEvento;
         }
         public Evento Evento { get; set; }
-        public Usuario Usuario { get; set; }
+        public virtual Usuario Usuario { get; set; }
         public ICollection<Atuendo> Atuendos { get; set; }
 
         private Pedido() { }

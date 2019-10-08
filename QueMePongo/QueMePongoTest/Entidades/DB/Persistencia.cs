@@ -272,12 +272,15 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
             pedido1.Resolver();
             pedido2.Resolver();
 
+            Assert.AreEqual(1, pedido2.Atuendos.Count);
+            Assert.AreEqual(16, pedido1.Atuendos.Count);
+
             try
             {
                 QueMePongoDB db = new QueMePongoDB();
 
                 db.Usuarios.Add(usr1);
-                db.Usuarios.Add(usr2);
+                //db.Usuarios.Add(usr2);
                 db.SaveChanges();
             }
             catch (DbEntityValidationException e)
