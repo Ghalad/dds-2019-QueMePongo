@@ -10,14 +10,30 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order = 1)]
         public int CaracteristicaId { get; set; }
+        public string Nombre { get; set; }
         public string Clave { get; private set; }
         public string Valor { get; private set; }
 
         public Caracteristica() { }
+
+
         public Caracteristica(string clave, string valor)
         {
-            if(!string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
+            if (!string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
             {
+                this.Nombre = "CARATERISTICA";
+                this.Clave = clave.ToUpper();
+                this.Valor = valor.ToUpper();
+            }
+            else
+                throw new Exception("No se puede instanciar una caracteristica con clave o valor nulos.");
+        }
+
+        public Caracteristica(string nombre, string clave, string valor)
+        {
+            if(!string.IsNullOrWhiteSpace(nombre) || !string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
+            {
+                this.Nombre = nombre;
                 this.Clave = clave.ToUpper();
                 this.Valor = valor.ToUpper();
             }

@@ -72,6 +72,7 @@
     <Compile Include="Entidades\Clima\ApiUxService.cs" />
     <Compile Include="Entidades\Clima\WeatherService.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceAdapter.cs" />
+    <Compile Include="Entidades\Contexto\QueMePongoDBInitializer.cs" />
     <Compile Include="Entidades\Core\AtuendosGestor.cs" />
     <Compile Include="Entidades\Core\NodoPedido.cs" />
     <Compile Include="Entidades\Core\Pedido.cs" />
@@ -103,7 +104,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueMePongoDB.cs" />
+    <Compile Include="Entidades\Contexto\QueMePongoDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

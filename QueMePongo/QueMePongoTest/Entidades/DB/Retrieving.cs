@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ar.UTN.QMP.Lib;
-using System.Data.Entity;
 using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ar.UTN.QMP.Lib.Entidades.Contexto;
 
 namespace Ar.UTN.QMP.Test.Entidades.DB
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
-using Ar.UTN.QMP.Lib;
 using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
@@ -10,6 +9,7 @@ using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
 using Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ar.UTN.QMP.Lib.Entidades.Contexto;
 
 namespace Ar.UTN.QMP.Test.Entidades.DB
 {

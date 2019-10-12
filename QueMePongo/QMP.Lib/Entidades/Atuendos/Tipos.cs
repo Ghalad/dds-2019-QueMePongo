@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Ar.UTN.QMP.Lib.Entidades.Contexto;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -24,159 +26,83 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
         private Tipos()
         {
+            QueMePongoDB db = new QueMePongoDB();
+
             this.TipoCaracteristicas = new List<string>();
-            this.CategoriaxTipo      = new List<Caracteristica>();
-            this.MaterialxTipo       = new List<Caracteristica>();
-            this.Caracteristicas     = new List<Caracteristica>();
-            this.Superposiones       = new List<Caracteristica>();
-            this.NivelDeAbrigo       = new List<Caracteristica>();
+            this.CategoriaxTipo = new List<Caracteristica>();
+            this.MaterialxTipo = new List<Caracteristica>();
+            this.Caracteristicas = new List<Caracteristica>();
+            this.Superposiones = new List<Caracteristica>();
+            this.NivelDeAbrigo = new List<Caracteristica>();
 
-            // Aca van todos las caracteristicas posibles que puede tener una prenda.
-            this.TipoCaracteristicas.Add("CATEGORIA");
-            this.TipoCaracteristicas.Add("TIPO");
-            this.TipoCaracteristicas.Add("MATERIAL");
-            this.TipoCaracteristicas.Add("COLOR");
-            this.TipoCaracteristicas.Add("SUPERPOSICION");
-            this.TipoCaracteristicas.Add("ABRIGO");
-            this.TipoCaracteristicas.Add("CLIMA");
-            this.TipoCaracteristicas.Add("EVENTO");
-            
+            // Se cargan los tipos de caracteristicas desde la base
+            try
+            {
+                foreach (var str in db.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA")).Select(c => c.Clave).Distinct().ToList())
+                {
+                    this.TipoCaracteristicas.Add(str);
+                }
+            }
+            catch (Exception ex)
+            {
 
-            // Estos son todos los valores que puede adoptar cada tipo de caracteristica
-            this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "ACCESORIO"));
-            this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "SUPERIOR"));
-            this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "INFERIOR"));
-            this.Caracteristicas.Add(new Caracteristica("CATEGORIA", "CALZADO"));
-
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "GORRA"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "SOMBRERO"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "MUSCULOSA"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "REMERA_MANGA_CORTA"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "REMERA_MANGA_LARGA"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "CAMISA_MANGA_CORTA"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "CAMISA_MANGA_LARGA"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "SWEATER"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "CAMPERA_DE_ABRIGO"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "CAMPERA_DE_LLUVIA"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "PANTALON_CORTO"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "PANTALON_LARGO"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "POLLERA"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "MEDIAS"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATO_TACO_ALTO"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATO_TACO_BAJO"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATILLA_DE_CORRER"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "ZAPATILLA_DE_TREKING"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "PANCHAS"));
-            this.Caracteristicas.Add(new Caracteristica("TIPO", "OJOTAS"));
-
-            this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "1"));
-            this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "2"));
-            this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "3"));
-            this.Caracteristicas.Add(new Caracteristica("SUPERPOSICION", "4"));
-
-            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "1"));
-            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "2"));
-            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "3"));
-            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "4"));
-            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "5"));
-            this.Caracteristicas.Add(new Caracteristica("ABRIGO", "6"));
-
-            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "ALGODON"));
-            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "CUERO"));
-            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "HILO"));
-            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "CORDEROY"));
-            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "JEAN"));
-            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "GOMA"));
-            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "LANA"));
-            this.Caracteristicas.Add(new Caracteristica("MATERIAL", "POLIESTER"));
-
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "NEGRO"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "GRIS"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "AZUL"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "VERDE"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "VIOLETA"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "ROJO"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "NARANJA"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "AMARILLO"));
-            this.Caracteristicas.Add(new Caracteristica("COLOR", "BLANCO"));
-
-            this.Caracteristicas.Add(new Caracteristica("EVENTO", "TRABAJO"));
-            this.Caracteristicas.Add(new Caracteristica("EVENTO", "SALIDA_AMIGOS"));
-            this.Caracteristicas.Add(new Caracteristica("EVENTO", "CUMPLEAÑOS"));
-            this.Caracteristicas.Add(new Caracteristica("EVENTO", "CASAMIENTO"));
-            this.Caracteristicas.Add(new Caracteristica("EVENTO", "CASUAL"));
+            }
 
 
-            // Estos son los valores de nivel de superposicion que puede tener una prenda de un determinado tipo
-            this.Superposiones.Add(new Caracteristica("GORRA",                "1"));
-            this.Superposiones.Add(new Caracteristica("SOMBRERO",             "1"));
-            this.Superposiones.Add(new Caracteristica("MUSCULOSA",            "1"));
-            this.Superposiones.Add(new Caracteristica("REMERA_MANGA_CORTA",   "1"));
-            this.Superposiones.Add(new Caracteristica("REMERA_MANGA_LARGA",   "1"));
-            this.Superposiones.Add(new Caracteristica("CAMISA_MANGA_CORTA",   "2"));
-            this.Superposiones.Add(new Caracteristica("CAMISA_MANGA_LARGA",   "2"));
-            this.Superposiones.Add(new Caracteristica("SWEATER",              "3"));
-            this.Superposiones.Add(new Caracteristica("CAMPERA_DE_ABRIGO",    "4"));
-            this.Superposiones.Add(new Caracteristica("CAMPERA_DE_LLUVIA",    "4"));
-            this.Superposiones.Add(new Caracteristica("PANTALON_CORTO",       "2"));
-            this.Superposiones.Add(new Caracteristica("PANTALON_LARGO",       "2"));
-            this.Superposiones.Add(new Caracteristica("POLLERA",              "2"));
-            this.Superposiones.Add(new Caracteristica("MEDIAS",               "1"));
-            this.Superposiones.Add(new Caracteristica("ZAPATO_TACO_ALTO",     "2"));
-            this.Superposiones.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "2"));
-            this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "2"));
-            this.Superposiones.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "2"));
-            this.Superposiones.Add(new Caracteristica("PANCHAS",              "2"));
-            this.Superposiones.Add(new Caracteristica("OJOTAS",               "2"));
+            // Se cargan las caracteristicas desde la base
+            try
+            {
+                foreach (var car in db.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA")).Select(c => c).ToList())
+                {
+                    this.Caracteristicas.Add(car);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
 
 
-            // Listado de que tipo de prenda pertenece a que categoria
-            this.CategoriaxTipo.Add(new Caracteristica("ACCESORIO", "GORRA"));
-            this.CategoriaxTipo.Add(new Caracteristica("ACCESORIO", "SOMBRERO"));
-            this.CategoriaxTipo.Add(new Caracteristica("SUPERIOR",  "MUSCULOSA"));
-            this.CategoriaxTipo.Add(new Caracteristica("SUPERIOR",  "REMERA_MANGA_CORTA"));
-            this.CategoriaxTipo.Add(new Caracteristica("SUPERIOR",  "REMERA_MANGA_LARGA"));
-            this.CategoriaxTipo.Add(new Caracteristica("SUPERIOR",  "CAMISA_MANGA_CORTA"));
-            this.CategoriaxTipo.Add(new Caracteristica("SUPERIOR",  "CAMISA_MANGA_LARGA"));
-            this.CategoriaxTipo.Add(new Caracteristica("SUPERIOR",  "SWEATER"));
-            this.CategoriaxTipo.Add(new Caracteristica("SUPERIOR",  "CAMPERA_DE_ABRIGO"));
-            this.CategoriaxTipo.Add(new Caracteristica("SUPERIOR",  "CAMPERA_DE_LLUVIA"));
-            this.CategoriaxTipo.Add(new Caracteristica("INFERIOR",  "PANTALON_CORTO"));
-            this.CategoriaxTipo.Add(new Caracteristica("INFERIOR",  "PANTALON_LARGO"));
-            this.CategoriaxTipo.Add(new Caracteristica("INFERIOR",  "POLLERA"));
-            this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "MEDIAS"));
-            this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "ZAPATO_TACO_ALTO"));
-            this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "ZAPATO_TACO_BAJO"));
-            this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "ZAPATILLA_DE_CORRER"));
-            this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "ZAPATILLA_DE_TREKING"));
-            this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "PANCHAS"));
-            this.CategoriaxTipo.Add(new Caracteristica("CALZADO",   "OJOTAS"));
+            // Se cargan las superposiciones desde la base
+            try
+            {
+                foreach (var car in db.Caracteristicas.Where(c => c.Nombre.Equals("SUPERPOSICION")).Select(c => c).ToList())
+                {
+                    this.Superposiones.Add(car);
+                }
+            }
+            catch (Exception ex)
+            {
 
-            //El nivel de abrigo que le corresponde a cada prenda
-            //CADA VEZ QUE SE ACTUALICE, ACTUALIZAR AtuendosGestor.CumpleNivelDeAbrigo()
-            this.NivelDeAbrigo.Add(new Caracteristica("GORRA",                "2"));
-            this.NivelDeAbrigo.Add(new Caracteristica("SOMBRERO",             "1"));
+            }
 
-            this.NivelDeAbrigo.Add(new Caracteristica("MUSCULOSA",            "2"));
-            this.NivelDeAbrigo.Add(new Caracteristica("REMERA_MANGA_CORTA",   "3"));
-            this.NivelDeAbrigo.Add(new Caracteristica("REMERA_MANGA_LARGA",   "4"));
-            this.NivelDeAbrigo.Add(new Caracteristica("CAMISA_MANGA_CORTA",   "3"));
-            this.NivelDeAbrigo.Add(new Caracteristica("CAMISA_MANGA_LARGA",   "4"));
-            this.NivelDeAbrigo.Add(new Caracteristica("SWEATER",              "5"));
-            this.NivelDeAbrigo.Add(new Caracteristica("CAMPERA_DE_ABRIGO",    "6"));
-            this.NivelDeAbrigo.Add(new Caracteristica("CAMPERA_DE_LLUVIA",    "4"));
 
-            this.NivelDeAbrigo.Add(new Caracteristica("PANTALON_CORTO",       "3"));
-            this.NivelDeAbrigo.Add(new Caracteristica("PANTALON_LARGO",       "4"));
-            this.NivelDeAbrigo.Add(new Caracteristica("POLLERA",              "3"));
+            // Se cargan las superposiciones desde la base
+            try
+            {
+                foreach (var car in db.Caracteristicas.Where(c => c.Nombre.Equals("CATEGORIATIPO")).Select(c => c).ToList())
+                {
+                    this.CategoriaxTipo.Add(car);
+                }
+            }
+            catch (Exception ex)
+            {
 
-            this.NivelDeAbrigo.Add(new Caracteristica("MEDIAS",               "1"));
-            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATO_TACO_ALTO",     "2"));
-            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATO_TACO_BAJO",     "2"));
-            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATILLA_DE_CORRER",  "2"));
-            this.NivelDeAbrigo.Add(new Caracteristica("ZAPATILLA_DE_TREKING", "2"));
-            this.NivelDeAbrigo.Add(new Caracteristica("PANCHAS",              "2"));
-            this.NivelDeAbrigo.Add(new Caracteristica("OJOTAS",               "0"));
+            }
+
+
+            // Se cargan las superposiciones desde la base
+            try
+            {
+                foreach (var car in db.Caracteristicas.Where(c => c.Nombre.Equals("NIVELABRIGO")).Select(c => c).ToList())
+                {
+                    this.NivelDeAbrigo.Add(car);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
 
