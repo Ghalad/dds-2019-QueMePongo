@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
 {
@@ -19,28 +15,32 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
         public NodoPedido Agregar(Pedido pedidoNuevo)
         {
-            /// 2019.10.21 < 2020.12.30 por lo que se encola adelante y se devuelve como PrimerNodo
+            // 2019.10.21 < 2020.12.30 por lo que se encola adelante y se devuelve como PrimerNodo
             if (pedidoNuevo.Fecha() <= Pedido.Fecha())
                 return new NodoPedido(pedidoNuevo, this);
             else
             {
-                if (NextNodo != null)
-                    NextNodo = NextNodo.Agregar(pedidoNuevo);
+                if (this.NextNodo != null)
+                    this.NextNodo = NextNodo.Agregar(pedidoNuevo);
                 else
-                    NextNodo = new NodoPedido(pedidoNuevo, null);
+                    this.NextNodo = new NodoPedido(pedidoNuevo, null);
                 return this;
             }
         }
+
+
         public NodoPedido QuitarPrimero()
         {
-            return NextNodo;
+            return this.NextNodo;
         }
+
+
         public int CantidadPedidos()
         {
-            if (NextNodo == null)
+            if (this.NextNodo == null)
                 return 1;
             else
-                return 1 + NextNodo.CantidadPedidos();
+                return 1 + this.NextNodo.CantidadPedidos();
         }
 
         public int DentroDeCuanto()

@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ar.UTN.QMP.Test</RootNamespace>
     <AssemblyName>QueMePongoTest</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,18 +65,13 @@
     <Compile Include="Entidades\Atuendos\PrendaBuilderTests.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceTest.cs" />
     <Compile Include="Entidades\Core\QueMePongoTests.cs" />
+    <Compile Include="Entidades\Core\SchedulerTests.cs" />
     <Compile Include="Entidades\DB\Persistencia.cs" />
     <Compile Include="Entidades\DB\Retrieving.cs" />
     <Compile Include="Entidades\DB\Updating.cs" />
     <Compile Include="Entidades\Reglas\ReglaTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entidades\Atuendos\PrendasTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\QMP.Lib\QMP.Lib.csproj">
-      <Project>{5A2D6A01-003A-4D65-9914-95784DF806D7}</Project>
-      <Name>QMP.Lib</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entidades\Atuendos\imagenOriginal.jpg">
@@ -85,6 +81,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QMP.Lib\QMP.Lib.csproj">
+      <Project>{5a2d6a01-003a-4d65-9914-95784df806d7}</Project>
+      <Name>QMP.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

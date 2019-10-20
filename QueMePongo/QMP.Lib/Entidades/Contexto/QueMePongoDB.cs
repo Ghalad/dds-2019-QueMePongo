@@ -10,11 +10,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
 {
     public class QueMePongoDB : DbContext
     {
+        public DbSet<Caracteristica> Caracteristicas { get; set; }
+        public DbSet<Prenda> Prendas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Guardarropa> Guardarropas { get; set; }
-        public DbSet<Prenda> Prendas { get; set; }
         public DbSet<Calificacion> Calificaciones { get; set; }
-        public DbSet<Caracteristica> Caracteristicas { get; set; }
         public DbSet<Regla> Reglas { get; set; }
         public DbSet<Condicion> Condiciones { get; set; }
         public DbSet<Operador> Operadores { get; set; }
@@ -30,19 +30,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            /*
             modelBuilder.Entity<Atuendo>()
-               .HasMany(p => p.Prendas)
-               .WithMany(r => r.Atuendos)
-               .Map(mc =>
-               {
-                   mc.MapLeftKey("AtuendoId");
-                   mc.MapRightKey("PrendaId");
-                   mc.ToTable("PrendasAtuendos");
-               });
+                        .HasMany(p => p.Prendas);
 
             modelBuilder.Entity<Usuario>()
-                        .HasOptional(s => s.Pedido) // Mark Address property optional in Student entity
+                        .HasOptional(s => s.Pedido)
                         .WithRequired(ad => ad.Usuario);
+
+            modelBuilder.Entity<Caracteristica>()
+                        .HasIndex(c => new { c.Nombre, c.Clave, c.Valor })
+                        .IsUnique();*/
         }
     }
 }

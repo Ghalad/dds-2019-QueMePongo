@@ -3,7 +3,6 @@ using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -12,50 +11,58 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
     [Table("Usuarios")]
     public abstract class Usuario
     {
-        [Key]
         public int UsuarioId { get; set; }
         public string Username { get; set; }
-        public int Maximo { get; set; }
+        public int MaximoPrendas { get; set; }
         public int Sensibilidad { get; set; }
         public virtual Pedido Pedido { get; set; }
+        public ICollection<Regla> Reglas { get; set; }
         public ICollection<Atuendo> AtuendosAceptados { get; set; }
         public ICollection<Guardarropa> Guardarropas { get; set; }
-        public ICollection<Regla> Reglas { get; set; }
+
+        public Usuario() { }
 
         protected Usuario(int maximo, string username)
         {
             this.Username = username;
-            this.Guardarropas = new HashSet<Guardarropa>();
+            this.Guardarropas = new List<Guardarropa>();
             this.Reglas = new List<Regla>();
-            this.Maximo = maximo;
+            this.MaximoPrendas = maximo;
         }
 
-        public Usuario() { }
-
+        /// <summary>
+        /// Devuelve una lista con todas las prendas de todos los guardarropas
+        /// </summary>
+        /// <returns></returns>
         public List<Prenda> ObtenerPrendas()
         {
-            List<Prenda> PrendasAux = new List<Prenda>();
+            List<Prenda> prendasAux = new List<Prenda>();
+            
+            foreach (Guardarropa unGuardarropas in Guardarropas)
+                foreach (Prenda unaPrenda in unGuardarropas.Prendas)
+                    prendasAux.Add(unaPrenda);
 
-            foreach (Guardarropa g in Guardarropas)
-            {
-                foreach (Prenda p in g.Prendas)
-                {
-                    PrendasAux.Add(p);
-                }
-            }
-
-            return PrendasAux;
+            return prendasAux;
         }
 
+        /// <summary>
+        /// Permite vincular al usuario un guardarropas
+        /// </summary>
+        /// <param name="guardarropa"></param>
         public void AgregarGuardarropa(Guardarropa guardarropa)
         {
             if (guardarropa != null)
             {
-                guardarropa.AgregarUsuario(this);
-                this.Guardarropas.Add(guardarropa);
+                if (this.Guardarropas != null)
+                {
+                    if (!this.Guardarropas.Contains(guardarropa))
+                        this.Guardarropas.Add(guardarropa);
+                }
+                else
+                    throw new Exception("Lista de guardarropas del usuario no inicializada.");
             }
             else
-                throw new Exception("El guardarropas no debe ser nulo.");
+                throw new Exception("El guardarropas a vincular no debe ser nulo.");
         }
 
         /// <summary>
@@ -63,29 +70,20 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         /// </summary>
         /// <param name="idGuardarropa"></param>
         /// <param name="prenda"></param>
-        public void AgregarPrenda(string idGuardarropa, Prenda prenda)
+        public void AgregarPrenda(int idGuardarropa, Prenda prenda)
         {
-            if (idGuardarropa != null)
+            if (idGuardarropa != 0)
                 if (prenda != null)
-                {
-                    //Esto probablemente no sirva porque "perdemos" la instancia de esta prenda dentro de este método.
-                    //Tiene que cambiarse y pasarse por parámetro, la prenda
-                   this.Guardarropas.ToList().Find(g => g.Id.Equals(idGuardarropa)).AgregarPrenda(prenda);
-                }
+                   this.Guardarropas.ToList().Find(g => g.GuardarropaId == idGuardarropa).AgregarPrenda(prenda);
                 else
                     throw new Exception("Prenda requerida.");
             else
                 throw new Exception("ID de guardarropa requerido.");
         }
 
-        public bool YaAcepto(Atuendo atuendo)
+        public bool YaAcepto(int id)
         {
-            foreach(Atuendo a in AtuendosAceptados)
-            {
-                if (a.AtuendoId == atuendo.AtuendoId)
-                    return true;
-            }
-            return false;
+            return this.AtuendosAceptados.Any(a => a.AtuendoId.Equals(id));
         }
 
         /// <summary>
@@ -102,7 +100,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
         public void SetSensibilidad(string sensibilidadClima)
         {
-            switch (sensibilidadClima)
+            switch (sensibilidadClima.ToUpper())
             {
                 case "MUY FRIOLENTO":
                     Sensibilidad = -2;

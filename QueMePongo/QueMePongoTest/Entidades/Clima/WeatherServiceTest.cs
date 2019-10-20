@@ -13,7 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima.Tests
 
             //Assert.AreEqual(temperatura, 0);
             //^ para que tire error y conocer la temperatura actual
-            Assert.IsTrue(temperatura > 5 && temperatura < 20);
+            Assert.IsTrue(temperatura > 5 && temperatura < 25);
         }
 
     }

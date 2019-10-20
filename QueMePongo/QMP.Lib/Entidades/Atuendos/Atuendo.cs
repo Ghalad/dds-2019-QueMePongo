@@ -9,7 +9,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     [Table("Atuendos")]
     public class Atuendo
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AtuendoId { get; set; }
         public bool? Aceptado { get; set; }
         public Calificacion Calificacion { get; set; }
@@ -29,10 +29,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public void AgregarPrenda(Prenda prenda)
         {
             if (prenda != null)
-            {
-                prenda.AgregarAtuendo(this);
                 this.Prendas.Add(prenda);
-            }
             else
                 throw new Exception("No pueden agregarse prendas nulas al atuendo.");
         }
@@ -56,10 +53,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 Calificacion = new Calificacion(puntaje);
             else
                 this.Calificacion.Calificar(puntaje);
-            foreach(Prenda p in Prendas) 
+
+            foreach(Prenda unaPrenda in this.Prendas) 
             {
-                p.MarcarComoUsada();
-                p.Puntuar(puntaje); //se marca a cada prenda con el puntaje del atuendo.. no está bueno
+                unaPrenda.MarcarComoUsada();
+                unaPrenda.Puntuar(puntaje); //se marca a cada prenda con el puntaje del atuendo.. no está bueno
             }
         }
 
@@ -92,58 +90,39 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 
             // ^ suponiendo que el puntaje del atuendo es el promedio del de las prendas
 
-            foreach (Prenda p in this.Prendas)
-            {
-                puntajePorPrendas = puntajePorPrendas + p.ObtenerPuntaje();
-            }
+            foreach (Prenda unaPrenda in this.Prendas)
+                puntajePorPrendas = puntajePorPrendas + unaPrenda.ObtenerPuntaje();
 
             if(puntajePorPrendas > puntajeAtuendo)
-            {
                 return puntajePorPrendas;
-            }
             else
-            {
                 return puntajeAtuendo;
-            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         internal bool TienePrendasUsadas()
         {
-            foreach(Prenda p in Prendas)
-            {
-                if (p.EstaEnUso())
-                {
+            foreach(Prenda unaPrenda in this.Prendas)
+                if (unaPrenda.EstaEnUso())
                     return true;
-                }
-            }
             return false;
         }
 
-        public int AbrigoCategoria(string tipo)
+        /// <summary>
+        /// Obtiene el nivel de abrigo de todas las prendas del atuendo que pertenescan a la categoria solicitada
+        /// </summary>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
+        public int NivelDeAbrigoPorCategoria(string tipo)
         {
-            foreach (Prenda p in Prendas)
-            {
-                if(p.TieneCaracteristica(new Caracteristica("CATEGORIA", tipo)))
-                {
-                    return Int32.Parse(p.ObtenerCaracteristica("ABRIGO"));
-                }
-            }
-            return 0;
-        }
-
-        [Obsolete]
-        internal int NivelDeAbrigo()
-        {
-            int suma = 0;
-            int valorAux;
-
-            foreach(Prenda p in Prendas)
-            {
-                valorAux = Convert.ToInt32(Tipos.GetInstance().ObtenerAbrigo(p.ObtenerCaracteristica("TIPO")));
-                suma = suma + valorAux;
-            }
-
-            return suma;
+            int abrigo = 0;
+            foreach (Prenda unaPrenda in this.Prendas)
+                if(unaPrenda.TieneCaracteristica("CATEGORIA", tipo))
+                    abrigo += Int32.Parse(unaPrenda.ObtenerCaracteristica("ABRIGO"));
+            return abrigo;
         }
     }
 }

@@ -7,11 +7,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
     [TestClass()]
     public class PrendaBuilderTests
     {
+        PrendaBuilder pb;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            pb = new PrendaBuilder();
+        }
+
         [TestMethod()]
         public void AgregarCaracteristicas_1()
         {
-            PrendaBuilder pb = new PrendaBuilder();
-
             try
             {
                 pb.CrearPrenda()
@@ -29,8 +35,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
         [TestMethod()]
         public void AgregarCaracteristicas_2()
         {
-            PrendaBuilder pb = new PrendaBuilder();
-
             try
             {
                 pb.CrearPrenda()
@@ -52,8 +56,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
         [TestMethod()]
         public void AgregarCaracteristicas_3()
         {
-            PrendaBuilder pb = new PrendaBuilder();
-
             try
             {
                 pb.CrearPrenda()
@@ -72,8 +74,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
         [TestMethod()]
         public void NoPermiteAgregarCaracteristicasInvalidas()
         {
-            PrendaBuilder pb = new PrendaBuilder();
-
             try
             {
                 pb.CrearPrenda()
@@ -97,9 +97,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
             string rutaDestino = @"imagenNormalizada_" + DateTime.Now.ToString("yyyyMMdd") + ".jpg";
 
             Image imagenOriginal = Image.FromFile(rutaOrigen);
-
-            PrendaBuilder pb = new PrendaBuilder();
-
+            
             try
             {
                 pb.CrearPrenda()

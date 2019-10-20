@@ -10,21 +10,21 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     [Table("Guardarropas")]
     public class Guardarropa
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int GuardarropaId { get; set; }
         public int MaximoPrendas { get; set; }
-        public ICollection<Usuario> Usuarios { get; set; }
         public ICollection<Prenda> Prendas { get; set; }
+        public ICollection<Usuario> Usuarios { get; set; }
+
+
+        private Guardarropa() { }
 
         public Guardarropa(int maximoPrendas)
         {
-            this.Usuarios = new HashSet<Usuario>();
-            this.MaximoPrendas = maximoPrendas;
+            this.Usuarios = new List<Usuario>();
             this.Prendas = new List<Prenda>();
+            this.MaximoPrendas = maximoPrendas;
         }
-
-        private Guardarropa() { }
         
 
         /// <summary>
@@ -33,26 +33,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         /// <param name="prenda"></param>
         public void AgregarPrenda(Prenda prenda)
         {
-            if (this.MaximoPrendas == 0)
+            if (this.Prendas != null)
             {
-                Prendas = new List<Prenda>();
-                prenda.AgregarGuardarropa(this);
-                this.Prendas.Add(prenda);
-            }
-            else if (this.Prendas.Count < this.MaximoPrendas)
-            {
-
-                prenda.AgregarGuardarropa(this);
-                this.Prendas.Add(prenda);
+                if (this.MaximoPrendas == 0)
+                {
+                    this.Prendas.Add(prenda);
+                }
+                else if (this.Prendas.Count < this.MaximoPrendas)
+                {
+                    this.Prendas.Add(prenda);
+                }
+                else
+                    throw new Exception("Guardarropas lleno. No se pueden agregar mas prendas");
             }
             else
-                throw new Exception("Guardarropas lleno. No se pueden agregar mas prendas");
+                throw new Exception("La lista de prendas no esta inicilizada.");
         }
 
-        public void AgregarUsuario(Usuario usuario)
-        {
-            this.Usuarios.Add(usuario);
-        }
 
         /// <summary>
         /// Obtiene la lista de prendas del guardarropas

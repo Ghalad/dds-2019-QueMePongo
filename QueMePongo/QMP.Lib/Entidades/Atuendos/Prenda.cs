@@ -1,5 +1,4 @@
-﻿using Ar.UTN.QMP.Lib.Entidades._0._Para_DB;
-using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,31 +17,21 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         [NotMapped]
         public Image Imagen { get; set; }
         public byte[] ImagenEnBytes { get; set; }
-        public static int RESOLUCION = 140; // Esto se podria setear por archivo de configuracion
+        [NotMapped]
+        private static int RESOLUCION = 140; // resolucion de las imagenes de las prendas
+        [NotMapped]
+        private static int MAXIMO_DIAS_DE_USO = 1; // maxima cantidad de dias que una prenda puede estar en uso, a partir de su fecha de uso
         public Calificacion Calificacion { get; set; }
-        public DateTime fechaDeUso { get; set; }
-        public ICollection<CaracteristicaPrenda> Caracteristicas { get; set; }
-        public ICollection<Atuendo> Atuendos { get; set; }
-
-
-        public ICollection<Guardarropa> Guardarropas { get; set; }
+        public DateTime? fechaDeUso { get; set; }
+        public ICollection<Caracteristica> Caracteristicas { get; set; }
+        public ICollection<Guardarropa> Guardarropas { get; set; } // Necesario para generar la relacion many-to-many
 
         public Prenda()
         {
-            this.Caracteristicas = new List<CaracteristicaPrenda>();
-            this.fechaDeUso = new DateTime(1990, 12, 13);
-            this.Calificacion = null;
-            this.Atuendos = new HashSet<Atuendo>();
-            this.Guardarropas = new HashSet<Guardarropa>();
-        }
-        public void AgregarAtuendo(Atuendo atuendo)
-        {
-            this.Atuendos.Add(atuendo);
-        }
-
-        public void AgregarGuardarropa(Guardarropa guardarropa)
-        {
-            this.Guardarropas.Add(guardarropa);
+            this.Caracteristicas = new List<Caracteristica>();
+            this.Guardarropas    = new List<Guardarropa>();
+            this.fechaDeUso      = null;
+            this.Calificacion    = null;
         }
 
 
@@ -55,7 +44,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             foreach(Caracteristica c in this.Caracteristicas)
                 if (c.EsLaMisma(caracteristica))
                     return;
-            this.Caracteristicas.Add(new CaracteristicaPrenda(caracteristica.Clave, caracteristica.Valor, this));
+            this.Caracteristicas.Add(caracteristica);
         }
 
         
@@ -69,7 +58,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             foreach (Caracteristica c in this.Caracteristicas)
                 if (c.EsLaMisma(clave, valor))
                     return;
-            this.Caracteristicas.Add(new CaracteristicaPrenda(clave, valor, this));
+            this.Caracteristicas.Add(new Caracteristica(clave, valor));
         }
 
 
@@ -100,7 +89,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             else
                 throw new Exception("No se puede agregar una imagen nula");
         }
-        public byte[] imageToByteArray(System.Drawing.Image imageIn)
+
+
+        public byte[] imageToByteArray(Image imageIn)
         {
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
@@ -114,26 +105,33 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return returnImage;
         }
 
-
+        /// <summary>
+        /// Marca una prenda como "usada"para no pueda ser utilizada por otro guardarropas
+        /// </summary>
         public void MarcarComoUsada()
         {
             this.fechaDeUso = DateTime.Now;
-            return;
         }
 
+        /// <summary>
+        /// Devuelve false si la prenda esta en uso por mas de los dias que tiene configurados
+        /// </summary>
+        /// <returns></returns>
         public bool EstaEnUso()
         {
-            int diasQueSeUsaUnaPrenda = 2;
-            if((DateTime.Now - fechaDeUso).TotalDays > diasQueSeUsaUnaPrenda)
+            if (this.fechaDeUso != null)
             {
-                return false;
+                if((DateTime.Now.Subtract(fechaDeUso ?? DateTime.Now)).TotalDays > MAXIMO_DIAS_DE_USO)
+                    return true;
             }
-            else
-            {
-                return true;
-            }
+
+            return false;
         }
 
+        /// <summary>
+        /// Obtiene el puntaje de todo el atuendo
+        /// </summary>
+        /// <returns></returns>
         public int ObtenerPuntaje()
         {
             if (Calificacion == null)
@@ -141,6 +139,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return this.Calificacion.ObtenerPuntaje();
         }
 
+        /// <summary>
+        /// Permite puntuar todas las prendas del atuendo
+        /// </summary>
+        /// <param name="puntaje"></param>
         internal void Puntuar(int puntaje)
         {
             if (Calificacion == null)
@@ -241,15 +243,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 
 
 
-        [Obsolete("Esto no va")]
-        public int NumeroSuperposicion()
-        {
-            foreach(Caracteristica c in Caracteristicas)
-                if (c.EsLaMismaClave("superposicion"))
-                    return Convert.ToInt32(c.Valor);
 
-            return -1;
-        }
         [Obsolete("Esto no va")]
         public void MostrarPorPantalla()
         {
@@ -259,17 +253,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 {
                     Console.WriteLine(c.Valor);
                 }
-            }
-        }
-        [Obsolete("Esto no va")]
-#pragma warning disable CS0114 // 'Prenda.ToString()' hides inherited member 'object.ToString()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.
-        public void ToString()
-#pragma warning restore CS0114 // 'Prenda.ToString()' hides inherited member 'object.ToString()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.
-        {
-            int i = 1;
-            foreach (Caracteristica c in Caracteristicas)
-            {
-                Console.WriteLine(string.Format("{0}) clave=[{1}] valor=[{2}]", i++, c.Clave, c.Valor));
             }
         }
     }

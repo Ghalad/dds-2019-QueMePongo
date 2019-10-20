@@ -20,12 +20,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
         public Evento(string tipoEvento, DateTime fecha, string cuidad, string descripcion, string repeticion)
         {
             string clave = "EVENTO";
+            GestorCaracteristicas GeCa = GestorCaracteristicas.GetInstance();
 
             if (!string.IsNullOrWhiteSpace(tipoEvento))
             {
                 if (!string.IsNullOrWhiteSpace(cuidad))
                 {
-                    if (Tipos.GetInstance().ExisteCaracteristica(clave, tipoEvento.ToUpper()))
+                    if (GeCa.ExisteCaracteristica(clave, tipoEvento))
                     {
                         if (this.EsUnaRepeticionValida(repeticion)) 
                         {
@@ -33,7 +34,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
                             this.Descripcion = descripcion;
                             this.CiudadEvento = cuidad;
                             this.Repeticion = repeticion.ToUpper();
-                            this.TipoEvento = new Caracteristica(clave, tipoEvento);
+                            this.TipoEvento = GeCa.ObtenerCaracteristica(clave, tipoEvento);
                         }
                         else
                             throw new Exception("La frecuencia del evento debe ser una de las siguientes : A DIARIO, SEMANAL, MENSUAL, ANUAL");

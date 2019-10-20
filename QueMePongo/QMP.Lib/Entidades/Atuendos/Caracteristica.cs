@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ar.UTN.QMP.Lib.Entidades.Reglas;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,12 +9,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     [Table("Caracteristicas")]
     public class Caracteristica
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order = 1)]
-        public int CaracteristicaId { get; set; }
-        public string Nombre { get; set; }
+        public int CaracteristicaId { get; private set; }
+        [MaxLength(100)]
+        public string Nombre { get; private set; }
+        [MaxLength(50)]
         public string Clave { get; private set; }
-        public string Valor { get; private set; }
+        [MaxLength(50)]
+        public string Valor { get; set; }
+        public ICollection<Prenda> Prendas { get; set; } // Necesario para generar la relacion many-to-many
+        public ICollection<Condicion> Condiciones { get; set; } // Necesario para generar la relacion many-to-many
+
 
         public Caracteristica() { }
 
@@ -21,7 +29,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             if (!string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
             {
-                this.Nombre = "CARATERISTICA";
+                this.Nombre = "CARACTERISTICA";
                 this.Clave = clave.ToUpper();
                 this.Valor = valor.ToUpper();
             }
@@ -33,12 +41,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             if(!string.IsNullOrWhiteSpace(nombre) || !string.IsNullOrWhiteSpace(clave) || !string.IsNullOrWhiteSpace(valor))
             {
-                this.Nombre = nombre;
+                this.Nombre = nombre.ToUpper();
                 this.Clave = clave.ToUpper();
                 this.Valor = valor.ToUpper();
             }
             else
-                throw new Exception("No se puede instanciar una caracteristica con clave o valor nulos.");
+                throw new Exception("No se puede instanciar una caracteristica con nombre, clave o valor nulos.");
         }
 
 

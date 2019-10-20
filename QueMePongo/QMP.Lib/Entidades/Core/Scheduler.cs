@@ -1,26 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
 {
-    public class QueMePongo
+    public class Scheduler
     {
-        private static QueMePongo Instance { get; set; }
-        private Queue<Pedido> ColaDePedidos { get; set; }
+        private static Scheduler Instance { get; set; }
+        private NodoPedido Nodo { get; set; }
 
-
-        #region CONSTRUCTOR
-        private QueMePongo()
+        private Scheduler()
         {
-            this.ColaDePedidos = new Queue<Pedido>();
+
         }
 
-        public static QueMePongo GetInstance()
+        public static Scheduler GetInstance()
         {
-            if (Instance == null) Instance = new QueMePongo();
+            if (Instance == null) Instance = new Scheduler();
             return Instance;
         }
-        #endregion CONSTRUCTOR
+
+
 
         /// <summary>
         /// Se encarga de recibir pedidos y encolarlos
@@ -29,21 +27,28 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         public void AgregarPedido(Pedido pedido)
         {
             if (pedido != null)
-                this.ColaDePedidos.Enqueue(pedido);
+            {
+                if (this.Nodo != null)
+                    this.Nodo = this.Nodo.Agregar(pedido);
+                else
+                    this.Nodo = new NodoPedido(pedido, null);
+            }
             else
                 throw new Exception("No se puede agregar un pedido nulo");
         }
-
 
         /// <summary>
         /// Se encarga de desencolar pedidos o informar cola vacia
         /// </summary>
         public void DesencolarPedido()
         {
-            if (this.ColaDePedidos.Count == 0)
+            if (this.Nodo == null)
                 throw new Exception("No hay pedidos para procesar");
             else
-                AtenderPedido(this.ColaDePedidos.Dequeue());
+            {
+                AtenderPedido(this.Nodo.Pedido);
+                this.Nodo = this.Nodo.QuitarPrimero();
+            }
         }
 
 
@@ -54,8 +59,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private void AtenderPedido(Pedido pedido)
         {
             pedido.Resolver();
+            if (pedido.SeRepite())
+            {
+                this.AgregarPedido(pedido.ObtenerSiguiente());
+            }
         }
-
 
         /// <summary>
         /// Para usar en los tests.. Encolar pedidos, iniciar scheduler y fijarte cuantos pedidos quedan
@@ -63,7 +71,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// <returns></returns>
         public int CantidadPedidos()
         {
-            return this.ColaDePedidos.Count;
+            if (this.Nodo == null) return 0;
+            return this.Nodo.CantidadPedidos();
         }
     }
 }

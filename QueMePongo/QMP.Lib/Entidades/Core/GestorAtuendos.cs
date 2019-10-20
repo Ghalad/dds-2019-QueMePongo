@@ -1,5 +1,4 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
-using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
 using Ar.UTN.QMP.Lib.Entidades.Clima;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
@@ -9,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
 {
-    public class AtuendosGestor
+    public class GestorAtuendos
     {
         private List<Atuendo> Atuendos { get; set; }
         private List<Prenda> Prendas { get; set; }
@@ -17,7 +16,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private Evento Evento { get; set; }
 
         #region CONSTRUCTOR
-        public AtuendosGestor(List<Prenda> prendas, List<Regla> reglas, Evento evento)
+        public GestorAtuendos(List<Prenda> prendas, List<Regla> reglas, Evento evento)
         {
             if (prendas != null)
                 this.Prendas = prendas;
@@ -49,6 +48,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 throw new Exception("Atuendos no procesados");
             return this.Atuendos;
         }
+
+
         /// <summary>
         /// Setea una coleccion de Atuendos con todas las combinaciones de prendas posibles.
         /// </summary>
@@ -71,20 +72,25 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             }
             this.FiltrarAtuendosPrendasUsadas();
         }
+
+        /// <summary>
+        /// Quita de la seleccion los atuendos con prendas ya usadas
+        /// </summary>
         private void FiltrarAtuendosPrendasUsadas()
         {
             List<Atuendo> removidos = new List<Atuendo>();
 
-            foreach (Atuendo a in Atuendos)
+            foreach (Atuendo unAtuendo in this.Atuendos)
             {
-                if (a.TienePrendasUsadas())
+                if (unAtuendo.TienePrendasUsadas())
                 {
-                    removidos.Add(a);
+                    removidos.Add(unAtuendo);
                 }
             }
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
+
         /// <summary>
         /// Aplica todas las reglas a la lista de atuendos, quitando los que no son validos.
         /// </summary>
@@ -106,6 +112,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
+
         /// <summary>
         /// Filtra la lista de atuendos segun el tipo de evento
         /// </summary>
@@ -124,18 +131,27 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
+
+        /// <summary>
+        /// Quita los atuedno que no cumplen con la sensibilidad y la temperadura
+        /// </summary>
+        /// <param name="sensibilidad"></param>
         public void FiltrarAtuendosPorSensibilidadYClima(int sensibilidad)
         {
             List<Atuendo> removidos = new List<Atuendo>();
 
-            foreach(Atuendo a in Atuendos)
+            foreach(Atuendo unAtuendo in this.Atuendos)
             {
-                if (!this.CumpleNivelDeAbrigo(sensibilidad, a))
-                    removidos.Add(a);
+                if (!this.CumpleNivelDeAbrigo(sensibilidad, unAtuendo))
+                    removidos.Add(unAtuendo);
             }
 
             this.Atuendos.RemoveAll(a => removidos.Contains(a));
         }
+
+        /// <summary>
+        /// Ordenas los atuendos segun su calificacion
+        /// </summary>
         public void OrdenarPorCalificacionDeAtuendo()
         {
             Atuendo atuendoAux;
@@ -157,24 +173,32 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
         #endregion OPERACIONES
 
+
         #region FUNCIONES AUXILIARES
-        private bool CumpleNivelDeAbrigo(int sensibilidadUsuario, Atuendo a)
+
+        /// <summary>
+        /// Valida que el atuendo cumpla con el nivel de abrigo tolerado por el usuario
+        /// </summary>
+        /// <param name="sensibilidadUsuario"></param>
+        /// <param name="atuendo"></param>
+        /// <returns></returns>
+        private bool CumpleNivelDeAbrigo(int sensibilidadUsuario, Atuendo atuendo)
         {
-            int abrigoSuperior = a.AbrigoCategoria("SUPERIOR");
-            int abrigoInferior = a.AbrigoCategoria("INFERIOR");
-            int abrigoCalzado = a.AbrigoCategoria("CALZADO");
-            int abrigoExtra = a.AbrigoCategoria("ACCESORIO");
+            int abrigoSuperior = atuendo.NivelDeAbrigoPorCategoria("SUPERIOR");
+            int abrigoInferior = atuendo.NivelDeAbrigoPorCategoria("INFERIOR");
+            int abrigoCalzado  = atuendo.NivelDeAbrigoPorCategoria("CALZADO");
+            int abrigoExtra    = atuendo.NivelDeAbrigoPorCategoria("ACCESORIO");
 
             int minimoSuperior = 0, maximoSuperior = 0, minimoInferior = 0, maximoInferior = 0, minimoCalzado = 0, maximoCalzado = 0, minimoExtra = 0, maximoExtra = 0;
 
             /// Relaciona el clima con la sensibilidad del usuario (info abajo)
-            /// por ejemplo: si el clima es de temperatura media pero el usuario es friolento, el usuario la sentirá un nivel más frío
-            ///                osea sentirá que hace frío. Si el clima es de temperatura fria y, de nuevo, el usuario es friolento, la
-            ///                sentirá como muy fría.
-            ///                Si hace calor y el usuario es muy friolento baja dos niveles: sentirá frío.
-            ///                Si hace calor y el usuario es caluroso sube un nivel: sentirá mucho calor.
-            ///                El nivel máximo y mínimo de sensibilidad es mucho calor y mucho frío relativamente. El usuario no puede 
-            ///                ser más o menos sensible que eso
+            /// por ejemplo: si el clima es de temperatura media pero el usuario es friolento, el usuario sentirá un nivel más frío
+            /// osea sentirá que hace frío. Si el clima es de temperatura fria y, de nuevo, el usuario es friolento, la
+            /// sentirá como muy fría.
+            /// Si hace calor y el usuario es muy friolento baja dos niveles: sentirá frío.
+            /// Si hace calor y el usuario es caluroso sube un nivel: sentirá mucho calor.
+            /// El nivel máximo y mínimo de sensibilidad es mucho calor y mucho frío relativamente. El usuario no puede 
+            /// ser más o menos sensible que eso
             int n = sensibilidadUsuario + this.SensibilidadClima();
 
             if (n <= -2) //Hace "MUCHO FRIO"
@@ -232,17 +256,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 minimoExtra = 0; //si o si con un accesorio para el frío
                 maximoExtra = 0;
             }
-            else // Error
+            else 
             {
-
+                // Error ????
             }
 
-            return (this.EstaEntre(minimoSuperior, abrigoSuperior, maximoSuperior)
-                && this.EstaEntre(minimoInferior, abrigoInferior, maximoInferior)
-                && this.EstaEntre(minimoCalzado, abrigoCalzado, maximoCalzado)
-                && this.EstaEntre(minimoExtra, abrigoExtra, maximoExtra));
+            return (this.EstaEntre(minimoSuperior, abrigoSuperior, maximoSuperior) &&
+                    this.EstaEntre(minimoInferior, abrigoInferior, maximoInferior) &&
+                    this.EstaEntre(minimoCalzado, abrigoCalzado, maximoCalzado) &&
+                    this.EstaEntre(minimoExtra, abrigoExtra, maximoExtra));
 
         }
+
         /// <summary>
         ///  Se define cuál es la sensibilidad relativa del usuario con la temperatura
         /// </summary>
@@ -275,11 +300,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 return 2;
             }
         }
+
         private bool EstaEntre(int minimo, int valor, int maximo)
         {
             return (minimo <= valor && valor <= maximo);
         }
+
         #endregion
+
+
+
+
+
 
         #region OBSOLETAS
         [Obsolete("Esto no va")]
@@ -297,7 +329,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 i++;
             }
         }
-        
         #endregion
     }
 }

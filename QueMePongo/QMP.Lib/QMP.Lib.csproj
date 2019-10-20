@@ -10,10 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ar.UTN.QMP.Lib</RootNamespace>
     <AssemblyName>QMP.Lib</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,8 +50,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -61,21 +64,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades\0_ParaDB\CaracteristicaCondicion.cs" />
-    <Compile Include="Entidades\0_ParaDB\CaracteristicaPrenda.cs" />
     <Compile Include="Entidades\Atuendos\Atuendo.cs" />
     <Compile Include="Entidades\Atuendos\Caracteristica.cs" />
     <Compile Include="Entidades\Atuendos\PrendaBuilder.cs" />
-    <Compile Include="Entidades\Atuendos\Tipos.cs" />
+    <Compile Include="Entidades\Atuendos\GestorCaracteristicas.cs" />
     <Compile Include="Entidades\Calificaciones\Calificacion.cs" />
     <Compile Include="Entidades\Clima\ApiUxInfo.cs" />
     <Compile Include="Entidades\Clima\ApiUxService.cs" />
     <Compile Include="Entidades\Clima\WeatherService.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceAdapter.cs" />
     <Compile Include="Entidades\Contexto\QueMePongoDBInitializer.cs" />
-    <Compile Include="Entidades\Core\AtuendosGestor.cs" />
+    <Compile Include="Entidades\Core\GestorAtuendos.cs" />
     <Compile Include="Entidades\Core\NodoPedido.cs" />
     <Compile Include="Entidades\Core\Pedido.cs" />
+    <Compile Include="Entidades\Core\Scheduler.cs" />
     <Compile Include="Entidades\Eventos\Evento.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherService.cs" />
     <Compile Include="Entidades\Clima\OpenWeatherInfo.cs" />
@@ -98,23 +100,16 @@
     <Compile Include="Entidades\Usuarios\UsrGratis.cs" />
     <Compile Include="Entidades\Usuarios\UsrPremium.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
-    <Compile Include="Migrations\201910081906442_Initial.cs" />
-    <Compile Include="Migrations\201910081906442_Initial.Designer.cs">
-      <DependentUpon>201910081906442_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entidades\Contexto\QueMePongoDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910081906442_Initial.resx">
-      <DependentUpon>201910081906442_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

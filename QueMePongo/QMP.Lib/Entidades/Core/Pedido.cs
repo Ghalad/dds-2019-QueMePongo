@@ -12,17 +12,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     [Table("Pedidos")]
     public class Pedido
     {
-        [Key, ForeignKey("Usuario")]
+        [Key, ForeignKey("Usuario"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PedidoId { get; set; }
-        public DateTime Fecha()
-        {
-            return Evento.FechaEvento;
-        }
         public Evento Evento { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; }
         public ICollection<Atuendo> Atuendos { get; set; }
 
+
+        #region CONSTRUCTOR
         private Pedido() { }
+
         public Pedido(Usuario usr, Evento evento)
         {
             if (usr != null)
@@ -37,13 +36,24 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos = new List<Atuendo>();
         }
+        #endregion CONSTRUCTOR
+
+
+        /// <summary>
+        /// Devuelve la fecha del evento del pedido
+        /// </summary>
+        /// <returns></returns>
+        public DateTime Fecha()
+        {
+            return Evento.FechaEvento;
+        }
 
         /// <summary>
         /// Resuelve el pedido, generando un atuendo y haciendolo disponible para que el usuario lo obtenga previa notificacion
         /// </summary>
         public void Resolver()
         {
-            AtuendosGestor gestor = new AtuendosGestor(Usuario.ObtenerPrendas(), Usuario.Reglas.ToList(), this.Evento);
+            GestorAtuendos gestor = new GestorAtuendos(this.Usuario.ObtenerPrendas(), this.Usuario.Reglas.ToList(), this.Evento);
             gestor.GenerarAtuendos();
             gestor.FiltrarAtuendosPorReglas();
             gestor.FiltrarAtuendosPorEvento();
@@ -54,18 +64,26 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             this.NotificarUsuario();
         }
 
+        /// <summary>
+        /// Genera un nuevo pedido para el mismo usuario y el mismo evento pero en la proxima fecha segun la configuracion del evento
+        /// </summary>
+        /// <returns></returns>
         public Pedido ObtenerSiguiente()
         {
-            return new Pedido(this.Usuario, Evento.ObtenerSiguiente());
-        }
-
-        public bool SeRepite()
-        {
-            return (Evento.SeRepite());
+            return new Pedido(this.Usuario, this.Evento.ObtenerSiguiente());
         }
 
         /// <summary>
-        /// Obtiene un atuendo que no haya sido marcado antes
+        /// Indica si el evento del pedido se repite o no
+        /// </summary>
+        /// <returns></returns>
+        public bool SeRepite()
+        {
+            return this.Evento.SeRepite();
+        }
+
+        /// <summary>
+        /// Obtiene los atuendo del pedido una vez que fueron procesados
         /// </summary>
         /// <returns></returns>
         public List<Atuendo> ObtenerAtuendos()
@@ -82,11 +100,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// <param name="id"></param>
         public void AceptarAtuendo(int id, int puntaje)
         {
-            if (Usuario.YaAcepto(this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id))))
-                return;
-            this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id)).Aceptar(puntaje);
-            this.Atuendos.ToList().ForEach(a => { if (!a.AtuendoId.Equals(id)) a.Rechazar(); });
-            this.Usuario.AgregarAtuendoAceptado(this.Atuendos.ToList().Find(a => a.AtuendoId.Equals(id)));
+            if (this.Atuendos != null && this.Atuendos.Any(a => a.AtuendoId.Equals(id)))
+            {
+                if (this.Usuario.YaAcepto(id)) return;
+                this.Atuendos.Where(a => a.AtuendoId.Equals(id)).SingleOrDefault().Aceptar(puntaje);
+                this.Atuendos.ToList().ForEach(a => { if (!a.AtuendoId.Equals(id)) a.Rechazar(); });
+                this.Usuario.AgregarAtuendoAceptado(this.Atuendos.Where(a => a.AtuendoId.Equals(id)).SingleOrDefault());
+            }
         }
 
 
@@ -96,15 +116,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         public void DeshacerUltimaOperacion()
         {
             foreach(Atuendo atuendo in this.Atuendos)
-            {
                 atuendo.Deshacer();
-            }
         }
 
         public void NotificarUsuario()
         {
             this.Usuario.NotificarPedidoResuelto(this);
         }
+
+
+
+
+
+
 
 
         [Obsolete] //solo la uso para un test

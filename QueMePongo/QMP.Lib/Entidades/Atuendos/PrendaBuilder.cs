@@ -6,6 +6,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     public class PrendaBuilder
     {
         private Prenda Prenda { get; set; }
+        private GestorCaracteristicas GeCa { get; set; }
+
+        public PrendaBuilder()
+        {
+            this.GeCa = GestorCaracteristicas.GetInstance();
+        }
 
         public PrendaBuilder CrearPrenda()
         {
@@ -17,42 +23,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             return this.Prenda;
         }
-
-        [Obsolete("Metodo obsoleto, Utilizar especificos 'ConCategoria, ConTipo, ConMaterial, etc...'")]
-        public PrendaBuilder AgregarCaracteristica(string clave, string valor)
-        {
-            if (this.Prenda != null && Tipos.GetInstance().ExisteCaracteristica(clave, valor))
-            {
-                if (!this.Prenda.TieneCaracteristica(clave))
-                {
-                    if (clave.ToUpper().Equals("TIPO"))
-                    {
-                        if(Tipos.GetInstance().ValidarTipo(valor.ToUpper(), this.Prenda.ObtenerCaracteristica("CATEGORIA")))
-                            this.Prenda.AgregarCaracteristica(clave, valor);
-                    }
-                    else if (clave.ToUpper().Equals("CATEGORIA"))
-                    {
-                        if (Tipos.GetInstance().ValidarCategoria(valor.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
-                            this.Prenda.AgregarCaracteristica(clave, valor);
-                    }
-                    else
-                        this.Prenda.AgregarCaracteristica(clave, valor);
-                }
-                else
-                    if (clave.ToUpper().Equals("COLOR") &&
-                        this.Prenda.CantidadDeCaracteristica(clave) == 1 &&
-                        !this.Prenda.ObtenerCaracteristica("COLOR").Equals(valor.ToUpper()))
-                    {
-                        this.Prenda.AgregarCaracteristica(clave, valor);
-                    }
-
-            }
-            
-            return this;
-        }
-
-
-
 
 
         /// <summary>
@@ -68,19 +38,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             {
                 if (this.Prenda != null)
                 {
-                    if (Tipos.GetInstance().ExisteCaracteristica(clave, categoria.ToUpper()))
+                    if (this.GeCa.ExisteCaracteristica(clave, categoria.ToUpper()))
                     {
                         if (!this.Prenda.TieneCaracteristica(clave))
                         {
                             if (this.Prenda.TieneCaracteristica("TIPO"))
                             {
-                                if (Tipos.GetInstance().ExisteCaracteristicaXTipo(categoria.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
-                                    this.Prenda.AgregarCaracteristica(clave, categoria.ToUpper());
+                                if (this.GeCa.ExisteCaracteristicaXTipo(categoria.ToUpper(), this.Prenda.ObtenerCaracteristica("TIPO")))
+                                    this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, categoria.ToUpper()));
                                 else
                                     throw new Exception(string.Format("La categoria [{0}] no se corresponde con el tipo de prenda [{1}] que posee", categoria, this.Prenda.ObtenerCaracteristica("TIPO")));
                             }
                             else
-                                this.Prenda.AgregarCaracteristica(clave, categoria.ToUpper());
+                                this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, categoria.ToUpper()));
                         }
                         else
                             throw new Exception("La prenda ya posee categoria");
@@ -110,25 +80,25 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             {
                 if (this.Prenda != null)
                 {
-                    if (Tipos.GetInstance().ExisteCaracteristica(clave, tipo.ToUpper()))
+                    if (this.GeCa.ExisteCaracteristica(clave, tipo.ToUpper()))
                     {
                         if (!this.Prenda.TieneCaracteristica(clave))
                         {
                             if (this.Prenda.TieneCaracteristica("CATEGORIA"))
                             {
-                                if (Tipos.GetInstance().ExisteCaracteristicaXTipo(this.Prenda.ObtenerCaracteristica("CATEGORIA"), tipo.ToUpper()))
+                                if (this.GeCa.ExisteCaracteristicaXTipo(this.Prenda.ObtenerCaracteristica("CATEGORIA"), tipo.ToUpper()))
                                 {
-                                    this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
-                                    this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
-                                    this.Prenda.AgregarCaracteristica("ABRIGO", Tipos.GetInstance().ObtenerAbrigo(tipo));
+                                    this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, tipo.ToUpper()));
+                                    this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica("SUPERPOSICION", this.GeCa.ObtenerSuperposicion(tipo)));
+                                    this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica("ABRIGO", this.GeCa.ObtenerAbrigo(tipo)));
                                 }
                                 else
                                     throw new Exception(string.Format("El tipo de prenda [{0}] no se corresponde con la categoria [{1}] que posee", tipo, this.Prenda.ObtenerCaracteristica("CATEGORIA")));
                             }
                             else
                             {
-                                this.Prenda.AgregarCaracteristica(clave, tipo.ToUpper());
-                                this.Prenda.AgregarCaracteristica("SUPERPOSICION", Tipos.GetInstance().ObtenerSuperposicion(tipo));
+                                this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, tipo.ToUpper()));
+                                this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica("SUPERPOSICION", this.GeCa.ObtenerSuperposicion(tipo)));
                             }
                         }
                         else
@@ -160,10 +130,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             {
                 if (this.Prenda != null)
                 {
-                    if (Tipos.GetInstance().ExisteCaracteristica(clave, material.ToUpper()))
+                    if (this.GeCa.ExisteCaracteristica(clave, material.ToUpper()))
                     {
                         if (!this.Prenda.TieneCaracteristica(clave))
-                            this.Prenda.AgregarCaracteristica(clave, material.ToUpper());
+                            this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, material.ToUpper()));
                         else
                             throw new Exception("La prenda ya posee material");
                     }
@@ -193,17 +163,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             {
                 if (this.Prenda != null)
                 {
-                    if (Tipos.GetInstance().ExisteCaracteristica(clave, color.ToUpper()))
+                    if (this.GeCa.ExisteCaracteristica(clave, color.ToUpper()))
                     {
                         if (!this.Prenda.TieneCaracteristica(clave))
                         {
                             // color primario
-                            this.Prenda.AgregarCaracteristica(clave, color.ToUpper());
+                            this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, color.ToUpper()));
                         }
                         else if (this.Prenda.CantidadDeCaracteristica(clave) < 2)
                         {
                             // color secundario
-                            this.Prenda.AgregarCaracteristica(clave, color.ToUpper());
+                            this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, color.ToUpper()));
                         }
                         else
                             throw new Exception("La prenda ya posee color primario y secundario");
@@ -234,10 +204,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             {
                 if (this.Prenda != null)
                 {
-                    if (Tipos.GetInstance().ExisteCaracteristica(clave, tipoEvento.ToUpper()))
+                    if (this.GeCa.ExisteCaracteristica(clave, tipoEvento.ToUpper()))
                     {
                         if (!this.Prenda.TieneCaracteristica(clave, tipoEvento.ToUpper()))
-                            this.Prenda.AgregarCaracteristica(clave, tipoEvento.ToUpper());
+                            this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, tipoEvento.ToUpper()));
                         else
                             throw new Exception("La prenda ya posee un evento");
                     }

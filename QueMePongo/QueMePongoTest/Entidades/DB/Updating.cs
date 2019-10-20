@@ -93,13 +93,13 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
             string username = "manurocck";
 
             this.CargarUsuario(username, ctx);
-            Assert.AreEqual(10, user.Maximo);
+            Assert.AreEqual(10, user.MaximoPrendas);
 
-            user.Maximo = 20;
+            user.MaximoPrendas = 20;
             ctx.SaveChanges();
 
             this.CargarUsuario(username, ctx);
-            Assert.AreEqual(10, user.Maximo);
+            Assert.AreEqual(10, user.MaximoPrendas);
         }
 
         [TestMethod]

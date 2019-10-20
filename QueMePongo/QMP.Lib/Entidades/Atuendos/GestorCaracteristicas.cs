@@ -5,104 +5,90 @@ using System.Linq;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
-    public class Tipos
+    public class GestorCaracteristicas
     {
-        private static Tipos Instancia { get; set; }
+        private static GestorCaracteristicas Instancia { get; set; }
 
         public List<string> TipoCaracteristicas { get; set; }
         public List<Caracteristica> CategoriaxTipo { get; set; }
-        public List<Caracteristica> MaterialxTipo { get; set; }
         public List<Caracteristica> Caracteristicas { get; set; }
         public List<Caracteristica> Superposiones { get; set; }
         public List<Caracteristica> NivelDeAbrigo { get; set; }
 
 
-        public static Tipos GetInstance()
+        public static GestorCaracteristicas GetInstance()
         {
-            if (Instancia == null) Instancia = new Tipos();
+            if (Instancia == null) Instancia = new GestorCaracteristicas();
             return Instancia;
         }
 
 
-        private Tipos()
+        private GestorCaracteristicas()
         {
-            QueMePongoDB db = new QueMePongoDB();
-
             this.TipoCaracteristicas = new List<string>();
-            this.CategoriaxTipo = new List<Caracteristica>();
-            this.MaterialxTipo = new List<Caracteristica>();
-            this.Caracteristicas = new List<Caracteristica>();
-            this.Superposiones = new List<Caracteristica>();
-            this.NivelDeAbrigo = new List<Caracteristica>();
+            this.CategoriaxTipo      = new List<Caracteristica>();
+            this.Caracteristicas     = new List<Caracteristica>();
+            this.Superposiones       = new List<Caracteristica>();
+            this.NivelDeAbrigo       = new List<Caracteristica>();
 
-            // Se cargan los tipos de caracteristicas desde la base
-            try
+            using (QueMePongoDB db = new QueMePongoDB())
             {
-                foreach (var str in db.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA")).Select(c => c.Clave).Distinct().ToList())
+                // Se cargan los tipos de caracteristicas desde la base
+                try
                 {
-                    this.TipoCaracteristicas.Add(str);
+                    this.TipoCaracteristicas.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA")).Select(c => c.Clave).Distinct().ToList());
                 }
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-
-            // Se cargan las caracteristicas desde la base
-            try
-            {
-                foreach (var car in db.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA")).Select(c => c).ToList())
+                catch (Exception ex)
                 {
-                    this.Caracteristicas.Add(car);
+                    //TODO
                 }
-            }
-            catch (Exception ex)
-            {
-
-            }
 
 
-            // Se cargan las superposiciones desde la base
-            try
-            {
-                foreach (var car in db.Caracteristicas.Where(c => c.Nombre.Equals("SUPERPOSICION")).Select(c => c).ToList())
+                // Se cargan las caracteristicas desde la base
+                try
                 {
-                    this.Superposiones.Add(car);
+                    this.Caracteristicas.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA")).Select(c => c).ToList());
                 }
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-
-            // Se cargan las superposiciones desde la base
-            try
-            {
-                foreach (var car in db.Caracteristicas.Where(c => c.Nombre.Equals("CATEGORIATIPO")).Select(c => c).ToList())
+                catch (Exception ex)
                 {
-                    this.CategoriaxTipo.Add(car);
+                    //TODO
                 }
-            }
-            catch (Exception ex)
-            {
-
-            }
 
 
-            // Se cargan las superposiciones desde la base
-            try
-            {
-                foreach (var car in db.Caracteristicas.Where(c => c.Nombre.Equals("NIVELABRIGO")).Select(c => c).ToList())
+                // Se cargan las superposiciones desde la base
+                try
                 {
-                    this.NivelDeAbrigo.Add(car);
+                    this.Superposiones.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("SUPERPOSICION")).Select(c => c).ToList());
                 }
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
+                    //TODO
+                }
+
+
+                // Se cargan las superposiciones desde la base
+                try
+                {
+                    this.CategoriaxTipo.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("CATEGORIATIPO")).Select(c => c).ToList());
+                }
+                catch (Exception ex)
+                {
+                    //TODO
+                }
+
+
+                // Se cargan las superposiciones desde la base
+                try
+                {
+                    this.NivelDeAbrigo.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("NIVELABRIGO")).Select(c => c).ToList());
+                }
+                catch (Exception ex)
+                {
+                    //TODO
+                }
 
             }
+
         }
 
 
@@ -178,12 +164,37 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             return null;
         }
 
+        /// <summary>
+        /// En base a un tipo de prenda obtiene el nivel de abrigo
+        /// </summary>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
         public string ObtenerAbrigo(string tipo)
         {
             foreach (var c in this.NivelDeAbrigo)
                 if (c.EsLaMismaClave(tipo))
                     return c.Valor;
             return null;
+        }
+
+        /// <summary>
+        /// Se encarga de controlar que no haya multiplicidad de objetos Caracteristica que representen la misma caracteristica.
+        /// </summary>
+        /// <param name="clave"></param>
+        /// <param name="valor"></param>
+        /// <returns></returns>
+        public Caracteristica ObtenerCaracteristica(string clave, string valor)
+        {
+            Caracteristica car;
+
+            car = this.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA") && c.Clave.Equals(clave.ToUpper()) && c.Valor.Equals(valor.ToUpper())).FirstOrDefault();
+
+            if (car == null)
+            {
+                throw new Exception(string.Format("La caracteristica [{0}, {1}] solicitada no existe.", clave, valor));
+            }
+
+            return car;
         }
 
     }

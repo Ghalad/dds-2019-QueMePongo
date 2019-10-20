@@ -1,5 +1,4 @@
-﻿using Ar.UTN.QMP.Lib.Entidades._0._Para_DB;
-using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
@@ -7,7 +6,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
     public class CondicionCantidad : Condicion
     {
         public Operador Operador { get; set; }
-        public ICollection<CaracteristicaCondicion> Caracteristicas { get; set; }
+        public ICollection<Caracteristica> Caracteristicas { get; set; }
 
         /// <summary>
         /// Valida la cantidad de prendas que poseen TODAS las caracteristicas contra el operador, para ser VALIDO. De lo contrario el atuendo es INVALIDO
@@ -17,10 +16,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
         public CondicionCantidad(Operador operador, List<Caracteristica> caracteristicas)
         {
             this.Operador = operador;
-            this.Caracteristicas = new List<CaracteristicaCondicion>();
+            this.Caracteristicas = new List<Caracteristica>();
             foreach (Caracteristica c in caracteristicas)
             {
-                Caracteristicas.Add(new CaracteristicaCondicion(c.Clave, c.Valor, this));
+                Caracteristicas.Add(new Caracteristica(c.Clave, c.Valor));
             }
         }
 
