@@ -55,6 +55,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             GestorAtuendos gestor = new GestorAtuendos(this.Usuario.ObtenerPrendas(), this.Usuario.Reglas.ToList(), this.Evento);
             gestor.GenerarAtuendos();
+            gestor.FiltrarAtuendosPrendasUsadas();
             gestor.FiltrarAtuendosPorReglas();
             gestor.FiltrarAtuendosPorEvento();
             //gestor.FiltrarAtuendosPorSensibilidadYClima(this.Usuario.Sensibilidad);
@@ -102,11 +103,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             if (this.Atuendos != null && this.Atuendos.Any(a => a.AtuendoId.Equals(id)))
             {
-                if (this.Usuario.YaAcepto(id)) return;
-                this.Atuendos.Where(a => a.AtuendoId.Equals(id)).SingleOrDefault().Aceptar(puntaje);
-                this.Atuendos.ToList().ForEach(a => { if (!a.AtuendoId.Equals(id)) a.Rechazar(); });
+                this.Atuendos.Where(a => a.AtuendoId.Equals(id)).SingleOrDefault().Aceptar(this.Usuario, puntaje);
                 this.Usuario.AgregarAtuendoAceptado(this.Atuendos.Where(a => a.AtuendoId.Equals(id)).SingleOrDefault());
             }
+            else
+                throw new Exception("Identificador de atuendo invalido o lista vacia.");
         }
 
 
@@ -115,6 +116,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void DeshacerUltimaOperacion()
         {
+            // ESTO ESTA MAL
             foreach(Atuendo atuendo in this.Atuendos)
                 atuendo.Deshacer();
         }
@@ -129,18 +131,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
 
 
-
-
-        [Obsolete] //solo la uso para un test
-        public void AceptarPrimerAtuendo()
-        {
-            if(this.Atuendos.Count == 0)
-            {
-                throw new Exception("El usuario no tiene atuendos para aceptar.");
-            }
-
-            this.AceptarAtuendo(this.Atuendos.ToList()[0].AtuendoId, 10);
-        }
 
         [Obsolete]
         public void MostrarAtuendos()

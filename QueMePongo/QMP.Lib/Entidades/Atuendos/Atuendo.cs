@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,15 +12,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AtuendoId { get; set; }
-        public bool? Aceptado { get; set; }
-        public Calificacion Calificacion { get; set; }
+        public bool Aceptado { get; set; }
         public ICollection<Prenda> Prendas { get; set; }
 
         public Atuendo()
         {
-            this.Prendas = new HashSet<Prenda>();
-            this.Aceptado = null;
-            this.Calificacion = null;
+            this.Prendas = new List<Prenda>();
+            this.Aceptado = false;
         }
 
         /// <summary>
@@ -44,59 +43,44 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
         /// <summary>
-        /// Marca al atuendo como aceptado
+        /// Marca al atuendo como aceptado y puntua todas las prendas que lo componen
         /// </summary>
-        public void Aceptar(int puntaje)
+        public void Aceptar(Usuario usuario, int puntaje)
         {
-            this.Aceptado = true;
-            if (Calificacion == null)
-                Calificacion = new Calificacion(puntaje);
-            else
-                this.Calificacion.Calificar(puntaje);
-
-            foreach(Prenda unaPrenda in this.Prendas) 
+            if (this.Aceptado == false)
             {
-                unaPrenda.MarcarComoUsada();
-                unaPrenda.Puntuar(puntaje); //se marca a cada prenda con el puntaje del atuendo.. no está bueno
+                this.Aceptado = true;
+
+                foreach (Prenda unaPrenda in this.Prendas)
+                {
+                    unaPrenda.MarcarComoUsada();
+                    unaPrenda.Puntuar(usuario, puntaje);
+                }
             }
+            else
+                throw new Exception("El Atuendo contiene prendas utilizadas por otro usuario.");
         }
 
         /// <summary>
-        /// Marca al atuendo como rechazado
-        /// </summary>
-        public void Rechazar()
-        {
-            this.Aceptado = false;
-        }
-
-        /// <summary>
-        /// Deshace la ultima operacion
+        /// Deshace la ultima puntuacion y quita la marca de aceptado
         /// </summary>
         public void Deshacer()
         {
-            this.Aceptado = null;
+            this.Aceptado = false;
+            // quitar calificacion
         }
 
         /// <summary>
-        /// Se considera como mayor puntaje el de las prendas o el del atuendo
+        /// Obtiene el puntje de todas las prendas
         /// </summary>
         /// <returns></returns>
         internal int ObtenerPuntaje()
         {
-            int puntajeAtuendo = 0;
-            int puntajePorPrendas = 0;
-            if (this.Calificacion != null)
-                puntajeAtuendo = this.Calificacion.ObtenerPuntaje() * this.CantidadDePrendas();
-                
-            // ^ suponiendo que el puntaje del atuendo es el promedio del de las prendas
+            int puntaje = 0;
+            foreach(Prenda unaPrenda in this.Prendas)
+                puntaje += unaPrenda.ObtenerPuntaje();
 
-            foreach (Prenda unaPrenda in this.Prendas)
-                puntajePorPrendas = puntajePorPrendas + unaPrenda.ObtenerPuntaje();
-
-            if(puntajePorPrendas > puntajeAtuendo)
-                return puntajePorPrendas;
-            else
-                return puntajeAtuendo;
+            return puntaje;
         }
 
         /// <summary>

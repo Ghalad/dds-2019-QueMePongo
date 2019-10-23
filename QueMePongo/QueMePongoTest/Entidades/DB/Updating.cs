@@ -109,7 +109,7 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
             string username = "manurocck";
 
             this.CargarUsuario(username, ctx);
-            user.Pedido.AceptarPrimerAtuendo();
+            user.Pedido.AceptarAtuendo(32, 10);
 
             ctx.SaveChanges();
 

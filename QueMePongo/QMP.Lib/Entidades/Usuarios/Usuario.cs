@@ -1,4 +1,6 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+using Ar.UTN.QMP.Lib.Entidades.Comunicacion;
 using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using System;
@@ -16,9 +18,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         public int MaximoPrendas { get; set; }
         public int Sensibilidad { get; set; }
         public virtual Pedido Pedido { get; set; }
+        public ComunicacionAdapter MedioComunicacion { get; set; }
         public ICollection<Regla> Reglas { get; set; }
         public ICollection<Atuendo> AtuendosAceptados { get; set; }
         public ICollection<Guardarropa> Guardarropas { get; set; }
+        public ICollection<Calificacion> Calificaciones { get; set; }
 
         public Usuario() { }
 
@@ -26,8 +30,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             this.Username = username;
             this.Guardarropas = new List<Guardarropa>();
+            this.Calificaciones = new List<Calificacion>();
             this.Reglas = new List<Regla>();
             this.MaximoPrendas = maximo;
+        }
+
+        public void SetMetodoComunicacion(ComunicacionAdapter com)
+        {
+            this.MedioComunicacion = com;
         }
 
         /// <summary>
@@ -81,10 +91,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
                 throw new Exception("ID de guardarropa requerido.");
         }
 
-        public bool YaAcepto(int id)
-        {
-            return this.AtuendosAceptados.Any(a => a.AtuendoId.Equals(id));
-        }
 
         /// <summary>
         /// Permite agregar reglas
@@ -124,16 +130,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
 
         public void AgregarAtuendoAceptado(Atuendo atuendo)
         {
-            if (AtuendosAceptados == null)
-                AtuendosAceptados = new List<Atuendo>();
+            if (this.AtuendosAceptados == null)
+                this.AtuendosAceptados = new List<Atuendo>();
             
-            AtuendosAceptados.Add(atuendo);
+            this.AtuendosAceptados.Add(atuendo);
         }
 
         public void NotificarPedidoResuelto(Pedido pedido)
         {
             this.Pedido = pedido;
-            //TODO notificar al usuario que el pedido ya esta resuelto
+            if (this.MedioComunicacion != null)
+                this.MedioComunicacion.Notificar("Su pedido ya esta resuelto.");
         }
     }
 }

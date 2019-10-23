@@ -15,6 +15,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public int MaximoPrendas { get; set; }
         public ICollection<Prenda> Prendas { get; set; }
         public ICollection<Usuario> Usuarios { get; set; }
+        private int IdentificadorProvisorio { get; set; }
 
 
         private Guardarropa() { }
@@ -37,10 +38,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             {
                 if (this.MaximoPrendas == 0)
                 {
+                    prenda.PrendaId = this.GenerarId();
                     this.Prendas.Add(prenda);
                 }
                 else if (this.Prendas.Count < this.MaximoPrendas)
                 {
+                    prenda.PrendaId = this.GenerarId();
                     this.Prendas.Add(prenda);
                 }
                 else
@@ -58,6 +61,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public List<Prenda> ObtenerPrendas()
         {
             return this.Prendas.ToList();
+        }
+
+        private int GenerarId()
+        {
+            return this.IdentificadorProvisorio++;
         }
     }
 }

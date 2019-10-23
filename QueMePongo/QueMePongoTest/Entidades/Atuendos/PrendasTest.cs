@@ -95,22 +95,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
             Assert.IsTrue(this.p1.CantidadDeCaracteristicas() == 4);
         }
 
-        [TestMethod]
-        public void TieneLaMismaCaracteristica()
-        {
-            this.p1.AgregarCaracteristica(new Caracteristica("categoria", "superior"));
-            this.p2.AgregarCaracteristica(new Caracteristica("categoria", "superior"));
-            Assert.IsTrue(this.p1.EsLaMisma(this.p2));
-        }
-
-        [TestMethod]
-        public void NoTieneLaMismaCaracteristica()
-        {
-            this.p1.AgregarCaracteristica(new Caracteristica("categoria", "superior"));
-            this.p2.AgregarCaracteristica(new Caracteristica("categoria", "inferior"));
-            Assert.IsFalse(this.p1.EsLaMisma(this.p2));
-        }
-
 
 
 

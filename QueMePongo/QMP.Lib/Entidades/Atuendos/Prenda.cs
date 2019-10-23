@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,17 +22,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         private static int RESOLUCION = 140; // resolucion de las imagenes de las prendas
         [NotMapped]
         private static int MAXIMO_DIAS_DE_USO = 1; // maxima cantidad de dias que una prenda puede estar en uso, a partir de su fecha de uso
-        public Calificacion Calificacion { get; set; }
         public DateTime? fechaDeUso { get; set; }
         public ICollection<Caracteristica> Caracteristicas { get; set; }
+        public ICollection<Calificacion> Calificaciones { get; set; }
         public ICollection<Guardarropa> Guardarropas { get; set; } // Necesario para generar la relacion many-to-many
 
         public Prenda()
         {
             this.Caracteristicas = new List<Caracteristica>();
             this.Guardarropas    = new List<Guardarropa>();
+            this.Calificaciones  = new List<Calificacion>();
             this.fechaDeUso      = null;
-            this.Calificacion    = null;
         }
 
 
@@ -121,7 +122,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             if (this.fechaDeUso != null)
             {
-                if((DateTime.Now.Subtract(fechaDeUso ?? DateTime.Now)).TotalDays > MAXIMO_DIAS_DE_USO)
+                if((DateTime.Now.Subtract(fechaDeUso ?? DateTime.Now)).TotalDays < MAXIMO_DIAS_DE_USO)
                     return true;
             }
 
@@ -129,26 +130,25 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
         /// <summary>
-        /// Obtiene el puntaje de todo el atuendo
+        /// Obtiene el puntaje total de la prenda
         /// </summary>
         /// <returns></returns>
         public int ObtenerPuntaje()
         {
-            if (Calificacion == null)
-                return 0;
-            return this.Calificacion.ObtenerPuntaje();
+            int puntaje = 0;
+            foreach (Calificacion cal in this.Calificaciones)
+                puntaje += cal.Puntaje;
+
+            return puntaje;
         }
 
         /// <summary>
-        /// Permite puntuar todas las prendas del atuendo
+        /// Define un nuevo puntaje para la prenda
         /// </summary>
         /// <param name="puntaje"></param>
-        internal void Puntuar(int puntaje)
+        internal void Puntuar(Usuario usuario, int puntaje)
         {
-            if (Calificacion == null)
-                Calificacion = new Calificacion(puntaje);
-            else
-                Calificacion.Calificar(puntaje);
+            this.Calificaciones.Add(new Calificacion(usuario, puntaje));
         }
 
         /// <summary>
@@ -189,19 +189,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 if (c.EsLaMismaClave(clave))
                     return true;
             return false;
-        }
-
-        /// <summary>
-        /// Valida si la prenda tiene las mismas caracteristicas que otra prenda
-        /// </summary>
-        /// <param name="prenda"></param>
-        /// <returns></returns>
-        public bool EsLaMisma(Prenda prenda)
-        {
-            foreach(Caracteristica c in this.Caracteristicas)
-                if (!prenda.TieneCaracteristica(c))
-                    return false;
-            return true;
         }
 
         /// <summary>

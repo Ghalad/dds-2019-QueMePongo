@@ -14,6 +14,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private List<Prenda> Prendas { get; set; }
         private List<Regla> Reglas { get; set; }
         private Evento Evento { get; set; }
+        private int IdentificadorProvisorio { get; set; }
 
         #region CONSTRUCTOR
         public GestorAtuendos(List<Prenda> prendas, List<Regla> reglas, Evento evento)
@@ -34,10 +35,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 throw new Exception("Es necesario informar un evento");
 
             this.Atuendos = new List<Atuendo>();
+            this.IdentificadorProvisorio = 1;
         }
         #endregion CONSTRUCTOR
 
-        #region OPERACIONES
         /// <summary>
         /// Devuelve los atuendos generados
         /// </summary>
@@ -50,6 +51,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         }
 
 
+        #region OPERACIONES
         /// <summary>
         /// Setea una coleccion de Atuendos con todas las combinaciones de prendas posibles.
         /// </summary>
@@ -65,18 +67,18 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 foreach (var row in new Combinaciones.Combinaciones(this.Prendas.Count, i).GetRows())
                 {
                     atuendo = new Atuendo();
-                    foreach (var seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
+                    atuendo.AtuendoId = this.GenerarId();
+                    foreach (Prenda seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
                         atuendo.AgregarPrenda(seleccion);
                     this.Atuendos.Add(atuendo);
                 }
             }
-            this.FiltrarAtuendosPrendasUsadas();
         }
 
         /// <summary>
         /// Quita de la seleccion los atuendos con prendas ya usadas
         /// </summary>
-        private void FiltrarAtuendosPrendasUsadas()
+        public void FiltrarAtuendosPrendasUsadas()
         {
             List<Atuendo> removidos = new List<Atuendo>();
 
@@ -170,11 +172,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             }return;
 
         }
-
         #endregion OPERACIONES
 
 
-        #region FUNCIONES AUXILIARES
+
+        #region FUNCIONES_AUXILIARES
 
         /// <summary>
         /// Valida que el atuendo cumpla con el nivel de abrigo tolerado por el usuario
@@ -306,7 +308,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             return (minimo <= valor && valor <= maximo);
         }
 
-        #endregion
+        /// <summary>
+        /// La generacion de IDs es provisoria porque sirve unicamente para que el usuario selecciones un atuendo
+        /// y este pueda ser buscado. El ID real se genera en la base una vez que se persista el atuendo, cuando
+        /// forme parte de los atuendos aceptados del usuario.
+        /// </summary>
+        /// <returns></returns>
+        private int GenerarId()
+        {
+            return this.IdentificadorProvisorio++;
+        }
+        #endregion FUNCIONES_AUXILIARES
 
 
 

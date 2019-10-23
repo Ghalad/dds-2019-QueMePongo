@@ -7,7 +7,6 @@ using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
 {
@@ -24,7 +23,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         Pedido pedido;
         QueMePongo qmp;
         DateTime fecha;
-        CultureInfo culture;
         Scheduler scheduler;
 
 
@@ -34,7 +32,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             this.GeGa = GestorCaracteristicas.GetInstance();
             this.pb = new PrendaBuilder();
             this.qmp = QueMePongo.GetInstance();
-            culture = new CultureInfo("en-US");
             scheduler = Scheduler.GetInstance();
         }
 
@@ -44,15 +41,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         {
             usr1 = new UsrGratis(2, "Guido");
 
-            fecha = Convert.ToDateTime("1/3/2020 12:10:15 PM", culture);
+            fecha = DateTime.Now;
             scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", fecha, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
-            fecha = Convert.ToDateTime("1/4/2020 12:10:15 PM", culture);
             scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", fecha, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
-            fecha = Convert.ToDateTime("1/2/2020 12:10:15 PM", culture);
             scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", fecha, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
-            fecha = Convert.ToDateTime("1/1/2020 12:10:15 PM", culture);
             scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", fecha, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
-
 
             Assert.IsTrue(scheduler.CantidadPedidos() == 4);
         }
@@ -61,6 +54,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         public void ResolverPedidosTest1()
         {
             int maxPrendas = 10;
+            int intentos = 5;
             usr1 = new UsrGratis(maxPrendas, "Guido");
             g1 = new Guardarropa(maxPrendas);
 
@@ -214,19 +208,22 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             usr1.AgregarGuardarropa(g1);
             #endregion
             
+            scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
+            scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
+            scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
+            scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", DateTime.Now, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
 
-            fecha = Convert.ToDateTime("1/3/2020 12:10:15 PM", culture);
-            scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", fecha, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
-            fecha = Convert.ToDateTime("1/4/2020 12:10:15 PM", culture);
-            scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", fecha, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
-            fecha = Convert.ToDateTime("1/2/2020 12:10:15 PM", culture);
-            scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", fecha, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
-            fecha = Convert.ToDateTime("1/1/2020 12:10:15 PM", culture);
-            scheduler.AgregarPedido(new Pedido(usr1, new Evento("casual", fecha, "Buenos Aires", "Ir a tomar un healdo", "UNICO")));
 
-            while (scheduler.CantidadPedidos() > 0)
+            Assert.IsTrue(scheduler.CantidadPedidos() == 4);
+
+            while (intentos != 0)
             {
-                scheduler.DesencolarPedido();
+                if (scheduler.TieneTrabajo())
+                {
+                    scheduler.DesencolarPedido();
+                }
+                else
+                    intentos--;
             }
 
             Assert.IsTrue(scheduler.CantidadPedidos() == 0);
@@ -237,12 +234,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         {
             usr1 = new UsrPremium("manurocck");
             usr1.AgregarGuardarropa(new Guardarropa(10));
+            int intentos = 5;
 
-            Pedido Pedido1 = new Pedido(usr1, new Evento("CASUAL", new DateTime(2019, 9, 18), "Buenos Aires", "Pasear por la reserva", "UNICO"));
-            Pedido Pedido2 = new Pedido(usr1, new Evento("TRABAJO", new DateTime(2019, 9, 18), "Buenos Aires", "Reunion trabajo", "SEMANAL"));
-            Pedido Pedido4 = new Pedido(usr1, new Evento("CUMPLEAÑOS", new DateTime(2019, 9, 18), "Buenos Aires", "Cumpleaños Winnifred", "ANUAL"));
-            Pedido Pedido3 = new Pedido(usr1, new Evento("CASUAL", new DateTime(2019, 9, 30), "Buenos Aires", "Ir a tomar un helado", "UNICO"));
-            Pedido Pedido5 = new Pedido(usr1, new Evento("CASUAL", new DateTime(2019, 9, 18), "Buenos Aires", "Comprar escalera", "UNICO"));
+            Pedido Pedido1 = new Pedido(usr1, new Evento("CASUAL",     new DateTime(2019, 10, 1), "Buenos Aires", "Pasear por la reserva", "UNICO"));
+            Pedido Pedido2 = new Pedido(usr1, new Evento("TRABAJO",    new DateTime(2019, 10, 2), "Buenos Aires", "Reunion trabajo", "SEMANAL"));
+            Pedido Pedido4 = new Pedido(usr1, new Evento("CUMPLEAÑOS", new DateTime(2019, 11, 21), "Buenos Aires", "Cumpleaños Winnifred", "ANUAL"));
+            Pedido Pedido3 = new Pedido(usr1, new Evento("CASUAL",     new DateTime(2019, 11, 25), "Buenos Aires", "Ir a tomar un helado", "UNICO"));
+            Pedido Pedido5 = new Pedido(usr1, new Evento("CASUAL",     new DateTime(2019, 12, 26), "Buenos Aires", "Comprar escalera", "UNICO"));
 
 
             scheduler.AgregarPedido(Pedido1);
@@ -253,12 +251,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
 
             Assert.AreEqual(5, scheduler.CantidadPedidos());
 
-            while (scheduler.CantidadPedidos() > 0)
+            while (intentos != 0)
             {
-                scheduler.DesencolarPedido();
+                if (scheduler.TieneTrabajo())
+                {
+                    scheduler.DesencolarPedido();
+                }
+                else
+                    intentos--;
             }
 
-            Assert.AreEqual(3, scheduler.CantidadPedidos()); //El del 10 de septiembre, el cumpleaños del año que viene y el de trabajo de la semana que viene
+            Assert.AreEqual(4, scheduler.CantidadPedidos()); // Tiene los 3 eventos del mes 11 mas el evento 2 re-programado
 
         }
     }

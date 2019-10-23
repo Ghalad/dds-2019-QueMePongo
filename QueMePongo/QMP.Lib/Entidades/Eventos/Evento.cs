@@ -79,13 +79,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
             switch (Repeticion.ToUpper())
             {
                 case "A DIARIO":
-                    return new DateTime(FechaEvento.Year, FechaEvento.Month, FechaEvento.Day + 1);
+                    return this.FechaEvento.AddDays(1);
                 case "SEMANAL":
-                    return new DateTime(FechaEvento.Year, FechaEvento.Month, FechaEvento.Day + 7);
+                    return this.FechaEvento.AddDays(7);
                 case "MENSUAL":
-                    return new DateTime(FechaEvento.Year, FechaEvento.Month + 1, FechaEvento.Day);
+                    return this.FechaEvento.AddMonths(1);
                 case "ANUAL":
-                    return new DateTime(FechaEvento.Year + 1, FechaEvento.Month, FechaEvento.Day);
+                    return this.FechaEvento.AddYears(1);
                 default:
                     throw new Exception("Error de programación en evento, ObtenerSiguienteFecha");
             }

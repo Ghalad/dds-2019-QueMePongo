@@ -74,5 +74,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             if (this.Nodo == null) return 0;
             return this.Nodo.CantidadPedidos();
         }
+
+
+        /// <summary>
+        /// Devuelve TRUE si exiten 1 pedido para resolver en el dia.
+        /// </summary>
+        /// <returns></returns>
+        public bool TieneTrabajo()
+        {
+            if (this.Nodo == null)
+                return false;
+            else if (DateTime.Compare(DateTime.Now.Date, this.Nodo.Pedido.Fecha().Date) >= 0)
+                return true;
+            return false;
+        }
     }
 }

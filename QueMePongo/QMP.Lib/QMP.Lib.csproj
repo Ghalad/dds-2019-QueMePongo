@@ -73,6 +73,7 @@
     <Compile Include="Entidades\Clima\ApiUxService.cs" />
     <Compile Include="Entidades\Clima\WeatherService.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceAdapter.cs" />
+    <Compile Include="Entidades\Comunicacion\ComunicacionAdapter.cs" />
     <Compile Include="Entidades\Contexto\QueMePongoDBInitializer.cs" />
     <Compile Include="Entidades\Core\GestorAtuendos.cs" />
     <Compile Include="Entidades\Core\NodoPedido.cs" />
