@@ -58,7 +58,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             gestor.FiltrarAtuendosPrendasUsadas();
             gestor.FiltrarAtuendosPorReglas();
             gestor.FiltrarAtuendosPorEvento();
-            //gestor.FiltrarAtuendosPorSensibilidadYClima(this.Usuario.Sensibilidad);
+            gestor.FiltrarAtuendosPorSensibilidadYClima(this.Usuario.Sensibilidad);
             gestor.OrdenarPorCalificacionDeAtuendo();
 
             this.Atuendos = gestor.ObtenerAtuendos();
@@ -98,13 +98,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// <summary>
         /// Permite aceptar un atuendo y rechazar el resto
         /// </summary>
-        /// <param name="id"></param>
-        public void AceptarAtuendo(int id, int puntaje)
+        /// <param name="atuendoId"></param>
+        public void AceptarAtuendo(int atuendoId, int puntaje)
         {
-            if (this.Atuendos != null && this.Atuendos.Any(a => a.AtuendoId.Equals(id)))
+            Atuendo unAtuendo;
+            if (this.Atuendos != null && this.Atuendos.Any(a => a.AtuendoId.Equals(atuendoId)))
             {
-                this.Atuendos.Where(a => a.AtuendoId.Equals(id)).SingleOrDefault().Aceptar(this.Usuario, puntaje);
-                this.Usuario.AgregarAtuendoAceptado(this.Atuendos.Where(a => a.AtuendoId.Equals(id)).SingleOrDefault());
+                unAtuendo = this.Atuendos.Where(a => a.AtuendoId.Equals(atuendoId)).SingleOrDefault();
+                unAtuendo.Aceptar(this.Usuario, puntaje);
+                this.Usuario.AgregarAtuendoAceptado(unAtuendo);
+                this.NotificarCambioDeClima(unAtuendo);
             }
             else
                 throw new Exception("Identificador de atuendo invalido o lista vacia.");
@@ -112,15 +115,32 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
 
         /// <summary>
-        /// Permite deshacer la operacion anterior
+        /// Permite deshacer la ultima calificacion del usuario
         /// </summary>
         public void DeshacerUltimaOperacion()
         {
-            // ESTO ESTA MAL
-            foreach(Atuendo atuendo in this.Atuendos)
-                atuendo.Deshacer();
+            foreach(Atuendo unAtuendo in this.Atuendos)
+            {
+                unAtuendo.DeshacerUltimaOperacion(Usuario.UsuarioId);
+            }
         }
 
+        /// <summary>
+        /// Notifica al usuario si hubo un cambio de clima abrupto para el atuendo seleccionado para el evento
+        /// </summary>
+        /// <param name="unAtuendo"></param>
+        private void NotificarCambioDeClima(Atuendo unAtuendo)
+        {
+            GestorAtuendos gestor = new GestorAtuendos(this.Usuario.ObtenerPrendas(), this.Usuario.Reglas.ToList(), this.Evento);
+            if (!gestor.CumpleNivelDeAbrigo2(this.Usuario.Sensibilidad, unAtuendo))
+            {
+                this.Usuario.Notificar("Las condiciones climaticas han cambiado abruptamente");
+            }
+        }
+
+        /// <summary>
+        /// Notifica al usuario que el pedido ya esta resuelto
+        /// </summary>
         public void NotificarUsuario()
         {
             this.Usuario.NotificarPedidoResuelto(this);

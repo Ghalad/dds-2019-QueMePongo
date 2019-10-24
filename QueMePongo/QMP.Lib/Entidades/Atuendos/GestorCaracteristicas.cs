@@ -40,7 +40,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 }
                 catch (Exception ex)
                 {
-                    //TODO
+                    throw new Exception("No se pudo cargar las caracteristicas");
                 }
 
 
@@ -51,7 +51,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 }
                 catch (Exception ex)
                 {
-                    //TODO
+                    throw new Exception("No se pudo cargar las caracteristicas");
                 }
 
 
@@ -62,7 +62,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 }
                 catch (Exception ex)
                 {
-                    //TODO
+                    throw new Exception("No se pudo cargar las caracteristicas");
                 }
 
 
@@ -73,7 +73,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 }
                 catch (Exception ex)
                 {
-                    //TODO
+                    throw new Exception("No se pudo cargar las caracteristicas");
                 }
 
 
@@ -84,7 +84,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 }
                 catch (Exception ex)
                 {
-                    //TODO
+                    throw new Exception("No se pudo cargar las caracteristicas");
                 }
 
             }

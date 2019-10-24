@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -12,13 +13,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AtuendoId { get; set; }
-        public bool Aceptado { get; set; }
         public ICollection<Prenda> Prendas { get; set; }
 
         public Atuendo()
         {
             this.Prendas = new List<Prenda>();
-            this.Aceptado = false;
         }
 
         /// <summary>
@@ -47,10 +46,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         /// </summary>
         public void Aceptar(Usuario usuario, int puntaje)
         {
-            if (this.Aceptado == false)
+            if (!TienePrendasUsadas())
             {
-                this.Aceptado = true;
-
                 foreach (Prenda unaPrenda in this.Prendas)
                 {
                     unaPrenda.MarcarComoUsada();
@@ -62,19 +59,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
         /// <summary>
-        /// Deshace la ultima puntuacion y quita la marca de aceptado
+        /// Deshace la ultima puntuacion hecha por el usuario
         /// </summary>
-        public void Deshacer()
+        public void DeshacerUltimaOperacion(int id)
         {
-            this.Aceptado = false;
-            // quitar calificacion
+            Calificacion cal;
+            foreach (Prenda unaPrenda in this.Prendas)
+            {
+                cal = unaPrenda.Calificaciones.Where(c => c.Usuario.UsuarioId.Equals(id)).OrderByDescending(c => c.FechaCreacion).First();
+                unaPrenda.Calificaciones.Remove(cal);
+            }
         }
 
         /// <summary>
-        /// Obtiene el puntje de todas las prendas
+        /// Obtiene el puntaje de todas las prendas
         /// </summary>
         /// <returns></returns>
-        internal int ObtenerPuntaje()
+        public int ObtenerPuntaje()
         {
             int puntaje = 0;
             foreach(Prenda unaPrenda in this.Prendas)
@@ -84,10 +85,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         }
 
         /// <summary>
-        /// 
+        /// Determina si el atuendo tiene prendas marcadas como usadas
         /// </summary>
         /// <returns></returns>
-        internal bool TienePrendasUsadas()
+        public bool TienePrendasUsadas()
         {
             foreach(Prenda unaPrenda in this.Prendas)
                 if (unaPrenda.EstaEnUso())

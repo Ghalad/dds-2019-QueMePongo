@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Entidades\Atuendos\PrendaBuilderTests.cs" />
     <Compile Include="Entidades\Clima\WeatherServiceTest.cs" />
+    <Compile Include="Entidades\Core\MensajeTexto.cs" />
     <Compile Include="Entidades\Core\QueMePongoTests.cs" />
     <Compile Include="Entidades\Core\SchedulerTests.cs" />
     <Compile Include="Entidades\DB\Persistencia.cs" />

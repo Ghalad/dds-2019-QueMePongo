@@ -1,8 +1,10 @@
-﻿using Ar.UTN.QMP.Lib.Entidades.Contexto;
+﻿using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+using Ar.UTN.QMP.Lib.Entidades.Contexto;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
 {
@@ -94,6 +96,50 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
 
             Assert.IsTrue(this.p1.CantidadDeCaracteristicas() == 4);
         }
+
+        [TestMethod]
+        public void DeshacerPuntaje()
+        {
+            // Creo el usuario
+            Usuario usr1 = new UsrGratis(2, "guido");
+            // Seteo el ID que se deberia generar en la base
+            usr1.UsuarioId = 123;
+            Atuendo unAtuendo = new Atuendo();
+
+            // Creo una prenda
+            PrendaBuilder pb = new PrendaBuilder();
+            pb.CrearPrenda()
+              .ConCategoria("superior")
+              .ConTipo("remera_manga_larga")
+              .ConMaterial("hilo")
+              .ConColor("blanco");
+
+            // Asigno la prenda al atuendo
+            unAtuendo.AgregarPrenda(pb.ObtenerPrenda());
+
+            // Acepto el atuendo con con el usuario1 y x puntaje
+            unAtuendo.Aceptar(usr1, 13);
+
+            // Cambio la fecha de uso de la prenda para poder considerarla como si no estuviera en uso
+            foreach (Prenda unaPrenda in unAtuendo.Prendas)
+                unaPrenda.fechaDeUso = new DateTime(2019, 10, 20);
+            
+            // Duermo el proceso 1 segundo para que las calificaciones tengan horas distintas y elimina la que me interesa
+            Thread.Sleep(1000);
+
+            // Acepto nuevamente el atuendo para el mismo usuario con otro puntaje
+            unAtuendo.Aceptar(usr1, 5);
+
+            // Valido que el puntaje del atuendo sela la sumatoria de puntajes de cada prenda
+            Assert.IsTrue(unAtuendo.ObtenerPuntaje().Equals(18));
+
+            // Deshago la ultima operacion del usuario
+            unAtuendo.DeshacerUltimaOperacion(usr1.UsuarioId);
+
+            // Valido que el puntaje del atuendo sea igual al primer puntaje asignado
+            Assert.IsTrue(unAtuendo.ObtenerPuntaje().Equals(13));
+        }
+
 
 
 

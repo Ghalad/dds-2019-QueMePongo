@@ -140,7 +140,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             this.Pedido = pedido;
             if (this.MedioComunicacion != null)
-                this.MedioComunicacion.Notificar("Su pedido ya esta resuelto.");
+                this.Notificar("Pedido Resuelto");
+        }
+
+        public void Notificar(string mensaje)
+        {
+            this.MedioComunicacion.Notificar(mensaje);
         }
     }
 }
