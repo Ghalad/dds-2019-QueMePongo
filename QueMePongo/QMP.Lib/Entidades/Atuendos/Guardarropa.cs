@@ -12,6 +12,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GuardarropaId { get; set; }
+        public string Nombre { get; set; }
         public int MaximoPrendas { get; set; }
         public ICollection<Prenda> Prendas { get; set; }
         public ICollection<Usuario> Usuarios { get; set; }

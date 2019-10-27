@@ -132,7 +132,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private void NotificarCambioDeClima(Atuendo unAtuendo)
         {
             GestorAtuendos gestor = new GestorAtuendos(this.Usuario.ObtenerPrendas(), this.Usuario.Reglas.ToList(), this.Evento);
-            if (!gestor.CumpleNivelDeAbrigo2(this.Usuario.Sensibilidad, unAtuendo))
+            if (!gestor.CumpleNivelDeAbrigo(this.Usuario.Sensibilidad, unAtuendo))
             {
                 this.Usuario.Notificar("Las condiciones climaticas han cambiado abruptamente");
             }

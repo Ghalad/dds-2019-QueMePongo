@@ -1,0 +1,21 @@
+﻿@model Ar.UTN.QMP.Web.Models.Usuarios.GuardarropaModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Menu</h2>
+<div>
+    <ul>
+        <li>@Html.ActionLink("Crear", "Crear", "Guardarropas")</li>
+        <li>@Html.ActionLink("Listar", "Listar", "Guardarropas")</li>
+    </ul>
+</div>
+
+<div>
+    @Html.ActionLink("Back", "Home", "Home")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

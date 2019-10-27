@@ -15,6 +15,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
     {
         public int UsuarioId { get; set; }
         public string Username { get; set; }
+        public string Password { get; set; }
         public int MaximoPrendas { get; set; }
         public int Sensibilidad { get; set; }
         public virtual Pedido Pedido { get; set; }

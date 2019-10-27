@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Ar.UTN.QMP.Lib.Entidades.Atuendos.Guardarropa>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Lista de guardarropas</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prendas)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Prendas.ToList().Count)
+        </td>
+    </tr>
+}
+</table>
+
+<div>
+    @Html.ActionLink("Back", "Index", "Guardarropas")
+</div>
