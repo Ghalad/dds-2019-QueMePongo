@@ -172,8 +172,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                         }
                         else if (this.Prenda.CantidadDeCaracteristica(clave) < 2)
                         {
-                            // color secundario
-                            this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, color.ToUpper()));
+                            if (!this.Prenda.ObtenerCaracteristica(clave).Equals(color.ToUpper()))
+                            {
+                                // color secundario
+                                this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, color.ToUpper()));
+                            }
+                            else
+                                throw new Exception("Los colores primario y secundario tiene que ser diferentes");
                         }
                         else
                             throw new Exception("La prenda ya posee color primario y secundario");
@@ -229,7 +234,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         /// </summary>
         /// <param name="imagen"></param>
         /// <returns></returns>
-        public PrendaBuilder ConImagen(Image imagen)
+        public PrendaBuilder ConImagen(byte[] imagen)
         {
             if (imagen != null)
             {

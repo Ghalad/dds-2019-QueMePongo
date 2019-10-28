@@ -1,13 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
-namespace Ar.UTN.QMP.Web.Models.Usuarios
+namespace Ar.UTN.QMP.Web.Models
 {
     public class UsuarioModel
     {
-        [HiddenInput(DisplayValue = false)]
-        public int UsuarioId { get; set; }
-
         [Required]
         public string UserName { get; set; }
 

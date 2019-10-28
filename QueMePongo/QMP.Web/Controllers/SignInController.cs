@@ -1,6 +1,6 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Contexto;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
-using Ar.UTN.QMP.Web.Models.Usuarios;
+using Ar.UTN.QMP.Web.Models;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -28,7 +28,7 @@ namespace Ar.UTN.QMP.Web.Controllers
                     usr = db.Usuarios.Where(u => u.Username.Equals(model.UserName)).FirstOrDefault();
                     if (usr == null)  // usuario nuevo
                     {
-                        usr = new UsrGratis(2, model.UserName);
+                        usr = new UsrGratis(10, model.UserName);
                         usr.Password = model.Password;
                         db.Usuarios.Add(usr);
                         db.SaveChanges();

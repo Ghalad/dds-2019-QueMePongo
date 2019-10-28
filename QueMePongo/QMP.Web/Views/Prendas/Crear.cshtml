@@ -1,0 +1,82 @@
+﻿@model Ar.UTN.QMP.Web.Models.PrendaModel
+
+@{
+    ViewBag.Title = "Crear";
+}
+
+<h2>Crear Prendas</h2>
+
+@using (Html.BeginForm("Crear", "Prendas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedGuardarropaId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedGuardarropaId, Model.Guardarropas.Select(c => new SelectListItem { Text = c.Nombre, Value = c.GuardarropaId.ToString() }), " ", new { @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedCategoria, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedCategoria, Model.Categorias.Select(c => new SelectListItem { Text = c.Valor, Value = c.CaracteristicaId.ToString() }), " " ,new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedTipo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedTipo, Model.Tipos.Select(c => new SelectListItem { Text = c.Valor, Value = c.CaracteristicaId.ToString() }), " ", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedMeterial, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedMeterial, Model.Materiales.Select(c => new SelectListItem { Text = c.Valor, Value = c.CaracteristicaId.ToString() }), " ", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedColorPrimario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedColorPrimario, Model.Colores.Select(c => new SelectListItem { Text = c.Valor, Value = c.CaracteristicaId.ToString() }), " ", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedColorSecundario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedColorSecundario, Model.Colores.Select(c => new SelectListItem { Text = c.Valor, Value = c.CaracteristicaId.ToString() }), " ", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedEvento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedEvento, Model.Eventos.Select(c => new SelectListItem { Text = c.Valor, Value = c.CaracteristicaId.ToString() }), " ", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="file" id="file" class="btn btn-default btn-file"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index", "Prendas")
+</div>

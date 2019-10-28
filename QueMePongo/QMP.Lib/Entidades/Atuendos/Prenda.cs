@@ -67,18 +67,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         /// Permite agregar una imagen a la prenda y normalizarla
         /// </summary>
         /// <param name="imagen"></param>
-        public void AgregarImagen(Image imagen)
+        public void AgregarImagen(byte[] imagen)
         {
-            if (imagen != null)
+            Image tempImg = Image.FromStream(new MemoryStream(imagen));
+            if (tempImg != null)
             {
                 try
                 {
-                    double escala = (double)RESOLUCION / (double)imagen.Width;
+                    double escala = (double)RESOLUCION / (double)tempImg.Width;
                     Graphics tmpGraphics = default(Graphics);
-                    Bitmap tmpResizedImage = new Bitmap(Convert.ToInt32(escala * imagen.Width), Convert.ToInt32(escala * imagen.Height));
+                    Bitmap tmpResizedImage = new Bitmap(Convert.ToInt32(escala * tempImg.Width), Convert.ToInt32(escala * tempImg.Height));
                     tmpGraphics = Graphics.FromImage(tmpResizedImage);
                     tmpGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-                    tmpGraphics.DrawImage(imagen, 0, 0, tmpResizedImage.Width + 1, tmpResizedImage.Height + 1);
+                    tmpGraphics.DrawImage(tempImg, 0, 0, tmpResizedImage.Width + 1, tmpResizedImage.Height + 1);
                     this.Imagen = tmpResizedImage;
                     this.ImagenEnBytes = imageToByteArray(this.Imagen);
                 }
@@ -97,13 +98,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
             return ms.ToArray();
-        }
-
-        public Image byteArrayToImage(byte[] byteArrayIn)
-        {
-            MemoryStream ms = new MemoryStream(byteArrayIn);
-            Image returnImage = Image.FromStream(ms);
-            return returnImage;
         }
 
         /// <summary>

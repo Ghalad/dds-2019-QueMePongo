@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Drawing;
+using System.IO;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
 {
@@ -97,7 +98,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
             string rutaDestino = @"imagenNormalizada_" + DateTime.Now.ToString("yyyyMMdd") + ".jpg";
 
             Image imagenOriginal = Image.FromFile(rutaOrigen);
-            
+
+            MemoryStream ms = new MemoryStream();
+            imagenOriginal.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+
             try
             {
                 pb.CrearPrenda()
@@ -105,7 +109,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
                   .ConTipo("remera_manga_larga")
                   .ConMaterial("hilo")
                   .ConColor("blanco")
-                  .ConImagen(imagenOriginal);
+                  .ConImagen(ms.ToArray());
 
                 pb.ObtenerPrenda().Imagen.Save(rutaDestino, System.Drawing.Imaging.ImageFormat.Jpeg);
             }
