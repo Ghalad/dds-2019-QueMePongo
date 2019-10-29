@@ -9,13 +9,11 @@ namespace Ar.UTN.QMP.Web.Controllers
 {
     public class SignInController : Controller
     {
-        // GET: SignIn
         public ActionResult SignIn()
         {
             return View();
         }
-
-        // POST: SignIn
+        
         [HttpPost]
         public ActionResult SignIn(UsuarioModel model)
         {
@@ -53,9 +51,9 @@ namespace Ar.UTN.QMP.Web.Controllers
             }
             catch(Exception ex)
             {
-                return View(model); // Esto capas que esta mal
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(model);
             }
-
         }
     }
 }

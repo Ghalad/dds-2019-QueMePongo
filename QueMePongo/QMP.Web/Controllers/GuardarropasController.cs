@@ -41,12 +41,12 @@ namespace Ar.UTN.QMP.Web.Controllers
                     db.SaveChanges();
                 }
                 ModelState.AddModelError(string.Empty, "Guardarropas creado con exito");
-                return View();
+                return View(model);
             }
             catch(Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return View();
+                return View(model);
             }
         }
 

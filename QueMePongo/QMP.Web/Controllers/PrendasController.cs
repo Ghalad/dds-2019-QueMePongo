@@ -4,6 +4,7 @@ using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using Ar.UTN.QMP.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -85,6 +86,13 @@ namespace Ar.UTN.QMP.Web.Controllers
                         pb.ConImagen(br.ReadBytes(file.ContentLength));
                     }
                 }
+                else
+                {
+                    Image _im = Image.FromFile(Server.MapPath(@"~/Content/images/imgNoDisponible.png"));
+                    MemoryStream ms = new MemoryStream();
+                    _im.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    pb.ConImagen(ms.ToArray());
+                }
 
                 using (QueMePongoDB db = new QueMePongoDB())
                 {
@@ -126,10 +134,41 @@ namespace Ar.UTN.QMP.Web.Controllers
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
                 LoadPrendaModel(model);
-                return View();
+                return View(model);
             }
         }
 
+        [HttpPost]
+        public ActionResult Listar(PrendaModel model)
+        {
+            string selectedG = model.SelectedGuardarropaId;
+
+            Guardarropa guardarropa;
+            try
+            {
+                using (QueMePongoDB db = new QueMePongoDB())
+                {
+                    guardarropa = db.Guardarropas.Find(Int32.Parse(model.SelectedGuardarropaId));
+                    db.Entry(guardarropa).Collection(g => g.Prendas).Load();
+                    foreach (Prenda prenda in guardarropa.Prendas)
+                        db.Entry(prenda).Collection(p => p.Caracteristicas).Load();
+
+                    LoadPrendaModel(model);
+
+                    model.SelectedGuardarropaId = selectedG;
+                    model.Prendas = guardarropa.Prendas;
+
+
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                LoadPrendaModel(model);
+                return View(model);
+            }
+        }
 
 
         private void LoadPrendaModel(PrendaModel model)

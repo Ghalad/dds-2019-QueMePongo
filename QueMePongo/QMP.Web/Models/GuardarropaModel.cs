@@ -4,7 +4,7 @@ namespace Ar.UTN.QMP.Web.Models
 {
     public class GuardarropaModel
     {
-        [Required]
+        [Required, Display(Name = "Nombre")]
         public string Nombre { get; set; }
     }
 }
