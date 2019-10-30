@@ -14,6 +14,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public List<Caracteristica> Caracteristicas { get; set; }
         public List<Caracteristica> Superposiones { get; set; }
         public List<Caracteristica> NivelDeAbrigo { get; set; }
+        public List<Caracteristica> Sensibilidad { get; set; }
 
 
         public static GestorCaracteristicas GetInstance()
@@ -30,6 +31,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Caracteristicas     = new List<Caracteristica>();
             this.Superposiones       = new List<Caracteristica>();
             this.NivelDeAbrigo       = new List<Caracteristica>();
+            this.Sensibilidad        = new List<Caracteristica>();
 
             using (QueMePongoDB db = new QueMePongoDB())
             {
@@ -37,50 +39,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 try
                 {
                     this.TipoCaracteristicas.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA")).Select(c => c.Clave).Distinct().ToList());
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("No se pudo cargar las caracteristicas");
-                }
-
-
-                // Se cargan las caracteristicas desde la base
-                try
-                {
                     this.Caracteristicas.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("CARACTERISTICA")).Select(c => c).ToList());
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("No se pudo cargar las caracteristicas");
-                }
-
-
-                // Se cargan las superposiciones desde la base
-                try
-                {
                     this.Superposiones.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("SUPERPOSICION")).Select(c => c).ToList());
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("No se pudo cargar las caracteristicas");
-                }
-
-
-                // Se cargan las superposiciones desde la base
-                try
-                {
                     this.CategoriaxTipo.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("CATEGORIATIPO")).Select(c => c).ToList());
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("No se pudo cargar las caracteristicas");
-                }
-
-
-                // Se cargan las superposiciones desde la base
-                try
-                {
                     this.NivelDeAbrigo.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("NIVELABRIGO")).Select(c => c).ToList());
+                    this.Sensibilidad.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("SENSIBILIDAD")).Select(c => c).ToList());
                 }
                 catch (Exception ex)
                 {
@@ -175,6 +138,22 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 if (c.EsLaMismaClave(tipo))
                     return c.Valor;
             return null;
+        }
+
+        public int ObtenerIndiceSensibilidad(string sensibilidad)
+        {
+            foreach (var car in this.Sensibilidad)
+                if (car.EsLaMismaClave(sensibilidad.ToUpper()))
+                    return Int32.Parse(car.Valor);
+            throw new Exception("Sensibilidad al clima no válida.");
+        }
+
+        public string ObtenerSensibilidad(int sensibilidad)
+        {
+            foreach (var car in this.Sensibilidad)
+                if (Int32.Parse(car.Valor) == sensibilidad)
+                    return car.Clave;
+            throw new Exception("Sensibilidad al clima no válida.");
         }
 
         /// <summary>

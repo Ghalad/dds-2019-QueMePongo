@@ -204,7 +204,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             #endregion REGLAS
 
             #region USUARIOS
-            usr1.SetSensibilidad("CALUROSO");
+            usr1.Sensibilidad = this.GeGa.ObtenerIndiceSensibilidad("CALUROSO");
             usr1.AgregarGuardarropa(g1);
             #endregion
             

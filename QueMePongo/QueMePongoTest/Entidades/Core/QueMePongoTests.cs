@@ -41,7 +41,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             usr1 = new UsrGratis(maxPrendas, "manurocck");
             g1 = new Guardarropa(maxPrendas);
             usr1.AgregarGuardarropa(g1);
-            usr1.SetSensibilidad("CALUROSO");  
+            usr1.Sensibilidad = this.GeGa.ObtenerIndiceSensibilidad("CALUROSO");
 
             #region PRENDAS
             pb.CrearPrenda()
@@ -366,8 +366,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             #endregion REGLAS
 
             #region USUARIOS
-            usr1.SetSensibilidad("CALUROSO");
-            usr2.SetSensibilidad("CALUROSO");
+            usr1.Sensibilidad = this.GeGa.ObtenerIndiceSensibilidad("CALUROSO");
+            usr2.Sensibilidad = this.GeGa.ObtenerIndiceSensibilidad("CALUROSO");
             usr1.AgregarGuardarropa(g1);
             usr2.AgregarGuardarropa(g1);
             #endregion
@@ -420,7 +420,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             usr1.SetMetodoComunicacion(new MensajeTexto());
             g1 = new Guardarropa(maxPrendas);
             usr1.AgregarGuardarropa(g1);
-            usr1.SetSensibilidad("CALUROSO");
+            usr1.Sensibilidad = this.GeGa.ObtenerIndiceSensibilidad("CALUROSO");
 
             #region PRENDAS
             pb.CrearPrenda()

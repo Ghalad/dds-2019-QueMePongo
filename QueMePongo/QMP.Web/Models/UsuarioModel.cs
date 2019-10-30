@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Ar.UTN.QMP.Web.Models
 {
@@ -9,6 +11,11 @@ namespace Ar.UTN.QMP.Web.Models
 
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }
+        public string PasswordNuevo { get; set; }
+
+        [Display(Name = "Grado de sensibilidad")]
+        public string SelectedSensibilidad { get; set; }
+        public IEnumerable<Caracteristica> Sensibilidades { get; set; }
 
         [Display(Name = "Numero de Tarjeta")]
         public string TarjetaCredito { get; set; }

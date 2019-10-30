@@ -137,6 +137,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("nivelabrigo", "ZAPATILLA_DE_TREKING", "2"));
             listaCar.Add(new Caracteristica("nivelabrigo", "PANCHAS",              "2"));
             listaCar.Add(new Caracteristica("nivelabrigo", "OJOTAS",               "0"));
+
+            listaCar.Add(new Caracteristica("sensibilidad", "MUY FRIOLENTO", "-2"));
+            listaCar.Add(new Caracteristica("sensibilidad", "FRIOLENTO", "-1"));
+            listaCar.Add(new Caracteristica("sensibilidad", "NORMAL", "0"));
+            listaCar.Add(new Caracteristica("sensibilidad", "CALUROSO", "1"));
+            listaCar.Add(new Caracteristica("sensibilidad", "MUY CALUROSO", "2"));
             #endregion CARGA_INICIAL
 
             context.Caracteristicas.AddRange(listaCar);

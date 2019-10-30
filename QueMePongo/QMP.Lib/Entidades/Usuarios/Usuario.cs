@@ -34,6 +34,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
             this.Calificaciones = new List<Calificacion>();
             this.Reglas = new List<Regla>();
             this.MaximoPrendas = maximo;
+            this.Sensibilidad = (GestorCaracteristicas.GetInstance()).ObtenerIndiceSensibilidad("NORMAL");
         }
 
         public void SetMetodoComunicacion(ComunicacionAdapter com)
@@ -103,30 +104,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
                 this.Reglas.Add(regla);
             else
                 throw new Exception("Regla requerida.");
-        }
-
-        public void SetSensibilidad(string sensibilidadClima)
-        {
-            switch (sensibilidadClima.ToUpper())
-            {
-                case "MUY FRIOLENTO":
-                    Sensibilidad = -2;
-                    break;
-                case "FRIOLENTO":
-                    Sensibilidad = -1;
-                    break;
-                case "NORMAL":
-                    Sensibilidad = 0;
-                    break;
-                case "CALUROSO":
-                    Sensibilidad = 1;
-                    break;
-                case "MUY CALUROSO":
-                    Sensibilidad = 2;
-                    break;
-                default:
-                    throw new Exception("Sensibilidad al clima no válida.");
-            }
         }
 
         public void AgregarAtuendoAceptado(Atuendo atuendo)

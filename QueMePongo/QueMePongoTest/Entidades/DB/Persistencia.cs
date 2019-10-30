@@ -881,5 +881,16 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
             Assert.AreEqual(1, 1);
         }
 
+        [TestMethod]
+        public void AddPedido()
+        {
+            using(QueMePongoDB db = new QueMePongoDB())
+            {
+                Evento evento = new Evento("CASUAL", DateTime.Now, "Buenos Aires", "jajajaja", "UNICO");
+
+                db.Eventos.Add(evento);
+                db.SaveChanges();
+            }
+        }
     }
 }

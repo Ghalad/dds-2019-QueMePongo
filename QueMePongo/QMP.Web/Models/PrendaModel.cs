@@ -1,7 +1,6 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 
 namespace Ar.UTN.QMP.Web.Models
 {
