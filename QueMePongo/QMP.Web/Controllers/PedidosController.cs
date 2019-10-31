@@ -43,17 +43,6 @@ namespace Ar.UTN.QMP.Web.Controllers
                 using (QueMePongoDB db = new QueMePongoDB())
                 {
                     Usuario usr = db.Usuarios.Find(Session["UsrID"]);
-                    /*
-                    db.Entry(usr).Collection(u => u.Guardarropas).Load();
-                    db.Entry(usr).Collection(u => u.Reglas).Load();
-
-                    foreach(Guardarropa guardarropa in usr.Guardarropas)
-                    {
-                        db.Entry(guardarropa).Collection(g => g.Prendas).Load();
-                        foreach (Prenda prenda in guardarropa.Prendas)
-                            db.Entry(prenda).Collection(p => p.Caracteristicas).Load();
-                    }
-                    */
                     
                     Evento evento = new Evento(model.SelectedEvento, model.FechaEvento, model.Ciudad, model.Descripcion, model.SelectedRepeticion);
                     Pedido pedido = new Pedido(usr, evento);
@@ -61,16 +50,18 @@ namespace Ar.UTN.QMP.Web.Controllers
                     QueMePongo qmp = QueMePongo.GetInstance();
                     qmp.AgregarPedido(pedido);
 
-                    db.Pedidos.Add(pedido);
-                    db.Entry(usr).State = System.Data.Entity.EntityState.Unchanged;
+                    db.Pedidos.Attach(pedido);
+                    db.Entry(evento.TipoEvento).State = System.Data.Entity.EntityState.Unchanged;
                     db.SaveChanges();
 
+                    LoadPedido(model);
                     return View(model);
                 }
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
+                LoadPedido(model);
                 return View(model);
             }
         }

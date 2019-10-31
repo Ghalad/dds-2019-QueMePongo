@@ -12,7 +12,7 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
     public class Retrieving
     {
         List<Usuario> Usuarios;
-
+        /*
         [TestInitialize]
         public void ImportarTodosLosUsuarios()
         {
@@ -126,5 +126,6 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
 
             Assert.AreEqual(1, 1);
         }
+        */
     }
 }

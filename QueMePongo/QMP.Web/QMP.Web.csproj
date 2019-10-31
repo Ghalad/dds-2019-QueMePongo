@@ -137,6 +137,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\GuardarropaModel.cs" />
+    <Compile Include="Models\PedidosModel.cs" />
     <Compile Include="Models\PrendaModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

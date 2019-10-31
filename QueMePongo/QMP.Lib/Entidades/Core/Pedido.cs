@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Contexto;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System;
@@ -12,7 +13,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     [Table("Pedidos")]
     public class Pedido
     {
-        [Key, ForeignKey("Usuario"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PedidoId { get; set; }
         public Evento Evento { get; set; }
         public Usuario Usuario { get; set; }
@@ -53,6 +54,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void Resolver()
         {
+            this.ActualizarDatosDelUsuario();
             GestorAtuendos gestor = new GestorAtuendos(this.Usuario.ObtenerPrendas(), this.Usuario.Reglas.ToList(), this.Evento);
             gestor.GenerarAtuendos();
             gestor.FiltrarAtuendosPrendasUsadas();
@@ -143,7 +145,29 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void NotificarUsuario()
         {
-            this.Usuario.NotificarPedidoResuelto(this);
+            this.Usuario.NotificarPedidoResuelto(this.PedidoId);
+        }
+
+
+        /// <summary>
+        /// Actualiza los datos del usuario
+        /// </summary>
+        private void ActualizarDatosDelUsuario()
+        {
+            using (QueMePongoDB db = new QueMePongoDB())
+            {
+                db.Entry(this).Reference(p => p.Usuario).Load();
+                db.Entry(this.Usuario).Reference(u => u.Guardarropas).Load();
+                foreach (Guardarropa guardarropa in this.Usuario.Guardarropas)
+                {
+                    db.Entry(guardarropa).Reference(g => g.Prendas).Load();
+                    foreach(Prenda prenda in guardarropa.Prendas)
+                    {
+                        db.Entry(prenda).Reference(p => p.Caracteristicas).Load();
+                        db.Entry(prenda).Reference(p => p.Calificaciones).Load();
+                    }
+                }
+            }
         }
 
 

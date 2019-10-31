@@ -11,7 +11,7 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
     public class Updating
     {
         Usuario user;
-
+        /*
         public void CargarUsuario(string username, QueMePongoDB ctx)
         {
             int contadorCaracteristicas = 0, i = 1, j = 1;
@@ -117,5 +117,6 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
 
             Assert.IsTrue(user.AtuendosAceptados.Count == 1);
         }
+        */
     }
 }

@@ -5,6 +5,7 @@ using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -13,12 +14,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
     [Table("Usuarios")]
     public abstract class Usuario
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UsuarioId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public int MaximoPrendas { get; set; }
         public int Sensibilidad { get; set; }
-        public virtual Pedido Pedido { get; set; }
+        public ICollection<Pedido> Pedidos { get; set; }
         public ComunicacionAdapter MedioComunicacion { get; set; }
         public ICollection<Regla> Reglas { get; set; }
         public ICollection<Atuendo> AtuendosAceptados { get; set; }
@@ -32,6 +34,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
             this.Username = username;
             this.Guardarropas = new List<Guardarropa>();
             this.Calificaciones = new List<Calificacion>();
+            this.Pedidos = new List<Pedido>();
             this.Reglas = new List<Regla>();
             this.MaximoPrendas = maximo;
             this.Sensibilidad = (GestorCaracteristicas.GetInstance()).ObtenerIndiceSensibilidad("NORMAL");
@@ -106,6 +109,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
                 throw new Exception("Regla requerida.");
         }
 
+
+        public void AgregarPedido(Pedido pedido)
+        {
+            this.Pedidos.Add(pedido);
+        }
+
         public void AgregarAtuendoAceptado(Atuendo atuendo)
         {
             if (this.AtuendosAceptados == null)
@@ -114,16 +123,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
             this.AtuendosAceptados.Add(atuendo);
         }
 
-        public void NotificarPedidoResuelto(Pedido pedido)
+        public void NotificarPedidoResuelto(int pedidoId)
         {
-            this.Pedido = pedido;
-            if (this.MedioComunicacion != null)
-                this.Notificar("Pedido Resuelto");
+            this.Notificar(string.Format("Pedido {0} resuelto", pedidoId));
         }
 
         public void Notificar(string mensaje)
         {
-            this.MedioComunicacion.Notificar(mensaje);
+            if (this.MedioComunicacion != null)
+                this.MedioComunicacion.Notificar(mensaje);
         }
     }
 }

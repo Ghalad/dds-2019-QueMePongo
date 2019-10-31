@@ -195,20 +195,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             
             qmp.AgregarPedido(pedido);
 
-            Assert.IsTrue(usr1.Pedido == null);
+            Assert.IsTrue(usr1.Pedidos.Count == 0);
             qmp.DesencolarPedido();
 
-            foreach (Atuendo a in usr1.Pedido.ObtenerAtuendos())
+            foreach(Pedido ped in usr1.Pedidos)
             {
-                int i = 1;
-                Console.WriteLine(string.Format("Atuendo id={0}", a.AtuendoId));
-                foreach (Prenda p in a.Prendas)
+                foreach (Atuendo a in ped.ObtenerAtuendos())
                 {
-                    p.MostrarPorPantalla();
+                    int i = 1;
+                    Console.WriteLine(string.Format("Atuendo id={0}", a.AtuendoId));
+                    foreach (Prenda p in a.Prendas)
+                    {
+                        p.MostrarPorPantalla();
+                    }
+                    Console.WriteLine("");
                 }
-                Console.WriteLine("");
+                Assert.IsTrue(ped.ObtenerAtuendos().Count >= 0);
             }
-            Assert.IsTrue(usr1.Pedido.ObtenerAtuendos().Count >= 0);
         }
 
         [TestMethod]
@@ -384,7 +387,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             qmp.DesencolarPedido();
 
             // Acepto el atuendo xx
-            usr1.Pedido.AceptarAtuendo(6, 17);
+            foreach(Pedido ped in usr1.Pedidos)
+            {
+                ped.AceptarAtuendo(6, 17);
+            }
 
             // Busco el atuendo aceptado (unico) por el usr1 para compararlo con los atuendos sugeridos al usr2
             Atuendo atuendoAceptado = null;
@@ -401,12 +407,16 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             // Compruebo que ningun atuendo sugerido al usr2 contenga prendas del atuendo aceptado por el usr1
             foreach (Prenda unaPrendaAceptada in atuendoAceptado.Prendas)
             {
-                foreach (Atuendo unAtuendo in usr2.Pedido.Atuendos)
+                foreach (Pedido ped in usr1.Pedidos)
                 {
-                    foreach (Prenda unaPrenda in unAtuendo.Prendas)
+                    foreach (Atuendo unAtuendo in ped.Atuendos)
                     {
-                        Assert.IsTrue(unaPrendaAceptada.PrendaId != unaPrenda.PrendaId);
+                        foreach (Prenda unaPrenda in unAtuendo.Prendas)
+                        {
+                            Assert.IsTrue(unaPrendaAceptada.PrendaId != unaPrenda.PrendaId);
+                        }
                     }
+
                 }
             }
         }
@@ -573,7 +583,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
 
             qmp.AgregarPedido(pedido);
 
-            Assert.IsTrue(usr1.Pedido == null);
+            Assert.IsTrue(usr1.Pedidos.Count == 0);
 
             qmp.DesencolarPedido();
 
