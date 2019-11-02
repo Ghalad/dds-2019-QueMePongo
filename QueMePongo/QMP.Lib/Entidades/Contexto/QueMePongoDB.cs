@@ -26,21 +26,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
         public QueMePongoDB(): base("name=QueMePongoDB")
         {
             Database.SetInitializer(new QueMePongoDBInitializer());
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            /*
-            modelBuilder.Entity<Atuendo>()
-                        .HasMany(p => p.Prendas);
-
-            modelBuilder.Entity<Usuario>()
-                        .HasOptional(s => s.Pedido)
-                        .WithRequired(ad => ad.Usuario);
-
-            modelBuilder.Entity<Caracteristica>()
-                        .HasIndex(c => new { c.Nombre, c.Clave, c.Valor })
-                        .IsUnique();*/
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
     }
 }
