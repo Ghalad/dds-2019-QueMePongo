@@ -15,13 +15,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PedidoId { get; set; }
+        public Estados Estado { get; set; }
         public Evento Evento { get; set; }
         public Usuario Usuario { get; set; }
         public ICollection<Atuendo> Atuendos { get; set; }
 
+        public enum Estados
+        {
+            EN_CURSO,
+            RESUELTO
+        }
 
         #region CONSTRUCTOR
-        private Pedido() { }
+        private Pedido()
+        {
+            this.Estado = Estados.EN_CURSO;
+            this.Atuendos = new List<Atuendo>();
+        }
 
         public Pedido(Usuario usr, Evento evento)
         {
@@ -36,6 +46,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 throw new Exception("Es necesario informar un evento");
 
             this.Atuendos = new List<Atuendo>();
+            this.Estado = Estados.EN_CURSO;
         }
         #endregion CONSTRUCTOR
 

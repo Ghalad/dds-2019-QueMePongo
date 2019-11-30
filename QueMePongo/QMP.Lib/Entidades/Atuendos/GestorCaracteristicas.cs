@@ -15,7 +15,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public List<Caracteristica> Superposiones { get; set; }
         public List<Caracteristica> NivelDeAbrigo { get; set; }
         public List<Caracteristica> Sensibilidad { get; set; }
-
+        
 
         public static GestorCaracteristicas GetInstance()
         {

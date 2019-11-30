@@ -47,7 +47,7 @@ namespace Ar.UTN.QMP.Web.Controllers
                     Evento evento = new Evento(model.SelectedEvento, model.FechaEvento, model.Ciudad, model.Descripcion, model.SelectedRepeticion);
                     Pedido pedido = new Pedido(usr, evento);
 
-                    QueMePongo qmp = QueMePongo.GetInstance();
+                    ColaPedidos qmp = ColaPedidos.GetInstance();
                     qmp.AgregarPedido(pedido);
 
                     db.Pedidos.Attach(pedido);

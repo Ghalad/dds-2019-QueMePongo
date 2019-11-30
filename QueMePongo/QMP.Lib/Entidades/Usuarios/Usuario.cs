@@ -27,7 +27,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         public ICollection<Guardarropa> Guardarropas { get; set; }
         public ICollection<Calificacion> Calificaciones { get; set; }
 
-        public Usuario() { }
+        public Usuario()
+        {
+            this.Guardarropas = new List<Guardarropa>();
+            this.Calificaciones = new List<Calificacion>();
+            this.Pedidos = new List<Pedido>();
+            this.Reglas = new List<Regla>();
+            this.Sensibilidad = (GestorCaracteristicas.GetInstance()).ObtenerIndiceSensibilidad("NORMAL");
+        }
 
         protected Usuario(int maximo, string username)
         {

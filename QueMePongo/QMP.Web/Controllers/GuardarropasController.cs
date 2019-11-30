@@ -37,7 +37,7 @@ namespace Ar.UTN.QMP.Web.Controllers
                     g.Nombre = model.Nombre;
                     usr.AgregarGuardarropa(g);
 
-                    db.Guardarropas.Add(g);
+                    //db.Guardarropas.Add(g);
                     db.SaveChanges();
                 }
                 ModelState.AddModelError(string.Empty, "Guardarropas creado con exito");

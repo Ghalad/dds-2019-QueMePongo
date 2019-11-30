@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
 {
-    public class QueMePongo
+    public class ColaPedidos
     {
-        private static QueMePongo Instance { get; set; }
+        private static ColaPedidos Instance { get; set; }
         private Queue<Pedido> ColaDePedidos { get; set; }
 
 
         #region CONSTRUCTOR
-        private QueMePongo()
+        private ColaPedidos()
         {
             this.ColaDePedidos = new Queue<Pedido>();
         }
 
-        public static QueMePongo GetInstance()
+        public static ColaPedidos GetInstance()
         {
-            if (Instance == null) Instance = new QueMePongo();
+            if (Instance == null) Instance = new ColaPedidos();
             return Instance;
         }
         #endregion CONSTRUCTOR

@@ -26,8 +26,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
         public QueMePongoDB(): base("name=QueMePongoDB")
         {
             Database.SetInitializer(new QueMePongoDBInitializer());
-            Configuration.LazyLoadingEnabled = false;
-            Configuration.ProxyCreationEnabled = false;
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
     }
 }

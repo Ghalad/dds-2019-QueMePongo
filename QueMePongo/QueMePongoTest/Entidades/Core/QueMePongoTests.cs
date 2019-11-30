@@ -22,7 +22,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         PrendaBuilder pb;
         Evento evento;
         Pedido pedido;
-        QueMePongo qmp;
+        ColaPedidos qmp;
 
 
 
@@ -31,7 +31,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         {
             this.GeGa = GestorCaracteristicas.GetInstance();
             this.pb = new PrendaBuilder();
-            this.qmp = QueMePongo.GetInstance();
+            this.qmp = ColaPedidos.GetInstance();
         }
 
         [TestMethod]

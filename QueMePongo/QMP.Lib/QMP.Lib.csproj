@@ -97,7 +97,7 @@
     <Compile Include="Entidades\Atuendos\Prenda.cs" />
     <Compile Include="Entidades\Reglas\Operadores\OperadorMenorIgual.cs" />
     <Compile Include="Entidades\Reglas\Regla.cs" />
-    <Compile Include="Entidades\Core\QueMePongo.cs" />
+    <Compile Include="Entidades\Core\ColaPedidos.cs" />
     <Compile Include="Entidades\Usuarios\UsrGratis.cs" />
     <Compile Include="Entidades\Usuarios\UsrPremium.cs" />
     <Compile Include="Entidades\Usuarios\Usuario.cs" />
