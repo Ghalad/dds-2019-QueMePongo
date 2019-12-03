@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,5 +25,8 @@ namespace Ar.UTN.QMP.Web.Models
 
         [Display(Name = "Descripcion")]
         public string Descripcion { get; set; }
+
+        [Display(Name = "Lista de pedidos")]
+        public ICollection<Pedido> Pedidos { get; set; }
     }
 }

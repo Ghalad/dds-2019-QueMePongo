@@ -186,6 +186,9 @@
     <Content Include="Views\Prendas\Crear.cshtml" />
     <Content Include="Views\Prendas\Listar.cshtml" />
     <Content Include="Views\Pedidos\Index.cshtml" />
+    <Content Include="Views\Pedidos\Crear.cshtml" />
+    <Content Include="Views\Pedidos\Agendar.cshtml" />
+    <Content Include="Views\Pedidos\Listar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

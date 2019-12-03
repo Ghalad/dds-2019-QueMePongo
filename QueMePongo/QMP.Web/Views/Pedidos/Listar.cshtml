@@ -1,0 +1,54 @@
+﻿@model Ar.UTN.QMP.Web.Models.PedidosModel
+
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Listar</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Pedido ID
+        </th>
+        <th>
+            Estado
+        </th>
+        <th>
+            Fecha Evento
+        </th>
+        <th>
+            Ciudad
+        </th>
+        <th>
+            Descripcion
+        </th>
+    </tr>
+
+@foreach (var item in Model.Pedidos) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PedidoId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Evento.FechaEvento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Evento.CiudadEvento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Evento.Descripcion)
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Back", "Index", "Pedidos")
+</div>

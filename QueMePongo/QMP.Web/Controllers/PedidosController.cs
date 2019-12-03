@@ -1,8 +1,6 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Contexto;
 using Ar.UTN.QMP.Lib.Entidades.Core;
-using Ar.UTN.QMP.Lib.Entidades.Eventos;
-using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using Ar.UTN.QMP.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -24,13 +22,13 @@ namespace Ar.UTN.QMP.Web.Controllers
 
             try
             {
-                LoadPedido(model);
+                LoadPedidoModel(model);
                 return View(model);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                LoadPedido(model);
+                LoadPedidoModel(model);
                 return View(model);
             }
         }
@@ -38,41 +36,92 @@ namespace Ar.UTN.QMP.Web.Controllers
         [HttpPost]
         public ActionResult Crear(PedidosModel model)
         {
+            PedidoDB p = new PedidoDB();
+            int pedidoID;
+
             try
             {
-                using (QueMePongoDB db = new QueMePongoDB())
-                {
-                    Usuario usr = db.Usuarios.Find(Session["UsrID"]);
-                    
-                    Evento evento = new Evento(model.SelectedEvento, model.FechaEvento, model.Ciudad, model.Descripcion, model.SelectedRepeticion);
-                    Pedido pedido = new Pedido(usr, evento);
-
-                    ColaPedidos qmp = ColaPedidos.GetInstance();
-                    qmp.AgregarPedido(pedido);
-
-                    db.Pedidos.Attach(pedido);
-                    db.Entry(evento.TipoEvento).State = System.Data.Entity.EntityState.Unchanged;
-                    db.SaveChanges();
-
-                    LoadPedido(model);
-                    return View(model);
-                }
+                pedidoID = p.Crear(Int32.Parse(Session["UsrID"].ToString()), model.SelectedEvento, model.Ciudad, model.Descripcion);
+                LoadPedidoModel(model);
+                ModelState.AddModelError(string.Empty, "Pedido creado con exito.");
+                return View(model);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                LoadPedido(model);
+                LoadPedidoModel(model);
                 return View(model);
             }
         }
 
 
 
-        private void LoadPedido(PedidosModel model)
+
+        public ActionResult Agendar()
+        {
+            PedidosModel model = new PedidosModel();
+
+            try
+            {
+                LoadPedidoModel(model);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                LoadPedidoModel(model);
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Agendar(PedidosModel model)
+        {
+            PedidoDB p = new PedidoDB();
+            int pedidoID;
+
+            try
+            {
+                pedidoID = p.Agendar(Int32.Parse(Session["UsrID"].ToString()), model.SelectedEvento, model.FechaEvento, model.Ciudad, model.Descripcion, model.SelectedRepeticion);
+                LoadPedidoModel(model);
+                ModelState.AddModelError(string.Empty, "Pedido creado con exito.");
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                LoadPedidoModel(model);
+                return View(model);
+            }
+        }
+
+
+        public ActionResult Listar()
+        {
+            PedidosModel model = new PedidosModel();
+            PedidoDB p = new PedidoDB();
+
+            try
+            {
+                model.Pedidos = p.Listar(Int32.Parse(Session["UsrID"].ToString()));
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                LoadPedidoModel(model);
+                return View(model);
+            }
+        }
+
+
+
+        private void LoadPedidoModel(PedidosModel model)
         {
             model.Eventos = GestorCaracteristicas.GetInstance().Caracteristicas.Where(c => c.Clave.Equals("EVENTO"));
             model.Repeticiones = new List<string>();
             model.Repeticiones.AddRange(new List<string>() { "UNICO", "A DIARIO", "SEMANAL", "MENSUAL", "ANUAL" });
+            model.Pedidos = new List<Pedido>();
         }
     }
 }

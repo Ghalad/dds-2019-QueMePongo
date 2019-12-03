@@ -41,21 +41,10 @@ namespace QMP.Web.Controllers
         [HttpPost]
         public ActionResult Configurar(UsuarioModel model)
         {
+            UsuarioDB usrDB = new UsuarioDB();
             try
             {
-                using (QueMePongoDB db = new QueMePongoDB())
-                {
-                    Usuario usr = db.Usuarios.Find(Session["UsrID"]);
-                    usr.Sensibilidad = Int32.Parse(model.SelectedSensibilidad);
-                    if (usr.GetType() == typeof(UsrPremium))
-                    {
-                        ((UsrPremium)usr).TarjetaCredito = model.TarjetaCredito;
-                    }
-
-                    db.Usuarios.Attach(usr);
-                    db.Entry(usr).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                }
+                usrDB.Modificar(Int32.Parse(Session["UsrID"].ToString()), Int32.Parse(model.SelectedSensibilidad), model.TarjetaCredito);
 
                 ModelState.AddModelError(string.Empty, "Usuario modificado con exito.");
                 LoadUsuarioParaConfigurar(model);
@@ -69,28 +58,31 @@ namespace QMP.Web.Controllers
             }
         }
 
+
+
+
+
+
         private void LoadUsuarioParaConfigurar(UsuarioModel model)
         {
             GestorCaracteristicas GeCa;
+            UsuarioDB usrDB = new UsuarioDB();
 
-            using (QueMePongoDB db = new QueMePongoDB())
+            Usuario usr = usrDB.ObtenerUsuario(Int32.Parse(Session["UsrID"].ToString()));
+
+            model.UserName = usr.Username;
+            model.Password = usr.Password;
+            if (usr.GetType() == typeof(UsrPremium))
             {
-                Usuario usr = db.Usuarios.Find(Session["UsrID"]);
-
-                model.UserName = usr.Username;
-                model.Password = usr.Password;
-                if (usr.GetType() == typeof(UsrPremium))
-                {
-                    model.EsUsuarioPremium = true;
-                    model.TarjetaCredito = ((UsrPremium)usr).TarjetaCredito;
-                }
-                else
-                    model.EsUsuarioPremium = false;
-
-                GeCa = GestorCaracteristicas.GetInstance();
-                model.Sensibilidades = GeCa.Sensibilidad.Where(c => c.Nombre.Equals("SENSIBILIDAD"));
-                model.SelectedSensibilidad = GeCa.ObtenerSensibilidad(usr.Sensibilidad);
+                model.EsUsuarioPremium = true;
+                model.TarjetaCredito = ((UsrPremium)usr).TarjetaCredito;
             }
+            else
+                model.EsUsuarioPremium = false;
+
+            GeCa = GestorCaracteristicas.GetInstance();
+            model.Sensibilidades = GeCa.Sensibilidad.Where(c => c.Nombre.Equals("SENSIBILIDAD"));
+            model.SelectedSensibilidad = GeCa.ObtenerSensibilidad(usr.Sensibilidad);
         }
     }
 }
