@@ -17,6 +17,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
         public Caracteristica TipoEvento { get; set; }
         public string Repeticion { get; set; }
 
+
+        public Evento() { }
         public Evento(string tipoEvento, DateTime fecha, string cuidad, string descripcion, string repeticion)
         {
             string clave = "EVENTO";

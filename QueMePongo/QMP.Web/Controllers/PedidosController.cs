@@ -99,11 +99,11 @@ namespace Ar.UTN.QMP.Web.Controllers
         public ActionResult Listar()
         {
             PedidosModel model = new PedidosModel();
-            PedidoDB p = new PedidoDB();
+            PedidoDB ped = new PedidoDB();
 
             try
             {
-                model.Pedidos = p.Listar(Int32.Parse(Session["UsrID"].ToString()));
+                model.Pedidos = ped.Listar(Int32.Parse(Session["UsrID"].ToString()));
                 return View(model);
             }
             catch (Exception ex)
@@ -112,6 +112,15 @@ namespace Ar.UTN.QMP.Web.Controllers
                 LoadPedidoModel(model);
                 return View(model);
             }
+        }
+
+        public ActionResult Ver(string pedidoID)
+        {
+            PedidosModel model = new PedidosModel();
+
+            Pedido p = (new PedidoDB()).Obtener(pedidoID);
+
+            return View(model);
         }
 
 

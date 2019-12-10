@@ -1,5 +1,4 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Contexto;
-using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using Ar.UTN.QMP.Web.Models;
 using System;
 using System.Web.Mvc;

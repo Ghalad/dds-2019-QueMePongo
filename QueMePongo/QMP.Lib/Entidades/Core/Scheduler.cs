@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ar.UTN.QMP.Lib.Entidades.Contexto;
+using System;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core
 {
@@ -6,10 +7,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     {
         private static Scheduler Instance { get; set; }
         private NodoPedido Nodo { get; set; }
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private Scheduler()
         {
-
+            inicializarPedidos();
         }
 
         public static Scheduler GetInstance()
@@ -28,6 +30,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             if (pedido != null)
             {
+                pedido.GrupoPertenencia = "S";
                 if (this.Nodo != null)
                     this.Nodo = this.Nodo.Agregar(pedido);
                 else
@@ -42,12 +45,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void DesencolarPedido()
         {
-            if (this.Nodo == null)
-                throw new Exception("No hay pedidos para procesar");
-            else
+            if (this.Nodo != null)
             {
-                AtenderPedido(this.Nodo.Pedido);
-                this.Nodo = this.Nodo.QuitarPrimero();
+                if (TieneTrabajo())
+                {
+                    AtenderPedido(this.Nodo.Pedido);
+                    log.Info(string.Format("Pedido {0} resuelto.", this.Nodo.Pedido.PedidoId));
+                    this.Nodo = this.Nodo.QuitarPrimero();
+                }
             }
         }
 
@@ -87,6 +92,13 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             else if (DateTime.Compare(DateTime.Now.Date, this.Nodo.Pedido.Fecha().Date) >= 0)
                 return true;
             return false;
+        }
+
+        public void inicializarPedidos()
+        {
+            var pendientes = (new PedidoDB()).Cargar("S");
+            foreach (var pedido in pendientes)
+                this.AgregarPedido(pedido);
         }
     }
 }

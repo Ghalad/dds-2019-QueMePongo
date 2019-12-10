@@ -14,7 +14,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         private List<Prenda> Prendas { get; set; }
         private List<Regla> Reglas { get; set; }
         private Evento Evento { get; set; }
-        private int IdentificadorProvisorio { get; set; }
 
         #region CONSTRUCTOR
         public GestorAtuendos(List<Prenda> prendas, List<Regla> reglas, Evento evento)
@@ -35,7 +34,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 throw new Exception("Es necesario informar un evento");
 
             this.Atuendos = new List<Atuendo>();
-            this.IdentificadorProvisorio = 1;
         }
         #endregion CONSTRUCTOR
 
@@ -62,12 +60,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             // Se toma como minimo combinaciones de 3 prendas ya que son las 3 partes del cuerpo que tienen que estar cubiertas siempre
             // y estaria descartados todos los atuendos de 1 y 2 prendas
-            for (int i = 3; i < max; i++)
+            for (int i = 2; i < max; i++)
             {
                 foreach (var row in new Combinaciones.Combinaciones(this.Prendas.Count, i).GetRows())
                 {
                     atuendo = new Atuendo();
-                    atuendo.AtuendoId = this.GenerarId();
                     foreach (Prenda seleccion in Combinaciones.Combinaciones.Permute(row, this.Prendas))
                         atuendo.AgregarPrenda(seleccion);
                     this.Atuendos.Add(atuendo);
@@ -169,7 +166,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                         this.Atuendos[j + 1] = atuendoAux;
                     }
                 }
-            }return;
+            }
+            return;
 
         }
         #endregion OPERACIONES
@@ -307,127 +305,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             return (minimo <= valor && valor <= maximo);
         }
-
-        /// <summary>
-        /// La generacion de IDs es provisoria porque sirve unicamente para que el usuario selecciones un atuendo
-        /// y este pueda ser buscado. El ID real se genera en la base una vez que se persista el atuendo, cuando
-        /// forme parte de los atuendos aceptados del usuario.
-        /// </summary>
-        /// <returns></returns>
-        private int GenerarId()
-        {
-            return this.IdentificadorProvisorio++;
-        }
         #endregion FUNCIONES_AUXILIARES
-
-
-
-
-
-
-        #region OBSOLETAS
-        [Obsolete("Esto no va")]
-        public void MostrarAtuendos()
-        {
-            int i = 1;
-            foreach (Atuendo a in Atuendos)
-            {
-                Console.WriteLine(string.Format("Atuendo {0} \n", i));
-                foreach (Prenda p in a.Prendas)
-                {
-                    p.MostrarPorPantalla();
-                }
-                Console.WriteLine("\n");
-                i++;
-            }
-        }
-
-        [Obsolete("Este metodo es para testear los cambios abruptos de temperatura")]
-        public bool CumpleNivelDeAbrigo2(int sensibilidadUsuario, Atuendo atuendo)
-        {
-            int abrigoSuperior = atuendo.NivelDeAbrigoPorCategoria("SUPERIOR");
-            int abrigoInferior = atuendo.NivelDeAbrigoPorCategoria("INFERIOR");
-            int abrigoCalzado = atuendo.NivelDeAbrigoPorCategoria("CALZADO");
-            int abrigoExtra = atuendo.NivelDeAbrigoPorCategoria("ACCESORIO");
-
-            int minimoSuperior = 0, maximoSuperior = 0, minimoInferior = 0, maximoInferior = 0, minimoCalzado = 0, maximoCalzado = 0, minimoExtra = 0, maximoExtra = 0;
-
-            /// Relaciona el clima con la sensibilidad del usuario (info abajo)
-            /// por ejemplo: si el clima es de temperatura media pero el usuario es friolento, el usuario sentirá un nivel más frío
-            /// osea sentirá que hace frío. Si el clima es de temperatura fria y, de nuevo, el usuario es friolento, la
-            /// sentirá como muy fría.
-            /// Si hace calor y el usuario es muy friolento baja dos niveles: sentirá frío.
-            /// Si hace calor y el usuario es caluroso sube un nivel: sentirá mucho calor.
-            /// El nivel máximo y mínimo de sensibilidad es mucho calor y mucho frío relativamente. El usuario no puede 
-            /// ser más o menos sensible que eso
-            int n = -3;
-
-            if (n <= -2) //Hace "MUCHO FRIO"
-            {
-                minimoSuperior = 12;
-                maximoSuperior = 19;
-                minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
-                maximoInferior = 4;
-                minimoCalzado = 3; //si o si con medias
-                maximoCalzado = 3;
-                minimoExtra = 1; //si o si con un accesorio para el frío
-                maximoExtra = 2;
-            }
-            else if (n == -1) //Hace "FRIO"
-            {
-                minimoSuperior = 7;
-                maximoSuperior = 15;
-                minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
-                maximoInferior = 4;
-                minimoCalzado = 2; //con medias o no
-                maximoCalzado = 3;
-                minimoExtra = 0;
-                maximoExtra = 2;
-            }
-            else if (n == 0) //Hay temperatura "AMBIENTE"
-            {
-                minimoSuperior = 2;
-                maximoSuperior = 4;
-                minimoInferior = 2; //pantalon corto y pantalon largo
-                maximoInferior = 4;
-                minimoCalzado = 1; //zapatillas con o sin medias
-                maximoCalzado = 3;
-                minimoExtra = 0;
-                maximoExtra = 2;
-            }
-            else if (n == 1) //Hace "CALOR"
-            {
-                minimoSuperior = 1;
-                maximoSuperior = 3;
-                minimoInferior = 1; //sólo pantalón largo
-                maximoInferior = 3;
-                minimoCalzado = 0; //sin medias
-                maximoCalzado = 2;
-                minimoExtra = 0; //sin accesorio
-                maximoExtra = 0;
-            }
-            else if (n == 2) //Hace "MUCHO CALOR"
-            {
-                minimoSuperior = 1;
-                maximoSuperior = 2;
-                minimoInferior = 1; //sólo pantalón largo
-                maximoInferior = 2;
-                minimoCalzado = 0; //si o si con medias
-                maximoCalzado = 2;
-                minimoExtra = 0; //si o si con un accesorio para el frío
-                maximoExtra = 0;
-            }
-            else
-            {
-                // Error ????
-            }
-
-            return (this.EstaEntre(minimoSuperior, abrigoSuperior, maximoSuperior) &&
-                    this.EstaEntre(minimoInferior, abrigoInferior, maximoInferior) &&
-                    this.EstaEntre(minimoCalzado, abrigoCalzado, maximoCalzado) &&
-                    this.EstaEntre(minimoExtra, abrigoExtra, maximoExtra));
-
-        }
-        #endregion
     }
 }

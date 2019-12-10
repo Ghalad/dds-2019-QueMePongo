@@ -1,4 +1,5 @@
-﻿using Ar.UTN.QMP.Lib.Entidades.Usuarios;
+﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System;
 using System.Linq;
 
@@ -59,6 +60,26 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
 
 
                 db.SaveChanges();
+            }
+        }
+
+
+        public Usuario Cargar(int userID)
+        {
+            using (QueMePongoDB db = new QueMePongoDB())
+            {
+                var user = db.Usuarios.Find(userID);
+                db.Entry(user).Collection(u => u.Guardarropas).Load();
+                foreach (Guardarropa guardarropa in user.Guardarropas)
+                {
+                    db.Entry(guardarropa).Collection(g => g.Prendas).Load();
+                    foreach (Prenda prenda in guardarropa.Prendas)
+                    {
+                        db.Entry(prenda).Collection(p => p.Caracteristicas).Load();
+                        db.Entry(prenda).Collection(p => p.Calificaciones).Load();
+                    }
+                }
+                return user;
             }
         }
     }

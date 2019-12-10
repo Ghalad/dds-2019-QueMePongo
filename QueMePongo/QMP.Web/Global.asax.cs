@@ -1,4 +1,5 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Core;
+using log4net.Config;
 using System;
 using System.Timers;
 using System.Web.Mvc;
@@ -11,6 +12,7 @@ namespace QMP.Web
     {
         private static Timer ColaPedidosTimer = new Timer(2500);
         private static Timer SchedulerTimer = new Timer(2500);
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected void Application_Start()
         {
@@ -25,6 +27,7 @@ namespace QMP.Web
             SchedulerTimer.Enabled = true;
             SchedulerTimer.Elapsed += new ElapsedEventHandler(SchedulerJob);
             */
+            log.Info("Sistema iniciado");
         }
 
         protected void Application_End()
@@ -33,6 +36,7 @@ namespace QMP.Web
             ColaPedidosTimer.Stop();
             SchedulerTimer.Stop();
             */
+            log.Info("Sistema finalizado");
         }
 
 
@@ -45,9 +49,9 @@ namespace QMP.Web
             {
                 ColaPedidos.GetInstance().DesencolarPedido();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log Exception
+                log.Error("Error (ColaPedidosJob): " + ex.Message);
             }
         }
 
@@ -58,9 +62,9 @@ namespace QMP.Web
             {
                 Scheduler.GetInstance().DesencolarPedido();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log Exception
+                log.Error("Error (SchedulerJob): " + ex.Message);
             }
         }
     }

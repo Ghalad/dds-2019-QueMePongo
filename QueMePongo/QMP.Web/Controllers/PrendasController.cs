@@ -51,6 +51,11 @@ namespace Ar.UTN.QMP.Web.Controllers
                 {
                     throw new Exception("Debe seleccionar Guardarropa, Categoria, Tipo, Material, Color Primario y Evento, obligatoriamente.");
                 }
+
+                if(model.SelectedColorSecundario != null)
+                {
+                    colorSecundarioId = Int32.Parse(model.SelectedColorSecundario);
+                }
                 
                 if (file != null && file.ContentLength > 0)
                 {
@@ -125,7 +130,7 @@ namespace Ar.UTN.QMP.Web.Controllers
         {
             GuardarropaDB g = new GuardarropaDB();
             GestorCaracteristicas GeCa = GestorCaracteristicas.GetInstance();
-                
+
             model.Guardarropas = g.ObtenerGuardarropas(Int32.Parse(Session["UsrID"].ToString()));
             model.Categorias = GeCa.Caracteristicas.Where(c => c.Clave.Equals("CATEGORIA")).ToList();
             model.Tipos = GeCa.Caracteristicas.Where(c => c.Clave.Equals("TIPO")).ToList();

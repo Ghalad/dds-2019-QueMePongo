@@ -16,6 +16,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PedidoId { get; set; }
         public Estados Estado { get; set; }
+        public string GrupoPertenencia { get; set; }
         public Evento Evento { get; set; }
         public Usuario Usuario { get; set; }
         public ICollection<Atuendo> Atuendos { get; set; }
@@ -76,6 +77,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos = gestor.ObtenerAtuendos();
             this.NotificarUsuario();
+            this.Estado = Pedido.Estados.RESUELTO;
+            this.ActualizarPedido();
         }
 
         /// <summary>
@@ -165,42 +168,12 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         private void ActualizarDatosDelUsuario()
         {
-            using (QueMePongoDB db = new QueMePongoDB())
-            {
-                db.Entry(this).Reference(p => p.Usuario).Load();
-                db.Entry(this.Usuario).Reference(u => u.Guardarropas).Load();
-                foreach (Guardarropa guardarropa in this.Usuario.Guardarropas)
-                {
-                    db.Entry(guardarropa).Reference(g => g.Prendas).Load();
-                    foreach(Prenda prenda in guardarropa.Prendas)
-                    {
-                        db.Entry(prenda).Reference(p => p.Caracteristicas).Load();
-                        db.Entry(prenda).Reference(p => p.Calificaciones).Load();
-                    }
-                }
-            }
+            this.Usuario = (new UsuarioDB()).Cargar(this.Usuario.UsuarioId);
         }
 
-
-
-
-
-
-
-        [Obsolete]
-        public void MostrarAtuendos()
+        public void ActualizarPedido()
         {
-            Console.WriteLine("About to print Atuendos..");
-            int i = 1;
-            foreach(Atuendo a in Atuendos)
-            {
-                Console.WriteLine("Atuendo {0}", i);
-                foreach(Prenda p in a.Prendas)
-                {
-;                   p.MostrarPorPantalla();
-                }
-                i++;
-            }
+            (new PedidoDB()).Actualizar(this);
         }
     }
 }

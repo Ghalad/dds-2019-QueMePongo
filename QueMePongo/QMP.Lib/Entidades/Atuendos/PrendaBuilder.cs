@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
 {
@@ -204,7 +203,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public PrendaBuilder ConEvento(string tipoEvento)
         {
             string clave = "EVENTO";
-            //TODO LOS EVENTOS SE TIENEN QUE PODER REPETIR
             if (!string.IsNullOrWhiteSpace(tipoEvento))
             {
                 if (this.Prenda != null)

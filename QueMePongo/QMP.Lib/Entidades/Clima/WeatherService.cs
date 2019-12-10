@@ -7,6 +7,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         private WeatherServiceAdapter srv { get; set; }
         private string Pais { get; set; }
         private string Ciudad { get; set; }
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(WeatherService));
 
         public WeatherService(string pais, string ciudad)
         {
@@ -29,15 +30,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
                 this.OpenWeather();
                 temp = this.srv.ObtenerTemperatura();
             }
-            catch
+            catch(Exception ex)
             {
+                log.Error("Error Servicio Clima 1:" + ex.Message);
                 try
                 {
                     this.ApiUx();
                     temp = this.srv.ObtenerTemperatura();
                 }
-                catch
+                catch(Exception ex2)
                 {
+                    log.Error("Error Servicio Clima 2:" + ex2.Message);
                     throw new Exception("Servicio de clima no disponible");
                 }
             }
