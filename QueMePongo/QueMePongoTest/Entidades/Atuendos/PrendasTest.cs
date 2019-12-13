@@ -12,7 +12,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
     public class PrendasTest
     {
         Prenda p1, p2;
-
+        /*
         [TestInitialize]
         public void Initialize()
         {
@@ -237,5 +237,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
 
             }
         }
+        */
     }
 }

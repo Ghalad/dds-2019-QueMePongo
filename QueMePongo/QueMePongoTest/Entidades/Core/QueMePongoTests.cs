@@ -1,12 +1,8 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
-using Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones;
-using Ar.UTN.QMP.Lib.Entidades.Reglas.Operadores;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
-using Ar.UTN.QMP.Test.Entidades.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
@@ -24,7 +20,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         Pedido pedido;
         ColaPedidos qmp;
 
-
+        /*
 
         [TestInitialize]
         public void Initialize()
@@ -591,5 +587,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             // PARA QUE LLAME AL METODO "CumpleNivelDeAbrigo2" EN VEZ DE LA METODO "CumpleNivelDeAbrigo"
             pedido.AceptarAtuendo(14, 13);
         }
+        */
     }
 }

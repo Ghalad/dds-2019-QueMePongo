@@ -14,7 +14,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
         Regla regla;
         List<Caracteristica> listaCar;
         List<Regla> reglas;
-
+        /*
         [TestInitialize]
         public void Initialize()
         {
@@ -26,9 +26,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
         [TestMethod]
         public void ReglaParaValidarSuperposicion_1()
         {
-            /************************************************************************************
-             * Valida que un atuendo no tenga mas de una prenda por cada nivel de superposicion
-             ************************************************************************************/
             #region ATUENDO
             this.atuendo = new Atuendo();
 
@@ -98,9 +95,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
         [TestMethod]
         public void ReglaParaValidarSuperposicion_2()
         {
-            /************************************************************************************
-             * Valida que un atuendo no tenga mas de una prenda por cada nivel de superposicion
-             ************************************************************************************/
             #region ATUENDO
             this.atuendo = new Atuendo();
             pb.CrearPrenda()
@@ -148,9 +142,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
         [TestMethod]
         public void ReglaParaValidarSuperposicion_3()
         {
-            /************************************************************************************
-             * Si un atuendo posee una prenda de superposicion 4 sin una de 3, es invalido
-             ************************************************************************************/
             #region ATUENDO
             this.atuendo = new Atuendo();
 
@@ -254,7 +245,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
                    .ConTipo("ojotas")
                    .ConMaterial("goma");
             this.atuendo.Prendas.Add(this.pb.ObtenerPrenda());
-             */
+             
             #endregion ATUENDO
 
             #region REGLA
@@ -281,5 +272,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
 
             Assert.IsFalse(resultado); // el atuendo es INVALIDO
         }
+*/
     }
 }

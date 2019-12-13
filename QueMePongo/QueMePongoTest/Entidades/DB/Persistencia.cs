@@ -16,6 +16,7 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
     [TestClass]
     public class Persistencia
     {
+        /*
         //OK
         [TestMethod]
         public void PersistirUsuariosConPedidos()
@@ -892,5 +893,6 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
                 db.SaveChanges();
             }
         }
+        */
     }
 }

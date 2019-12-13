@@ -24,7 +24,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         ColaPedidos qmp;
         DateTime fecha;
         Scheduler scheduler;
-
+        /*
 
         [TestInitialize]
         public void Initialize()
@@ -264,5 +264,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
             Assert.AreEqual(4, scheduler.CantidadPedidos()); // Tiene los 3 eventos del mes 11 mas el evento 2 re-programado
 
         }
+        */
     }
 }

@@ -9,7 +9,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
     public class PrendaBuilderTests
     {
         PrendaBuilder pb;
-
+        /*
         [TestInitialize]
         public void Initialize()
         {
@@ -119,5 +119,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
             }
 
         }
+        */
     }
 }
