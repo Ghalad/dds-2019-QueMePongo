@@ -12,21 +12,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
     public class PrendasTest
     {
         Prenda p1, p2;
-        /*
         [TestInitialize]
         public void Initialize()
-        {
+        {/*
             this.p1 = new Prenda();
             this.p2 = new Prenda();
+            */
         }
 
         [TestMethod]
         public void TieneCaracteristica1()
-        {
+        {/*
             this.p1.AgregarCaracteristica(new Caracteristica("categoria", "superior"));
             Assert.IsTrue(this.p1.TieneCaracteristica(new Caracteristica("categoria", "superior")));
+            */
         }
 
+        /*
         [TestMethod]
         public void TieneCaracteristica2()
         {

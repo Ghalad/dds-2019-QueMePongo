@@ -11,8 +11,8 @@ namespace Ar.UTN.QMP.Test.Entidades.DB
     [TestClass]
     public class Retrieving
     {
-        List<Usuario> Usuarios;
         /*
+        List<Usuario> Usuarios;
         [TestInitialize]
         public void ImportarTodosLosUsuarios()
         {

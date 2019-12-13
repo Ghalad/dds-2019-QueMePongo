@@ -20,19 +20,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
         Pedido pedido;
         ColaPedidos qmp;
 
-        /*
 
         [TestInitialize]
         public void Initialize()
         {
-            this.GeGa = GestorCaracteristicas.GetInstance();
-            this.pb = new PrendaBuilder();
-            this.qmp = ColaPedidos.GetInstance();
+            //this.GeGa = GestorCaracteristicas.GetInstance();
+            //this.pb = new PrendaBuilder();
+            //this.qmp = ColaPedidos.GetInstance();
         }
 
         [TestMethod]
         public void ResolverPedido()
         {
+            /*
             int maxPrendas = 10;
             usr1 = new UsrGratis(maxPrendas, "manurocck");
             g1 = new Guardarropa(maxPrendas);
@@ -48,6 +48,9 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core.Tests
               .ConColor("negro")
               .ConEvento("casual");
             g1.AgregarPrenda(pb.ObtenerPrenda());
+            */
+        }
+        /*
 
             pb.CrearPrenda()
               .ConCategoria("superior")

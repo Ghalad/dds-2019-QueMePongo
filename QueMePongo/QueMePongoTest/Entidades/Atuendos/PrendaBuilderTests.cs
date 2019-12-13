@@ -9,16 +9,15 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
     public class PrendaBuilderTests
     {
         PrendaBuilder pb;
-        /*
         [TestInitialize]
         public void Initialize()
         {
-            pb = new PrendaBuilder();
+            //pb = new PrendaBuilder();
         }
 
         [TestMethod()]
         public void AgregarCaracteristicas_1()
-        {
+        {/*
             try
             {
                 pb.CrearPrenda()
@@ -31,8 +30,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos.Tests
             {
                 Assert.Fail();
             }
+            */
         }
 
+        /*
         [TestMethod()]
         public void AgregarCaracteristicas_2()
         {

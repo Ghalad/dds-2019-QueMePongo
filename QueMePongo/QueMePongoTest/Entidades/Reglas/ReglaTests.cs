@@ -14,21 +14,22 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
         Regla regla;
         List<Caracteristica> listaCar;
         List<Regla> reglas;
-        /*
+
         [TestInitialize]
         public void Initialize()
         {
-            this.pb = new PrendaBuilder();
-            this.reglas = new List<Regla>();
+            //this.pb = new PrendaBuilder();
+            //this.reglas = new List<Regla>();
         }
 
 
         [TestMethod]
         public void ReglaParaValidarSuperposicion_1()
         {
-            #region ATUENDO
-            this.atuendo = new Atuendo();
-
+            //#region ATUENDO
+            //this.atuendo = new Atuendo();
+        }
+        /*
             pb.CrearPrenda()
               .ConCategoria("superior")
               .ConTipo("remera_manga_corta")
