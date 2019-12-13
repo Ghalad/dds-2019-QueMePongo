@@ -1,4 +1,6 @@
-﻿using Ar.UTN.QMP.Lib.Entidades.Core;
+﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
+using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
+using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System;
@@ -95,22 +97,83 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
 
         public void Actualizar(Pedido pedido)
         {
+            Pedido pedidoDB;
+            Atuendo atuendoDB;
+
             using (QueMePongoDB db = new QueMePongoDB())
             {
-                db.Pedidos.Attach(pedido);
-                db.Entry(pedido).State = System.Data.Entity.EntityState.Modified;
+                pedidoDB = db.Pedidos.Find(pedido.PedidoId);
+
+                foreach (Atuendo atuendo in pedido.Atuendos)
+                {
+                    atuendoDB = new Atuendo();
+                    foreach (Prenda prenda in atuendo.Prendas)
+                    {
+                        atuendoDB.Prendas.Add(db.Prendas.Find(prenda.PrendaId));
+                    }
+                    pedidoDB.Atuendos.Add(atuendoDB);
+                }
+                pedidoDB.GrupoPertenencia = pedido.GrupoPertenencia;
+                pedidoDB.Estado = Pedido.Estados.RESUELTO;
+                pedidoDB.Evento = db.Eventos.Find(pedido.Evento.EventoId);
+                pedidoDB.Usuario = db.Usuarios.Find(pedido.Usuario.UsuarioId);
                 db.SaveChanges();
             }
         }
 
 
-        public Pedido Obtener(string pedidoID)
+        public Pedido ObtenerPedido(int pedidoID)
         {
             using (QueMePongoDB db = new QueMePongoDB())
             {
                 var pedido = db.Pedidos.Find(pedidoID);
                 db.Entry(pedido).Collection(p => p.Atuendos).Load();
+                foreach (Atuendo atuendo in pedido.Atuendos)
+                {
+                    db.Entry(atuendo).Collection(a => a.Prendas).Load();
+                    foreach (Prenda prenda in atuendo.Prendas)
+                    {
+                        db.Entry(prenda).Collection(p => p.Caracteristicas).Load();
+                    }
+                }
                 return pedido;
+            }
+        }
+
+        public Atuendo ObtenerAtuendo(int atuendoID)
+        {
+            Atuendo atuendo;
+            using (QueMePongoDB db = new QueMePongoDB())
+            {
+                atuendo =  db.Atuendos.Find(atuendoID);
+                db.Entry(atuendo).Collection(a => a.Prendas).Load();
+
+                foreach (Prenda prenda in atuendo.Prendas)
+                {
+                    db.Entry(prenda).Collection(p => p.Caracteristicas).Load();
+                }
+            }
+
+            return atuendo;
+        }
+
+        public void PuntuarAtuendo(int userID, int atuendoID, int puntaje)
+        {
+            Atuendo atuendoDB;
+            Usuario user;
+            using (QueMePongoDB db = new QueMePongoDB())
+            {
+                atuendoDB = db.Atuendos.Find(atuendoID);
+                db.Entry(atuendoDB).Collection(a => a.Prendas).Load();
+
+                foreach (Prenda prenda in atuendoDB.Prendas)
+                {
+                    db.Entry(prenda).Collection(p => p.Caracteristicas).Load();
+                }
+                user = db.Usuarios.Find(userID);
+                atuendoDB.Aceptar(user, puntaje);
+                db.Entry(atuendoDB).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
             }
         }
     }

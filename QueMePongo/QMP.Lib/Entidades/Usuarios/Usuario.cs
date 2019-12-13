@@ -31,6 +31,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
         {
             this.Guardarropas = new List<Guardarropa>();
             this.Calificaciones = new List<Calificacion>();
+            this.AtuendosAceptados = new List<Atuendo>();
             this.Pedidos = new List<Pedido>();
             this.Reglas = new List<Regla>();
             this.Sensibilidad = (GestorCaracteristicas.GetInstance()).ObtenerIndiceSensibilidad("NORMAL");
@@ -41,6 +42,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Usuarios
             this.Username = username;
             this.Guardarropas = new List<Guardarropa>();
             this.Calificaciones = new List<Calificacion>();
+            this.AtuendosAceptados = new List<Atuendo>();
             this.Pedidos = new List<Pedido>();
             this.Reglas = new List<Regla>();
             this.MaximoPrendas = maximo;

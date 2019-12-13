@@ -53,6 +53,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     unaPrenda.MarcarComoUsada();
                     unaPrenda.Puntuar(usuario, puntaje);
                 }
+                usuario.AtuendosAceptados.Add(this);
             }
             else
                 throw new Exception("El Atuendo contiene prendas utilizadas por otro usuario.");

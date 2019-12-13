@@ -95,7 +95,7 @@ namespace Ar.UTN.QMP.Web.Controllers
             }
         }
 
-
+        
         public ActionResult Listar()
         {
             PedidosModel model = new PedidosModel();
@@ -114,13 +114,60 @@ namespace Ar.UTN.QMP.Web.Controllers
             }
         }
 
+
         public ActionResult Ver(string pedidoID)
         {
             PedidosModel model = new PedidosModel();
+            Pedido pedido;
 
-            Pedido p = (new PedidoDB()).Obtener(pedidoID);
+            try
+            {
+                pedido = (new PedidoDB()).ObtenerPedido(Int32.Parse(pedidoID));
 
-            return View(model);
+                if (pedido.Estado == Pedido.Estados.RESUELTO)
+                {
+                    model.Atuendos = pedido.Atuendos;
+                    TempData["atuendos"] = pedido.Atuendos;
+                    return View(model);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, string.Format("El pedido {0} no esta resuelto.", pedido.PedidoId));
+                    LoadPedidoModel(model);
+                    return RedirectToAction("Listar", "Pedidos");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                LoadPedidoModel(model);
+                return RedirectToAction("Listar", "Pedidos");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Ver(PedidosModel model)
+        {
+            PedidoDB p = new PedidoDB();
+            try
+            {
+                model.Atuendos = (List<Atuendo>)TempData["atuendos"];
+                TempData["atuendos"] = model.Atuendos;
+                model.Atuendo = p.ObtenerAtuendo(Int32.Parse(model.SelectedAtuendo));
+                if(model.Puntaje > 0)
+                {
+                    p.PuntuarAtuendo(Int32.Parse(Session["UsrID"].ToString()), Int32.Parse(model.SelectedAtuendo), model.Puntaje);
+                    ModelState.AddModelError(string.Empty, "Atuendo puntuado");
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                LoadPedidoModel(model);
+                return View(model);
+            }
         }
 
 

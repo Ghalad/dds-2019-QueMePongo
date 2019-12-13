@@ -47,6 +47,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
                 }
 
                 guardarropa = db.Guardarropas.Find(guardarropaID);
+                db.Entry(guardarropa).Collection(p => p.Prendas).Load();
                 guardarropa.AgregarPrenda(prenda);
 
                 db.Entry(guardarropa).State = System.Data.Entity.EntityState.Modified;

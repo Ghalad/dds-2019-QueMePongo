@@ -28,5 +28,13 @@ namespace Ar.UTN.QMP.Web.Models
 
         [Display(Name = "Lista de pedidos")]
         public ICollection<Pedido> Pedidos { get; set; }
+
+        [Display(Name = "Atuendo ID")]
+        public string SelectedAtuendo { get; set; }
+        public ICollection<Atuendo> Atuendos { get; set; }
+        public Atuendo Atuendo { get; set; }
+        [Display(Name = "Puntaje")]
+        [Range(0, 5)]
+        public int Puntaje { get; set; }
     }
 }

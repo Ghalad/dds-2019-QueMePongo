@@ -24,6 +24,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         private static int MAXIMO_DIAS_DE_USO = 1; // maxima cantidad de dias que una prenda puede estar en uso, a partir de su fecha de uso
         public DateTime? fechaDeUso { get; set; }
         public ICollection<Caracteristica> Caracteristicas { get; set; }
+        public ICollection<Atuendo> Atuendos { get; set; } // Necesario para generar la relacion many-to-many
         public ICollection<Calificacion> Calificaciones { get; set; }
         public ICollection<Guardarropa> Guardarropas { get; set; } // Necesario para generar la relacion many-to-many
 
@@ -31,6 +32,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         {
             this.Caracteristicas = new List<Caracteristica>();
             this.Guardarropas    = new List<Guardarropa>();
+            this.Atuendos        = new List<Atuendo>();
             this.Calificaciones  = new List<Calificacion>();
             this.fechaDeUso      = null;
         }
