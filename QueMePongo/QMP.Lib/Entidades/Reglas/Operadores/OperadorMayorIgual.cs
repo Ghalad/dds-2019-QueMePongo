@@ -2,6 +2,9 @@
 {
     public class OperadorMayorIgual : Operador
     {
+        public OperadorMayorIgual()
+        {
+        }
         public OperadorMayorIgual(int valorReferencia)
         {
             this.ValorReferencia = valorReferencia;

@@ -5,7 +5,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
 {
     public class CondicionNegativa : Condicion
     {
-        public ICollection<Caracteristica> Caracteristicas { get; set; }
+        public CondicionNegativa()
+        {
+            this.Caracteristicas = new List<Caracteristica>();
+        }
+
 
         /// <summary>
         /// Verifica que TODAS las prendas del atuendo NO tengan las caracteristicas, para ser VALIDO. De lo contrario el atuendo es INVALIDO
@@ -13,11 +17,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
         /// <param name="caracteristicas"></param>
         public CondicionNegativa(List<Caracteristica> caracteristicas)
         {
-            this.Caracteristicas = new List<Caracteristica>();
-            foreach (Caracteristica c in caracteristicas)
-            {
-                Caracteristicas.Add(new Caracteristica(c.Clave, c.Valor));
-            }
+            this.Caracteristicas = caracteristicas;
         }
 
         /// <summary>

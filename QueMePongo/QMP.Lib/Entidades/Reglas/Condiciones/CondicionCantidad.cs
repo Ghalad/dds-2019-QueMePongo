@@ -6,7 +6,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
     public class CondicionCantidad : Condicion
     {
         public Operador Operador { get; set; }
-        public ICollection<Caracteristica> Caracteristicas { get; set; }
+
+        public CondicionCantidad()
+        {
+            this.Caracteristicas = new List<Caracteristica>();
+        }
 
         /// <summary>
         /// Valida la cantidad de prendas que poseen TODAS las caracteristicas contra el operador, para ser VALIDO. De lo contrario el atuendo es INVALIDO
@@ -16,11 +20,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
         public CondicionCantidad(Operador operador, List<Caracteristica> caracteristicas)
         {
             this.Operador = operador;
-            this.Caracteristicas = new List<Caracteristica>();
-            foreach (Caracteristica c in caracteristicas)
-            {
-                Caracteristicas.Add(new Caracteristica(c.Clave, c.Valor));
-            }
+            this.Caracteristicas = caracteristicas;
         }
 
         /// <summary>

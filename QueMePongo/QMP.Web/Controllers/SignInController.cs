@@ -19,7 +19,7 @@ namespace Ar.UTN.QMP.Web.Controllers
 
             try
             {
-                Session["UsrID"] = usrDB.LogIn(model.UserName, model.Password);
+                Session["UsrID"] = usrDB.LogIn(model.UserName, model.Password, model.EsUsuarioPremium, model.TarjetaCredito);
                 return RedirectToAction("Home", "Home");
             }
             catch(Exception ex)

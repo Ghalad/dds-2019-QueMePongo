@@ -2,6 +2,9 @@
 {
     public class OperadorMenorIgual : Operador
     {
+        public OperadorMenorIgual()
+        {
+        }
         public OperadorMenorIgual(int valorReferencia)
         {
             this.ValorReferencia = valorReferencia;

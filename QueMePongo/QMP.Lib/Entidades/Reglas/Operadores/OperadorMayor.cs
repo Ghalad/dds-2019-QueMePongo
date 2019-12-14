@@ -2,6 +2,9 @@
 {
     public class OperadorMayor : Operador
     {
+        public OperadorMayor()
+        {
+        }
         public OperadorMayor(int valorReferencia)
         {
             this.ValorReferencia = valorReferencia;

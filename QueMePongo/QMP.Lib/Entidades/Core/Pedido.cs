@@ -77,7 +77,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             this.Atuendos = gestor.ObtenerAtuendos();
             this.NotificarUsuario();
-            this.Estado = Pedido.Estados.RESUELTO;
             this.ActualizarPedido();
         }
 
