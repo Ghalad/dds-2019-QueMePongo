@@ -29,6 +29,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("TIPO", "PANTALON_CORTO"));
             listaCar.Add(new Caracteristica("TIPO", "PANTALON_LARGO"));
             listaCar.Add(new Caracteristica("TIPO", "POLLERA"));
+            listaCar.Add(new Caracteristica("TIPO", "BERMUDA"));
             listaCar.Add(new Caracteristica("TIPO", "MEDIAS"));
             listaCar.Add(new Caracteristica("TIPO", "ZAPATO_TACO_ALTO"));
             listaCar.Add(new Caracteristica("TIPO", "ZAPATO_TACO_BAJO"));
@@ -58,6 +59,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("MATERIAL", "GOMA"));
             listaCar.Add(new Caracteristica("MATERIAL", "LANA"));
             listaCar.Add(new Caracteristica("MATERIAL", "POLIESTER"));
+            listaCar.Add(new Caracteristica("MATERIAL", "SEDA"));
+            listaCar.Add(new Caracteristica("MATERIAL", "LYCRA"));
 
             listaCar.Add(new Caracteristica("COLOR", "NEGRO"));
             listaCar.Add(new Caracteristica("COLOR", "GRIS"));
@@ -88,6 +91,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("superposicion", "PANTALON_CORTO",       "2"));
             listaCar.Add(new Caracteristica("superposicion", "PANTALON_LARGO",       "2"));
             listaCar.Add(new Caracteristica("superposicion", "POLLERA",              "2"));
+            listaCar.Add(new Caracteristica("superposicion", "BERMUDA",              "2"));
             listaCar.Add(new Caracteristica("superposicion", "MEDIAS",               "1"));
             listaCar.Add(new Caracteristica("superposicion", "ZAPATO_TACO_ALTO",     "2"));
             listaCar.Add(new Caracteristica("superposicion", "ZAPATO_TACO_BAJO",     "2"));
@@ -109,6 +113,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("categoriatipo", "INFERIOR",  "PANTALON_CORTO"));
             listaCar.Add(new Caracteristica("categoriatipo", "INFERIOR",  "PANTALON_LARGO"));
             listaCar.Add(new Caracteristica("categoriatipo", "INFERIOR",  "POLLERA"));
+            listaCar.Add(new Caracteristica("categoriatipo", "INFERIOR",  "BERMUDA"));
             listaCar.Add(new Caracteristica("categoriatipo", "CALZADO",   "MEDIAS"));
             listaCar.Add(new Caracteristica("categoriatipo", "CALZADO",   "ZAPATO_TACO_ALTO"));
             listaCar.Add(new Caracteristica("categoriatipo", "CALZADO",   "ZAPATO_TACO_BAJO"));
@@ -130,6 +135,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("nivelabrigo", "PANTALON_CORTO",       "1"));
             listaCar.Add(new Caracteristica("nivelabrigo", "PANTALON_LARGO",       "2"));
             listaCar.Add(new Caracteristica("nivelabrigo", "POLLERA",              "1"));
+            listaCar.Add(new Caracteristica("nivelabrigo", "BERMUDA",              "1"));
             listaCar.Add(new Caracteristica("nivelabrigo", "MEDIAS",               "1"));
             listaCar.Add(new Caracteristica("nivelabrigo", "ZAPATO_TACO_ALTO",     "2"));
             listaCar.Add(new Caracteristica("nivelabrigo", "ZAPATO_TACO_BAJO",     "1"));
@@ -143,6 +149,59 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("sensibilidad", "NORMAL", "0"));
             listaCar.Add(new Caracteristica("sensibilidad", "CALUROSO", "1"));
             listaCar.Add(new Caracteristica("sensibilidad", "MUY CALUROSO", "2"));
+
+
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "MUSCULOSA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "REMERA_MANGA_CORTA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "REMERA_MANGA_LARGA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "SWEATER"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "CAMPERA_DE_ABRIGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "PANTALON_CORTO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "PANTALON_LARGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "POLLERA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "BERMUDA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "ALGODON", "MEDIAS"));
+            listaCar.Add(new Caracteristica("materialpermitido", "SEDA", "REMERA_MANGA_CORTA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "SEDA", "REMERA_MANGA_LARGA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "SEDA", "SWEATER"));
+            listaCar.Add(new Caracteristica("materialpermitido", "SEDA", "CAMPERA_DE_ABRIGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "SEDA", "PANTALON_CORTO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "SEDA", "PANTALON_LARGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "SEDA", "POLLERA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "SEDA", "BERMUDA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "POLIESTER", "REMERA_MANGA_CORTA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "POLIESTER", "REMERA_MANGA_LARGA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "POLIESTER", "SWEATER"));
+            listaCar.Add(new Caracteristica("materialpermitido", "POLIESTER", "CAMPERA_DE_ABRIGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "POLIESTER", "PANTALON_CORTO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "POLIESTER", "PANTALON_LARGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "POLIESTER", "POLLERA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "POLIESTER", "BERMUDA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "LYCRA", "REMERA_MANGA_CORTA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "LYCRA", "REMERA_MANGA_LARGA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "LYCRA", "MUSCULOSA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "CUERO", "CAMPERA_DE_ABRIGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "CUERO", "ZAPATO_TACO_ALTO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "CUERO", "ZAPATO_TACO_BAJO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "CUERO", "ZAPATILLA_DE_TREKING"));
+            listaCar.Add(new Caracteristica("materialpermitido", "CUERO", "PANCHAS"));
+            listaCar.Add(new Caracteristica("materialpermitido", "JEAN", "PANTALON_CORTO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "JEAN", "PANTALON_LARGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "JEAN", "POLLERA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "JEAN", "BERMUDA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "NYLON", "PANTALON_CORTO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "NYLON", "PANTALON_LARGO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "NYLON", "POLLERA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "NYLON", "BERMUDA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "NYLON", "CAMPERA_DE_LLUVIA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "NYLON", "ZAPATILLA_DE_CORRER"));
+            listaCar.Add(new Caracteristica("materialpermitido", "LANA", "GORRA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "HILO", "GORRA"));
+            listaCar.Add(new Caracteristica("materialpermitido", "LANA", "SOMBRERO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "HILO", "SOMBRERO"));
+            listaCar.Add(new Caracteristica("materialpermitido", "GOMA", "OJOTAS"));
+            listaCar.Add(new Caracteristica("materialpermitido", "CUERO", "OJOTAS"));
+
             #endregion CARGA_INICIAL
 
             context.Caracteristicas.AddRange(listaCar);

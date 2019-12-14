@@ -15,7 +15,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
         public List<Caracteristica> Superposiones { get; set; }
         public List<Caracteristica> NivelDeAbrigo { get; set; }
         public List<Caracteristica> Sensibilidad { get; set; }
-        
+        public List<Caracteristica> MeterialesPermitidos { get; set; }
+
 
         public static GestorCaracteristicas GetInstance()
         {
@@ -32,6 +33,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
             this.Superposiones       = new List<Caracteristica>();
             this.NivelDeAbrigo       = new List<Caracteristica>();
             this.Sensibilidad        = new List<Caracteristica>();
+            this.MeterialesPermitidos = new List<Caracteristica>();
 
             using (QueMePongoDB db = new QueMePongoDB())
             {
@@ -44,6 +46,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                     this.CategoriaxTipo.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("CATEGORIATIPO")).Select(c => c).ToList());
                     this.NivelDeAbrigo.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("NIVELABRIGO")).Select(c => c).ToList());
                     this.Sensibilidad.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("SENSIBILIDAD")).Select(c => c).ToList());
+                    this.MeterialesPermitidos.AddRange(db.Caracteristicas.Where(c => c.Nombre.Equals("MATERIALPERMITIDO")).Select(c => c).ToList());
                 }
                 catch (Exception ex)
                 {
@@ -138,6 +141,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 if (c.EsLaMismaClave(tipo))
                     return c.Valor;
             return null;
+        }
+
+        public bool MaterialPermitido(string material, string tipo)
+        {
+            foreach (Caracteristica c in this.MeterialesPermitidos)
+                if (c.EsLaMisma(material.ToUpper(), tipo.ToUpper()))
+                    return true;
+            return false;
         }
 
         public int ObtenerIndiceSensibilidad(string sensibilidad)

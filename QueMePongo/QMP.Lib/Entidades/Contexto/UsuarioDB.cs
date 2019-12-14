@@ -127,60 +127,60 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
                 // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 1
                 r1 = new Regla();
                 listaCar = new List<Caracteristica>();
-                listaCar.Add(db.Caracteristicas.Find(2));
-                listaCar.Add(db.Caracteristicas.Find(25));
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "CATEGORIA" && c.Valor == "SUPERIOR").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "SUPERPOSICION" && c.Valor == "1").FirstOrDefault());
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
                 user.AgregarRegla(r1);
 
                 // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 2
                 r1 = new Regla();
                 listaCar = new List<Caracteristica>();
-                listaCar.Add(db.Caracteristicas.Find(2));
-                listaCar.Add(db.Caracteristicas.Find(26));
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "CATEGORIA" && c.Valor == "SUPERIOR").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "SUPERPOSICION" && c.Valor == "2").FirstOrDefault());
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
                 user.AgregarRegla(r1);
 
                 // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 3
                 r1 = new Regla();
                 listaCar = new List<Caracteristica>();
-                listaCar.Add(db.Caracteristicas.Find(2));
-                listaCar.Add(db.Caracteristicas.Find(27));
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "CATEGORIA" && c.Valor == "SUPERIOR").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "SUPERPOSICION" && c.Valor == "3").FirstOrDefault());
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
                 user.AgregarRegla(r1);
 
                 // descarta los atuendos que tengan en la parte superior mas de una prenda con nivel de superposicion 4
                 r1 = new Regla();
                 listaCar = new List<Caracteristica>();
-                listaCar.Add(db.Caracteristicas.Find(2));
-                listaCar.Add(db.Caracteristicas.Find(28));
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "CATEGORIA" && c.Valor == "SUPERIOR").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "SUPERPOSICION" && c.Valor == "4").FirstOrDefault());
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
                 user.AgregarRegla(r1);
 
                 // descarta los atuendos que no tengan prendas en la parte superior
                 r1 = new Regla();
                 listaCar = new List<Caracteristica>();
-                listaCar.Add(db.Caracteristicas.Find(2));
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "CATEGORIA" && c.Valor == "SUPERIOR").FirstOrDefault());
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
                 user.AgregarRegla(r1);
 
                 // descarta los atuendos que no tengan prendas en la parte inferior
                 r1 = new Regla();
                 listaCar = new List<Caracteristica>();
-                listaCar.Add(db.Caracteristicas.Find(3));
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "CATEGORIA" && c.Valor == "INFERIOR").FirstOrDefault());
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
                 user.AgregarRegla(r1);
 
                 // descarta los atuendos que no tengan calzado
                 r1 = new Regla();
                 listaCar = new List<Caracteristica>();
-                listaCar.Add(db.Caracteristicas.Find(4));
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "CATEGORIA" && c.Valor == "CALZADO").FirstOrDefault());
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorIgual(0), listaCar));
                 user.AgregarRegla(r1);
 
                 // descarta los atuendos que tengan mas de 1 calzado
                 r1 = new Regla();
                 listaCar = new List<Caracteristica>();
-                listaCar.Add(db.Caracteristicas.Find(4));
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "CATEGORIA" && c.Valor == "CALZADO").FirstOrDefault());
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
                 user.AgregarRegla(r1);
 

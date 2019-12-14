@@ -131,10 +131,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                 {
                     if (this.GeCa.ExisteCaracteristica(clave, material.ToUpper()))
                     {
-                        if (!this.Prenda.TieneCaracteristica(clave))
-                            this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, material.ToUpper()));
+                        if (this.GeCa.MaterialPermitido(material, this.Prenda.ObtenerCaracteristica("TIPO")))
+                        {
+                            if (!this.Prenda.TieneCaracteristica(clave))
+                                this.Prenda.AgregarCaracteristica(this.GeCa.ObtenerCaracteristica(clave, material.ToUpper()));
+                            else
+                                throw new Exception("La prenda ya posee material");
+                        }
                         else
-                            throw new Exception("La prenda ya posee material");
+                        {
+                            throw new Exception("Material no permitido para la prenda seleccionada.");
+                        }
                     }
                     else
                         throw new Exception(string.Format("No existe la caracteristica [{0}]", material));
