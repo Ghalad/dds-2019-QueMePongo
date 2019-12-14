@@ -7,7 +7,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     {
         private static Scheduler Instance { get; set; }
         private NodoPedido Nodo { get; set; }
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private Scheduler()
         {
@@ -50,7 +49,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 if (TieneTrabajo())
                 {
                     AtenderPedido(this.Nodo.Pedido);
-                    log.Info(string.Format("Pedido {0} resuelto.", this.Nodo.Pedido.PedidoId));
                     this.Nodo = this.Nodo.QuitarPrimero();
                 }
             }

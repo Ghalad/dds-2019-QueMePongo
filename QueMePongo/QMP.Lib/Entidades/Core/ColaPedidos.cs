@@ -8,7 +8,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
     {
         private static ColaPedidos Instance { get; set; }
         private Queue<Pedido> ColaDePedidos { get; set; }
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         #region CONSTRUCTOR
@@ -50,7 +49,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             if (this.ColaDePedidos.Count > 0)
             {
                 id = AtenderPedido(this.ColaDePedidos.Dequeue());
-                log.Info(string.Format("Pedido {0} resuelto.", id));
             }
         }
 
