@@ -196,6 +196,7 @@
     <Content Include="Views\Pedidos\Agendar.cshtml" />
     <Content Include="Views\Pedidos\Listar.cshtml" />
     <Content Include="Views\Pedidos\Ver.cshtml" />
+    <Content Include="Views\Home\Configurar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
