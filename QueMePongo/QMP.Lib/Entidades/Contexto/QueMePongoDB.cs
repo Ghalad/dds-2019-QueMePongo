@@ -2,6 +2,7 @@ using Ar.UTN.QMP.Lib.Entidades.Atuendos;
 using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
 using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
+using Ar.UTN.QMP.Lib.Entidades.Logs;
 using Ar.UTN.QMP.Lib.Entidades.Reglas;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;
 using System.Data.Entity;
@@ -21,6 +22,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Atuendo> Atuendos { get; set; }
         public DbSet<Evento> Eventos { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
 
         public QueMePongoDB(): base("name=QueMePongoDB")

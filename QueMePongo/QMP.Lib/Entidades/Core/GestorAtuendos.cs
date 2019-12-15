@@ -60,7 +60,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             // Se toma como minimo combinaciones de 3 prendas ya que son las 3 partes del cuerpo que tienen que estar cubiertas siempre
             // y estaria descartados todos los atuendos de 1 y 2 prendas
-            for (int i = 2; i < max; i++)
+            for (int i = 3; i <= max; i++)
             {
                 foreach (var row in new Combinaciones.Combinaciones(this.Prendas.Count, i).GetRows())
                 {
@@ -279,19 +279,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             WeatherService srvClima = new WeatherService("AR", this.Evento.CiudadEvento);
             decimal n = srvClima.ObtenerTemperatura();
 
-            if (n < 4) //Temperatura MUY FRIA
+            if (n < 5) //Temperatura MUY FRIA
             {
                 return -2;
             }
-            else if (n < 10) //Temperatura FRIA
+            else if (n < 15) //Temperatura FRIA
             {
                 return -1;
             }
-            else if (n < 15) //Temperatura AMBIENTE
+            else if (n < 20) //Temperatura AMBIENTE
             {
                 return 0;
             }
-            else if (n < 20) //Temperatura CALOR
+            else if (n < 30) //Temperatura CALOR
             {
                 return 1;
             }

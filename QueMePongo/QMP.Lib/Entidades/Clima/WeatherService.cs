@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ar.UTN.QMP.Lib.Entidades.Contexto;
+using System;
 
 namespace Ar.UTN.QMP.Lib.Entidades.Clima
 {
@@ -7,7 +8,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
         private WeatherServiceAdapter srv { get; set; }
         private string Pais { get; set; }
         private string Ciudad { get; set; }
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(WeatherService));
 
         public WeatherService(string pais, string ciudad)
         {
@@ -24,6 +24,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
 
         public decimal ObtenerTemperatura()
         {
+            LogDB log = new LogDB();
             decimal temp;
             try
             {
@@ -32,7 +33,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
             }
             catch(Exception ex)
             {
-                log.Error("Error Servicio Clima 1:" + ex.Message);
+                log.Fatal(this.GetType().Namespace + '.' + this.GetType().Name, "Error Servicio Clima 1:" + ex.Message);
                 try
                 {
                     this.ApiUx();
@@ -40,7 +41,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Clima
                 }
                 catch(Exception ex2)
                 {
-                    log.Error("Error Servicio Clima 2:" + ex2.Message);
+                    log.Fatal(this.GetType().Namespace + '.' + this.GetType().Name, "Error Servicio Clima 2:" + ex2.Message);
                     throw new Exception("Servicio de clima no disponible");
                 }
             }

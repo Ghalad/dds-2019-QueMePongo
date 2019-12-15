@@ -44,6 +44,7 @@ namespace QMP.Web.Controllers
             UsuarioDB usrDB = new UsuarioDB();
             try
             {
+                ModelState.Clear();
                 usrDB.Modificar(Int32.Parse(Session["UsrID"].ToString()), Int32.Parse(model.SelectedSensibilidad), model.TarjetaCredito);
 
                 ModelState.AddModelError(string.Empty, "Usuario modificado con exito.");

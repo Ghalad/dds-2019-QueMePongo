@@ -103,6 +103,14 @@ namespace Ar.UTN.QMP.Web.Controllers
 
             try
             {
+                if (TempData["msg"] != null)
+                {
+                    ModelState.AddModelError(string.Empty, TempData["msg"].ToString());
+                }
+
+                //ColaPedidos asd = ColaPedidos.GetInstance();
+                //asd.DesencolarPedido();
+
                 model.Pedidos = ped.Listar(Int32.Parse(Session["UsrID"].ToString()));
                 return View(model);
             }
@@ -132,14 +140,14 @@ namespace Ar.UTN.QMP.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, string.Format("El pedido {0} no esta resuelto.", pedido.PedidoId));
+                    TempData["msg"] = string.Format("El pedido {0} no esta resuelto.", pedido.PedidoId);
                     LoadPedidoModel(model);
                     return RedirectToAction("Listar", "Pedidos");
                 }
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                TempData["msg"] = ex.Message;
                 LoadPedidoModel(model);
                 return RedirectToAction("Listar", "Pedidos");
             }

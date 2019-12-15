@@ -1,4 +1,5 @@
-﻿using Ar.UTN.QMP.Lib.Entidades.Core;
+﻿using Ar.UTN.QMP.Lib.Entidades.Contexto;
+using Ar.UTN.QMP.Lib.Entidades.Core;
 using System;
 using System.Timers;
 using System.Web.Mvc;
@@ -18,13 +19,13 @@ namespace QMP.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+            /*
             ColaPedidosTimer.Enabled = true;
             ColaPedidosTimer.Elapsed += new ElapsedEventHandler(ColaPedidosJob);
 
             SchedulerTimer.Enabled = true;
             SchedulerTimer.Elapsed += new ElapsedEventHandler(SchedulerJob);
-            
+            */
         }
 
         protected void Application_End()
@@ -47,6 +48,8 @@ namespace QMP.Web
             }
             catch (Exception ex)
             {
+                LogDB log = new LogDB();
+                log.Fatal("QMP.Web.MvcApplication", ex.Message);
             }
         }
 
@@ -59,6 +62,8 @@ namespace QMP.Web
             }
             catch (Exception ex)
             {
+                LogDB log = new LogDB();
+                log.Fatal("QMP.Web.MvcApplication", ex.Message);
             }
         }
     }

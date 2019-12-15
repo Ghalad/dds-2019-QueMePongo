@@ -66,18 +66,26 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void Resolver()
         {
-            this.ActualizarDatosDelUsuario();
-            GestorAtuendos gestor = new GestorAtuendos(this.Usuario.ObtenerPrendas(), this.Usuario.Reglas.ToList(), this.Evento);
-            gestor.GenerarAtuendos();
-            gestor.FiltrarAtuendosPrendasUsadas();
-            gestor.FiltrarAtuendosPorReglas();
-            gestor.FiltrarAtuendosPorEvento();
-            gestor.FiltrarAtuendosPorSensibilidadYClima(this.Usuario.Sensibilidad);
-            gestor.OrdenarPorCalificacionDeAtuendo();
+            try
+            {
+                this.ActualizarDatosDelUsuario();
+                GestorAtuendos gestor = new GestorAtuendos(this.Usuario.ObtenerPrendas(), this.Usuario.Reglas.ToList(), this.Evento);
+                gestor.GenerarAtuendos();
+                gestor.FiltrarAtuendosPrendasUsadas();
+                gestor.FiltrarAtuendosPorReglas();
+                gestor.FiltrarAtuendosPorEvento();
+                gestor.FiltrarAtuendosPorSensibilidadYClima(this.Usuario.Sensibilidad);
+                gestor.OrdenarPorCalificacionDeAtuendo();
 
-            this.Atuendos = gestor.ObtenerAtuendos();
-            this.NotificarUsuario();
-            this.ActualizarPedido();
+                this.Atuendos = gestor.ObtenerAtuendos();
+                this.NotificarUsuario();
+                this.ActualizarPedido();
+            }
+            catch(Exception ex)
+            {
+                LogDB log = new LogDB();
+                log.Fatal(this.GetType().Namespace+'.'+this.GetType().Name, ex.Message);
+            }
         }
 
         /// <summary>

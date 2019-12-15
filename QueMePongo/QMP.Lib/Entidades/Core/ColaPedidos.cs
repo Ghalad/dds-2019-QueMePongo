@@ -45,7 +45,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// </summary>
         public void DesencolarPedido()
         {
-            int id;
+            string id;
             if (this.ColaDePedidos.Count > 0)
             {
                 id = AtenderPedido(this.ColaDePedidos.Dequeue());
@@ -57,10 +57,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         /// Resuelve un pedido en concreto
         /// </summary>
         /// <param name="pedido"></param>
-        private int AtenderPedido(Pedido pedido)
+        private string AtenderPedido(Pedido pedido)
         {
             pedido.Resolver();
-            return pedido.PedidoId;
+            if (pedido.Estado == Pedido.Estados.RESUELTO)
+            {
+                return pedido.PedidoId.ToString();
+            }
+            else return null;
         }
 
 
