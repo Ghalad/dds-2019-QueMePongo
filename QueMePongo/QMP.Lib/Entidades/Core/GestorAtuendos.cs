@@ -203,57 +203,57 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
 
             if (n <= -2) //Hace "MUCHO FRIO"
             {
-                minimoSuperior = 12;
-                maximoSuperior = 19;
-                minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
-                maximoInferior = 4;
-                minimoCalzado = 3; //si o si con medias
-                maximoCalzado = 3;
-                minimoExtra = 1; //si o si con un accesorio para el frío
-                maximoExtra = 2;
+                minimoSuperior = 100;
+                maximoSuperior = 150;
+                minimoInferior = 70;
+                maximoInferior = 70;
+                minimoCalzado = 20;
+                maximoCalzado = 30;
+                minimoExtra = 10;
+                maximoExtra = 25;
             }
             else if (n == -1) //Hace "FRIO"
             {
-                minimoSuperior = 7;
-                maximoSuperior = 15;
-                minimoInferior = 4; //sólo pantalón largo.. puede actualizarse cuando agreguemos prendas
-                maximoInferior = 4;
-                minimoCalzado = 2; //con medias o no
-                maximoCalzado = 3;
-                minimoExtra = 0;
-                maximoExtra = 2;
+                minimoSuperior = 60;
+                maximoSuperior = 110;
+                minimoInferior = 40;
+                maximoInferior = 70;
+                minimoCalzado = 20;
+                maximoCalzado = 30;
+                minimoExtra = 10;
+                maximoExtra = 25;
             }
             else if (n == 0) //Hay temperatura "AMBIENTE"
             {
-                minimoSuperior = 2;
-                maximoSuperior = 4;
-                minimoInferior = 2; //pantalon corto y pantalon largo
-                maximoInferior = 4;
-                minimoCalzado = 1; //zapatillas con o sin medias
-                maximoCalzado = 3;
-                minimoExtra = 0;
-                maximoExtra = 2;
+                minimoSuperior = 10;
+                maximoSuperior = 70;
+                minimoInferior = 20;
+                maximoInferior = 70;
+                minimoCalzado = 20;
+                maximoCalzado = 30;
+                minimoExtra = 10;
+                maximoExtra = 25;
             }
             else if (n == 1) //Hace "CALOR"
             {
-                minimoSuperior = 1;
-                maximoSuperior = 3;
-                minimoInferior = 1; //sólo pantalón largo
-                maximoInferior = 3;
-                minimoCalzado = 0; //sin medias
-                maximoCalzado = 2;
-                minimoExtra = 0; //sin accesorio
-                maximoExtra = 0;
+                minimoSuperior = 10;
+                maximoSuperior = 20;
+                minimoInferior = 20;
+                maximoInferior = 30;
+                minimoCalzado = 5;
+                maximoCalzado = 30;
+                minimoExtra = 10;
+                maximoExtra = 10;
             }
             else if (n == 2) //Hace "MUCHO CALOR"
             {
-                minimoSuperior = 1;
-                maximoSuperior = 2;
-                minimoInferior = 1; //sólo pantalón largo
-                maximoInferior = 2;
-                minimoCalzado = 0; //si o si con medias
-                maximoCalzado = 2;
-                minimoExtra = 0; //si o si con un accesorio para el frío
+                minimoSuperior = 10;
+                maximoSuperior = 20;
+                minimoInferior = 20; 
+                maximoInferior = 20;
+                minimoCalzado = 5; 
+                maximoCalzado = 20;
+                minimoExtra = 0; 
                 maximoExtra = 0;
             }
             else 

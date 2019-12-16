@@ -83,21 +83,22 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("SUPERPOSICION", "REMERA_CUELLO_REDONDO_MANGA_LARGA", "1"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "REMERA_ESCOTE_V_MANGA_CORTA",       "1"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "REMERA_ESCOTE_V_MANGA_LARGA",       "1"));
+            listaCar.Add(new Caracteristica("SUPERPOSICION", "MUSCULOSA",                         "1"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "SUETER",                            "2"));
-            listaCar.Add(new Caracteristica("SUPERPOSICION", "CAMPERA",                           "3"));
+            listaCar.Add(new Caracteristica("SUPERPOSICION", "BUZO",                              "2"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "PANTALON_LARGO",                    "2"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "PANTALON_CORTO",                    "2"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "BERMUDA",                           "2"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "POLLERA",                           "2"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "CALZA",                             "2"));
-            listaCar.Add(new Caracteristica("SUPERPOSICION", "BUZO",                              "2"));
-            listaCar.Add(new Caracteristica("SUPERPOSICION", "MUSCULOSA",                         "1"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "ZAPATILLAS",                        "2"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "ZAPATOS",                           "2"));
             listaCar.Add(new Caracteristica("SUPERPOSICION", "SANDALIAS",                         "2"));
+            listaCar.Add(new Caracteristica("SUPERPOSICION", "CAMPERA",                           "3"));
 
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "ACCESORIO", "GORRA"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "ACCESORIO", "SOMBRERO"));
+
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "SUPERIOR",  "REMERA_CUELLO_REDONDO_MANGA_CORTA"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "SUPERIOR",  "REMERA_CUELLO_REDONDO_MANGA_LARGA"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "SUPERIOR",  "REMERA_ESCOTE_V_MANGA_CORTA"));
@@ -106,33 +107,35 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "SUPERIOR",  "CAMPERA"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "SUPERIOR",  "BUZO"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "SUPERIOR",  "MUSCULOSA"));
+            
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "INFERIOR",  "PANTALON_LARGO"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "INFERIOR",  "PANTALON_CORTO"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "INFERIOR",  "BERMUDA"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "INFERIOR",  "POLLERA"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "INFERIOR",  "CALZA"));
+            
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "CALZADO",   "ZAPATILLAS"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "CALZADO",   "ZAPATOS"));
             listaCar.Add(new Caracteristica("CATEGORIATIPO", "CALZADO",   "SANDALIAS"));
 
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "GORRA",                             "1"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "SOMBRERO",                          "1"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "REMERA_CUELLO_REDONDO_MANGA_CORTA", "5"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "REMERA_CUELLO_REDONDO_MANGA_LARGA", "8"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "REMERA_ESCOTE_V_MANGA_CORTA",       "5"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "REMERA_ESCOTE_V_MANGA_LARGA",       "8"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "SUETER",                            "15"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "CAMPERA",                           "13"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "BUZO",                              "13"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "MUSCULOSA",                         "3"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "PANTALON_LARGO",                    "8"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "PANTALON_CORTO",                    "3"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "BERMUDA",                           "3"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "POLLERA",                           "3"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "CALZA",                             "5"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "ZAPATILLAS",                        "1"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "ZAPATOS",                           "1"));
-            listaCar.Add(new Caracteristica("NIVELABRIGO", "SANDALIAS",                         "1"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "GORRA",                             "10"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "SOMBRERO",                          "25"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "REMERA_CUELLO_REDONDO_MANGA_CORTA", "20"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "REMERA_CUELLO_REDONDO_MANGA_LARGA", "70"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "REMERA_ESCOTE_V_MANGA_CORTA",       "20"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "REMERA_ESCOTE_V_MANGA_LARGA",       "70"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "SUETER",                            "40"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "CAMPERA",                           "40"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "BUZO",                              "40"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "MUSCULOSA",                         "10"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "PANTALON_LARGO",                    "70"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "PANTALON_CORTO",                    "20"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "BERMUDA",                           "20"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "POLLERA",                           "20"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "CALZA",                             "40"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "ZAPATILLAS",                        "20"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "ZAPATOS",                           "30"));
+            listaCar.Add(new Caracteristica("NIVELABRIGO", "SANDALIAS",                         "5"));
 
             listaCar.Add(new Caracteristica("SENSIBILIDAD", "MUY_FRIOLENTO", "-2"));
             listaCar.Add(new Caracteristica("SENSIBILIDAD", "FRIOLENTO",     "-1"));
