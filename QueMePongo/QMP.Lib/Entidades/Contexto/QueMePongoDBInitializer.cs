@@ -196,7 +196,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
             listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "JEAN",      "PANTALON_CORTO"));
             listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "JEAN",      "BERMUDA"));
             listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "JEAN",      "POLLERA"));
+            listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "NYLON",     "PANTALON_LARGO"));
+            listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "NYLON",     "PANTALON_CORTO"));
             listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "NYLON",     "CAMPERA"));
+            listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "NYLON",     "POLLERA"));
             listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "NYLON",     "CALZA"));
             listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "NYLON",     "BUZO"));
             listaCar.Add(new Caracteristica("MATERIALPERMITIDO", "NYLON",     "ZAPATILLAS"));

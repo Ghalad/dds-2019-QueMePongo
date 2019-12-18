@@ -140,7 +140,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Atuendos
                         }
                         else
                         {
-                            throw new Exception("Material no permitido para la prenda seleccionada.");
+                            throw new Exception(string.Format("Material [{0}] no permitido para el tipo [{1}].", material, this.Prenda.ObtenerCaracteristica("TIPO")));
                         }
                     }
                     else

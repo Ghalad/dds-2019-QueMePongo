@@ -184,6 +184,118 @@ namespace Ar.UTN.QMP.Lib.Entidades.Contexto
                 r1.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
                 user.AgregarRegla(r1);
 
+                // descarta los atuendos que tengan sueter y calza
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "SUETER").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "CALZA").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan sueter y musculosa
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "SUETER").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "MUSCULOSA").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan campera y buzo
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "CAMPERA").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "BUZO").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan pantalon corto y sueter
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "PANTALON_CORTO").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "SUETER").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan bermuda y sueter
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "BERMUDA").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "SUETER").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan pollera y sueter
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "POLLERA").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "SUETER").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan calza y buzo
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "CALZA").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "BUZO").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan musculosa y pantalon largo
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "MUSCULOSA").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "PANTALON_LARGO").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan musculosa y bermuda
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "MUSCULOSA").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "BERMUDA").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan zapatos y pantalon_corto
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "ZAPATOS").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "PANTALON_CORTO").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan zapatos y bermuda
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "ZAPATOS").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "BERMUDA").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan zapatos y calza
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "ZAPATOS").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "CALZA").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan sandalias y bermuda
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "SANDALIAS").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "BERMUDA").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
+                // descarta los atuendos que tengan sandalias y calza
+                r1 = new Regla();
+                listaCar = new List<Caracteristica>();
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "SANDALIAS").FirstOrDefault());
+                listaCar.Add(db.Caracteristicas.Where(c => c.Nombre == "CARACTERISTICA" && c.Clave == "TIPO" && c.Valor == "CALZA").FirstOrDefault());
+                r1.AgregarCondicion(new CondicionAfirmativa(listaCar));
+                user.AgregarRegla(r1);
+
                 db.SaveChanges();
             }
         }

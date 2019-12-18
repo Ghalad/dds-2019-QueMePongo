@@ -28,26 +28,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
         {
             bool match = false;
 
-            foreach (Prenda prenda in atuendo.Prendas)
+            foreach (Caracteristica caracteristica in this.Caracteristicas)
             {
-                foreach (Caracteristica caracteristica in this.Caracteristicas)
+                match = false;
+
+                foreach (Prenda prenda in atuendo.Prendas)
                 {
                     if (prenda.TieneCaracteristica(caracteristica))
-                    {
-                        match = false;
-                    }
-                    else
                     {
                         match = true;
                         break;
                     }
                 }
 
-                if (match)
-                    return true; // atuendo INVALIDO
+                if (!match) return false; // atuendo VALIDO
             }
 
-            return false;  // atuendo VALIDO
+            return true;  // atuendo INVALIDO
         }
     }
 }

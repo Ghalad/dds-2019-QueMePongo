@@ -9,11 +9,14 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
     [TestClass()]
     public class ReglaTests
     {
+        /*
         PrendaBuilder pb;
         Atuendo atuendo;
         Regla regla;
         List<Caracteristica> listaCar;
         List<Regla> reglas;
+        */
+
 
         [TestInitialize]
         public void Initialize()
@@ -22,63 +25,64 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
             //this.reglas = new List<Regla>();
         }
 
-
+        /*
         [TestMethod]
         public void ReglaParaValidarSuperposicion_1()
         {
-            //#region ATUENDO
-            //this.atuendo = new Atuendo();
-        }
-        /*
+            #region ATUENDO
+            this.atuendo = new Atuendo();
+        
+        
             pb.CrearPrenda()
-              .ConCategoria("superior")
-              .ConTipo("remera_manga_corta")
-              .ConMaterial("algodon")
-              .ConColor("blanco");
+              .ConCategoria("SUPERIOR")
+              .ConTipo("SUETER")
+              .ConMaterial("ALGODON")
+              .ConColor("NEGRO");
             this.atuendo.AgregarPrenda(pb.ObtenerPrenda());
-
             pb.CrearPrenda()
-              .ConCategoria("superior")
-              .ConTipo("sweater")
-              .ConMaterial("algodon")
-              .ConColor("azul");
+              .ConCategoria("accesorio")
+              .ConTipo("gorra")
+              .ConMaterial("NYLON")
+              .ConColor("NEGRO");
             this.atuendo.AgregarPrenda(pb.ObtenerPrenda());
-
             pb.CrearPrenda()
-              .ConCategoria("superior")
-              .ConTipo("sweater")
-              .ConMaterial("algodon")
-              .ConColor("azul");
+              .ConCategoria("calzado")
+              .ConTipo("SANDALIAS")
+              .ConMaterial("cuero")
+              .ConColor("NEGRO");
+            this.atuendo.AgregarPrenda(pb.ObtenerPrenda());
+            pb.CrearPrenda()
+              .ConCategoria("inferior")
+              .ConTipo("POLLERA")
+              .ConMaterial("NYLON")
+              .ConColor("NEGRO");
             this.atuendo.AgregarPrenda(pb.ObtenerPrenda());
             #endregion ATUENDO
 
             #region REGLA
             this.regla = new Regla();
             this.listaCar = new List<Caracteristica>();
-            this.listaCar.Add(new Caracteristica("categoria", "superior"));
-            this.listaCar.Add(new Caracteristica("superposicion", "1"));
-            this.regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            this.listaCar.Add(new Caracteristica("tipo", "SUETER"));
+            this.listaCar.Add(new Caracteristica("tipo", "PANTALON_CORTO"));
+            this.regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
             this.reglas.Add(regla);
-
             this.regla = new Regla();
             this.listaCar = new List<Caracteristica>();
-            this.listaCar.Add(new Caracteristica("categoria", "superior"));
-            this.listaCar.Add(new Caracteristica("superposicion", "2"));
-            this.regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            this.listaCar.Add(new Caracteristica("tipo", "SUETER"));
+            this.listaCar.Add(new Caracteristica("tipo", "CALZA"));
+            this.regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
             this.reglas.Add(regla);
-
             this.regla = new Regla();
             this.listaCar = new List<Caracteristica>();
-            this.listaCar.Add(new Caracteristica("categoria", "superior"));
-            this.listaCar.Add(new Caracteristica("superposicion", "3"));
-            this.regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            this.listaCar.Add(new Caracteristica("tipo", "SUETER"));
+            this.listaCar.Add(new Caracteristica("tipo", "POLLERA"));
+            this.regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
             this.reglas.Add(regla);
-
             this.regla = new Regla();
             this.listaCar = new List<Caracteristica>();
-            this.listaCar.Add(new Caracteristica("categoria", "superior"));
-            this.listaCar.Add(new Caracteristica("superposicion", "4"));
-            this.regla.AgregarCondicion(new CondicionCantidad(new OperadorMayor(1), listaCar));
+            this.listaCar.Add(new Caracteristica("tipo", "SUETER"));
+            this.listaCar.Add(new Caracteristica("tipo", "MUSCULOSA"));
+            this.regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
             this.reglas.Add(regla);
             #endregion REGLA
 
@@ -92,7 +96,10 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
 
              Assert.IsFalse(resultado); // el atuendo es INVALIDO
         }
+        */
 
+
+        /*
         [TestMethod]
         public void ReglaParaValidarSuperposicion_2()
         {
@@ -234,7 +241,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
             // Caso 1: sin calzado
 
             // Caso 2: con 2 calzados
-            /*
+
             this.pb.CrearPrenda()
                    .ConCategoria("calzado")
                    .ConTipo("ojotas")
@@ -246,7 +253,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
                    .ConTipo("ojotas")
                    .ConMaterial("goma");
             this.atuendo.Prendas.Add(this.pb.ObtenerPrenda());
-             
+
             #endregion ATUENDO
 
             #region REGLA
@@ -273,6 +280,6 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
 
             Assert.IsFalse(resultado); // el atuendo es INVALIDO
         }
-*/
+        */
     }
 }
