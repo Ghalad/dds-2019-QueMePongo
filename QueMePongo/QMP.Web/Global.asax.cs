@@ -19,13 +19,13 @@ namespace QMP.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            /*
+            
             ColaPedidosTimer.Enabled = true;
             ColaPedidosTimer.Elapsed += new ElapsedEventHandler(ColaPedidosJob);
 
             SchedulerTimer.Enabled = true;
             SchedulerTimer.Elapsed += new ElapsedEventHandler(SchedulerJob);
-            */
+            
         }
 
         protected void Application_End()

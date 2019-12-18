@@ -108,9 +108,6 @@ namespace Ar.UTN.QMP.Web.Controllers
                     ModelState.AddModelError(string.Empty, TempData["msg"].ToString());
                 }
 
-                //ColaPedidos asd = ColaPedidos.GetInstance();
-                //asd.DesencolarPedido();
-
                 model.Pedidos = ped.Listar(Int32.Parse(Session["UsrID"].ToString()));
                 return View(model);
             }

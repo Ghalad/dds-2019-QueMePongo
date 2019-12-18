@@ -9,23 +9,23 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
     [TestClass()]
     public class ReglaTests
     {
-        /*
+        
         PrendaBuilder pb;
         Atuendo atuendo;
         Regla regla;
         List<Caracteristica> listaCar;
         List<Regla> reglas;
-        */
+        
 
 
         [TestInitialize]
         public void Initialize()
         {
-            //this.pb = new PrendaBuilder();
-            //this.reglas = new List<Regla>();
+            this.pb = new PrendaBuilder();
+            this.reglas = new List<Regla>();
         }
 
-        /*
+        
         [TestMethod]
         public void ReglaParaValidarSuperposicion_1()
         {
@@ -96,7 +96,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Tests
 
              Assert.IsFalse(resultado); // el atuendo es INVALIDO
         }
-        */
+        
 
 
         /*

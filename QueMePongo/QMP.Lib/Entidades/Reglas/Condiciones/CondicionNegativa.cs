@@ -33,17 +33,11 @@ namespace Ar.UTN.QMP.Lib.Entidades.Reglas.Condiciones
             {
                 foreach(Caracteristica caracteristica in this.Caracteristicas)
                 {
-                    if (prenda.TieneCaracteristica(caracteristica))
-                        match = true;
-                    else
+                    if (!prenda.TieneCaracteristica(caracteristica))
                     {
-                        match = false;
-                        break;
+                        return true; // atuendo INVALIDO
                     }
                 }
-
-                if (match)
-                    return true; // atuendo INVALIDO
             }
 
             return false;  // atuendo VALIDO

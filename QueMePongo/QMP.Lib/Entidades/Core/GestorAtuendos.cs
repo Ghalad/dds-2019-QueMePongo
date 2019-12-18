@@ -122,7 +122,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             Regla regla = new Regla();
             List<Caracteristica> listaCar = new List<Caracteristica>();
             listaCar.Add(this.Evento.TipoEvento);
-            regla.AgregarCondicion(new CondicionAfirmativa(listaCar));
+            regla.AgregarCondicion(new CondicionNegativa(listaCar));
 
             foreach (Atuendo atuendo in this.Atuendos)
                 if (!regla.Validar(atuendo))
