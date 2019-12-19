@@ -115,8 +115,12 @@ namespace Ar.UTN.QMP.Web.Controllers
             {
                 LogDB log = new LogDB();
                 log.Fatal("Ar.UTN.QMP.Web.Controllers.PedidosController 1", ex.Message);
-                log.Fatal("Ar.UTN.QMP.Web.Controllers.PedidosController 2", ex.InnerException.Message);
-                log.Fatal("Ar.UTN.QMP.Web.Controllers.PedidosController 3", ex.InnerException.InnerException.Message);
+                if (ex.InnerException != null)
+                {
+                    log.Fatal("Ar.UTN.QMP.Web.Controllers.PedidosController 2", ex.InnerException.Message);
+                    if (ex.InnerException.InnerException != null)
+                        log.Fatal("Ar.UTN.QMP.Web.Controllers.PedidosController 3", ex.InnerException.InnerException.Message);
+                }
                 ModelState.AddModelError(string.Empty, ex.Message);
                 LoadPedidoModel(model);
                 return View(model);
@@ -162,6 +166,13 @@ namespace Ar.UTN.QMP.Web.Controllers
             {
                 model.Atuendos = (List<Atuendo>)TempData["atuendos"];
                 TempData["atuendos"] = model.Atuendos;
+
+                if (model.SelectedAtuendo == null)
+                {
+                    ModelState.AddModelError(string.Empty, "No hay un atuendo seleccionado.");
+                    return View(model);
+                }
+
                 model.Atuendo = p.ObtenerAtuendo(Int32.Parse(model.SelectedAtuendo));
                 if(model.Puntaje > 0)
                 {
