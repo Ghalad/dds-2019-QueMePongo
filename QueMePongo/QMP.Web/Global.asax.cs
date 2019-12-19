@@ -20,6 +20,7 @@ namespace QMP.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
+            
             ColaPedidosTimer.Enabled = true;
             ColaPedidosTimer.Elapsed += new ElapsedEventHandler(ColaPedidosJob);
 
