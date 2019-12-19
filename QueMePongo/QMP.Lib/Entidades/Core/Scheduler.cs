@@ -87,7 +87,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             if (this.Nodo == null)
                 return false;
-            else if (DateTime.Compare(DateTime.Now.Date, this.Nodo.Pedido.Fecha().Date) >= 0 || DateTime.Now.Subtract(this.Nodo.Pedido.Fecha()).Days <= 4)
+            else if (DateTime.Compare(DateTime.Now.Date, this.Nodo.Pedido.Fecha().Date) >= 0 || Math.Abs(DateTime.Now.Subtract(this.Nodo.Pedido.Fecha()).Days) <= 4)
                 return true;
             return false;
         }

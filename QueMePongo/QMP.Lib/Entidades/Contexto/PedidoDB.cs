@@ -1,5 +1,4 @@
 ﻿using Ar.UTN.QMP.Lib.Entidades.Atuendos;
-using Ar.UTN.QMP.Lib.Entidades.Calificaciones;
 using Ar.UTN.QMP.Lib.Entidades.Core;
 using Ar.UTN.QMP.Lib.Entidades.Eventos;
 using Ar.UTN.QMP.Lib.Entidades.Usuarios;

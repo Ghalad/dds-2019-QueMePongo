@@ -113,6 +113,10 @@ namespace Ar.UTN.QMP.Web.Controllers
             }
             catch (Exception ex)
             {
+                LogDB log = new LogDB();
+                log.Fatal("Ar.UTN.QMP.Web.Controllers.PedidosController 1", ex.Message);
+                log.Fatal("Ar.UTN.QMP.Web.Controllers.PedidosController 2", ex.InnerException.Message);
+                log.Fatal("Ar.UTN.QMP.Web.Controllers.PedidosController 3", ex.InnerException.InnerException.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
                 LoadPedidoModel(model);
                 return View(model);

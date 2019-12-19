@@ -10,8 +10,8 @@ namespace QMP.Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static Timer ColaPedidosTimer = new Timer(5000);
-        private static Timer SchedulerTimer = new Timer(5000);
+        private static Timer ColaPedidosTimer = new Timer(15000);
+        private static Timer SchedulerTimer = new Timer(15000);
 
         protected void Application_Start()
         {
