@@ -48,8 +48,19 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             string id;
             if (this.ColaDePedidos.Count > 0)
             {
-                id = AtenderPedido(this.ColaDePedidos.Dequeue());
+                id = AtenderPedido(this.ColaDePedidos.Peek());
+                if (id != null)
+                {
+                    (new LogDB()).Debug(this.GetType().Name, string.Format("Pedido {0} resuelto", id));
+                    this.ColaDePedidos.Dequeue();
+                }
+                else
+                {
+                    (new LogDB()).Fatal(this.GetType().Name, string.Format("Error al resolver el pedido {0}", this.ColaDePedidos.Peek().PedidoId));
+                }
             }
+            else
+                (new LogDB()).Debug(this.GetType().Name, "Cola vacia.");
         }
 
 

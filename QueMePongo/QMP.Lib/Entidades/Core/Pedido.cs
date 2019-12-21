@@ -181,6 +181,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         public void ActualizarPedido()
         {
             (new PedidoDB()).Actualizar(this);
+            this.Estado = Estados.RESUELTO;
         }
     }
 }

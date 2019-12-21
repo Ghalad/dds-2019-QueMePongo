@@ -78,7 +78,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Eventos
 
         private DateTime ObtenerSiguienteFecha()
         {
-            switch (Repeticion.ToUpper())
+            switch (this.Repeticion.ToUpper())
             {
                 case "A DIARIO":
                     return this.FechaEvento.AddDays(1);

@@ -49,9 +49,17 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
                 if (TieneTrabajo())
                 {
                     AtenderPedido(this.Nodo.Pedido);
-                    this.Nodo = this.Nodo.QuitarPrimero();
+                    if(this.Nodo.Pedido.Estado == Pedido.Estados.RESUELTO)
+                    {
+                        (new LogDB()).Debug(this.GetType().Name, string.Format("Pedido {0} resuelto", this.Nodo.Pedido.PedidoId));
+                        this.Nodo = this.Nodo.QuitarPrimero();
+                    }
                 }
+                else
+                    (new LogDB()).Debug(this.GetType().Name, "No tengo trabajo");
             }
+            else
+                   (new LogDB()).Debug(this.GetType().Name, "Nodo vacio");
         }
 
 
@@ -64,7 +72,8 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
             pedido.Resolver();
             if (pedido.SeRepite())
             {
-                this.AgregarPedido(pedido.ObtenerSiguiente());
+                Pedido nuevo = pedido.ObtenerSiguiente();
+                nuevo.PedidoId = (new PedidoDB()).Agendar(nuevo.Usuario.UsuarioId, nuevo.Evento.TipoEvento.Valor, nuevo.Evento.FechaEvento, nuevo.Evento.CiudadEvento, nuevo.Evento.Descripcion, nuevo.Evento.Repeticion);
             }
         }
 
@@ -87,7 +96,7 @@ namespace Ar.UTN.QMP.Lib.Entidades.Core
         {
             if (this.Nodo == null)
                 return false;
-            else if (DateTime.Compare(DateTime.Now.Date, this.Nodo.Pedido.Fecha().Date) >= 0 || Math.Abs(DateTime.Now.Subtract(this.Nodo.Pedido.Fecha()).Days) <= 4)
+            else if (DateTime.Compare(DateTime.Now.Date, this.Nodo.Pedido.Fecha().Date) >= 0 || Math.Abs(DateTime.Now.Subtract(this.Nodo.Pedido.Fecha()).Days) < 4)
                 return true;
             return false;
         }
